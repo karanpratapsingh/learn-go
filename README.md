@@ -6100,7 +6100,7 @@ Processed: 10
 Work complete
 ```
 
-## Additional patterns?
+## Additional patterns
 
 There are some additional patterns that might be useful to know:
 
