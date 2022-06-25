@@ -6335,11 +6335,11 @@ Congratulations, you've finished the course!
 
 Now that you know the fundamentals of Go, here are some additional things for you to try:
 
-- [`Build a REST API with Go - For Beginners`](https://www.youtube.com/watch?v=bFYZrEuEDLE)
-- [`Connecting to PostgreSQL using GORM`](https://www.youtube.com/watch?v=Yk5ZjKq4qDQ)
-- [`Web Scraping with Go`](https://www.youtube.com/watch?v=sU_BwzOxl54)
-- [`Dockerize your Go app`](https://www.youtube.com/watch?v=zUc2LihXjlw)
-- [`DevOps Roadmap`](https://www.youtube.com/watch?v=np_seazJL3Q)
+- [Build a REST API with Go - For Beginners](https://www.youtube.com/watch?v=bFYZrEuEDLE)
+- [Connecting to PostgreSQL using GORM](https://www.youtube.com/watch?v=Yk5ZjKq4qDQ)
+- [Web Scraping with Go](https://www.youtube.com/watch?v=sU_BwzOxl54)
+- [Dockerize your Go app](https://www.youtube.com/watch?v=zUc2LihXjlw)
+- [DevOps Roadmap](https://www.youtube.com/watch?v=np_seazJL3Q)
 
 I hope this course was a great learning experience. I would love to hear feedback from you.
 
@@ -6349,8 +6349,8 @@ Wishing you all the best for further learning!
 
 Here are the resources that were referenced while creating this course.
 
-- [`The Go Programming Language`](https://www.gopl.io)
-- [`Official Go documentation`](https://go.dev/doc)
-- [`Official Go blog`](https://go.dev/blog)
-- [`A Tour of Go`](https://go.dev/tour)
-- [`Learn Go with Tests`](https://quii.gitbook.io/learn-go-with-tests)
+- [The Go Programming Language](https://www.gopl.io)
+- [Official Go documentation](https://go.dev/doc)
+- [Official Go blog](https://go.dev/blog)
+- [A Tour of Go](https://go.dev/tour)
+- [Learn Go with Tests](https://quii.gitbook.io/learn-go-with-tests)
