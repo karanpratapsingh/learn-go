@@ -2803,17 +2803,17 @@ Let's try it in an example by appending elements to our slice.
 func main() {
 	s1 := []string{"a", "b", "c", "d"}
 
-	s2 := append(a1, "e", "f")
+	s2 := append(s1, "e", "f")
 
-	fmt.Println("a1:", a1)
-	fmt.Println("a2:", a2)
+	fmt.Println("s1:", s1)
+	fmt.Println("s2:", s2)
 }
 ```
 
 ```bash
 $ go run main.go
-a1: [a b c d]
-a2: [a b c d e f]
+s1: [a b c d]
+s2: [a b c d e f]
 ```
 
 As we can see, the new elements were appended and a new slice was returned.
