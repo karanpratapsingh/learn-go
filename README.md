@@ -2630,7 +2630,7 @@ func main() {
 	// Output: Array: [20 15 5 30 25], Length: 5, Capacity: 5
 	fmt.Printf("Array: %v, Length: %d, Capacity: %d\n", a, len(a), cap(a))
 
-	// Output: Slice [15 5], Length: 3, Capacity: 4
+	// Output: Slice [15 5 30], Length: 3, Capacity: 4
 	fmt.Printf("Slice: %v, Length: %d, Capacity: %d", s, len(s), cap(s))
 }
 ```
