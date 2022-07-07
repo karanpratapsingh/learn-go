@@ -1876,7 +1876,7 @@ func main() {
 }
 ```
 
-For readability, we can separate by new line but this will also require a trialing comma.
+For readability, we can separate by new line but this will also require a trailing comma.
 
 ```go
 	var p2 = Person{
