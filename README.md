@@ -8,39 +8,54 @@ _This course is also available on my [website](https://www.karanpratapsingh.com/
 
 # Table of contents
 
-- [Welcome to the course](#welcome-to-the-course)
-- [What is Go?](#what-is-go)
-- [Why learn Go?](#why-learn-go)
-- [Installation and Setup](#installation-and-setup)
-- [Hello World](#hello-world)
-- [Variables and Data Types](#variables-and-data-types)
-- [String Formatting](#string-formatting)
-- [Flow Control](#flow-control)
-- [Functions](#functions)
-- [Modules](#modules)
-- [Workspaces](#workspaces)
-- [Packages](#packages)
-- [Useful Commands](#useful-commands)
-- [Build](#build)
-- [Pointers](#pointers)
-- [Structs](#structs)
-- [Methods](#methods)
-- [Arrays and Slices](#arrays-and-slices)
-- [Maps](#maps)
-- [Interfaces](#interfaces)
-- [Errors](#errors)
-- [Panic and Recover](#panic-and-recover)
-- [Testing](#testing)
-- [Generics](#generics)
-- [Concurrency](#concurrency)
-- [Goroutines](#goroutines)
-- [Channels](#channels)
-- [Select](#select)
-- [Sync Package](#sync-package)
-- [Advanced Concurrency Patterns](#advanced-concurrency-patterns)
-- [Context](#context)
-- [Next Steps](#next-steps)
-- [References](#references)
+- Getting Started
+
+  - [What is Go?](#what-is-go)
+  - [Why learn Go?](#why-learn-go)
+  - [Installation and Setup](#installation-and-setup)
+
+- Chapter I
+
+  - [Hello World](#hello-world)
+  - [Variables and Data Types](#variables-and-data-types)
+  - [String Formatting](#string-formatting)
+  - [Flow Control](#flow-control)
+  - [Functions](#functions)
+  - [Modules](#modules)
+  - [Workspaces](#workspaces)
+  - [Packages](#packages)
+  - [Useful Commands](#useful-commands)
+  - [Build](#build)
+
+- Chapter II
+
+  - [Pointers](#pointers)
+  - [Structs](#structs)
+  - [Methods](#methods)
+  - [Arrays and Slices](#arrays-and-slices)
+  - [Maps](#maps)
+
+- Chapter III
+
+  - [Interfaces](#interfaces)
+  - [Errors](#errors)
+  - [Panic and Recover](#panic-and-recover)
+  - [Testing](#testing)
+  - [Generics](#generics)
+
+- Chapter IV
+
+  - [Concurrency](#concurrency)
+  - [Goroutines](#goroutines)
+  - [Channels](#channels)
+  - [Select](#select)
+  - [Sync Package](#sync-package)
+  - [Advanced Concurrency Patterns](#advanced-concurrency-patterns)
+  - [Context](#context)
+
+- Appendix
+  - [Next Steps](#next-steps)
+  - [References](#references)
 
 # What is Go?
 
