@@ -1363,7 +1363,7 @@ _This is a very underrated feature from Go 1.18 but it is quite useful in certai
 
 In this tutorial, we will talk about packages.
 
-### So what are packages?
+## What are packages?
 
 A package is nothing but a directory containing one or more Go source files, or other Go packages.
 
@@ -1452,7 +1452,7 @@ func main() {
 }
 ```
 
-**External Dependencies**
+## External Dependencies
 
 In Go, we are not only limited to working with local packages, we can also install external packages using `go install` command as we saw earlier.
 
