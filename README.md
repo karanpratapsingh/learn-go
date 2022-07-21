@@ -2393,7 +2393,7 @@ In this tutorial, we will learn about arrays and slices in Go.
 
 ## Arrays
 
-### So what's an array?
+### What is an array?
 
 An array is a fixed-size collection of elements of the same type. The elements of the array are stored sequentially and can be accessed using their `index`.
 
