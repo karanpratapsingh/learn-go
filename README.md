@@ -8,13 +8,13 @@ _This course is also available on my [website](https://www.karanpratapsingh.com/
 
 # Table of contents
 
-- Getting Started
+- **Getting Started**
 
   - [What is Go?](#what-is-go)
   - [Why learn Go?](#why-learn-go)
   - [Installation and Setup](#installation-and-setup)
 
-- Chapter I
+- **Chapter I**
 
   - [Hello World](#hello-world)
   - [Variables and Data Types](#variables-and-data-types)
@@ -27,7 +27,7 @@ _This course is also available on my [website](https://www.karanpratapsingh.com/
   - [Useful Commands](#useful-commands)
   - [Build](#build)
 
-- Chapter II
+- **Chapter II**
 
   - [Pointers](#pointers)
   - [Structs](#structs)
@@ -35,7 +35,7 @@ _This course is also available on my [website](https://www.karanpratapsingh.com/
   - [Arrays and Slices](#arrays-and-slices)
   - [Maps](#maps)
 
-- Chapter III
+- **Chapter III**
 
   - [Interfaces](#interfaces)
   - [Errors](#errors)
@@ -43,7 +43,7 @@ _This course is also available on my [website](https://www.karanpratapsingh.com/
   - [Testing](#testing)
   - [Generics](#generics)
 
-- Chapter IV
+- **Chapter IV**
 
   - [Concurrency](#concurrency)
   - [Goroutines](#goroutines)
@@ -53,7 +53,7 @@ _This course is also available on my [website](https://www.karanpratapsingh.com/
   - [Advanced Concurrency Patterns](#advanced-concurrency-patterns)
   - [Context](#context)
 
-- Appendix
+- **Appendix**
   - [Next Steps](#next-steps)
   - [References](#references)
 
