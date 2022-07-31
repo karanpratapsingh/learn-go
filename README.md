@@ -6371,3 +6371,7 @@ Here are the resources that were referenced while creating this course.
 - [Official Go blog](https://go.dev/blog)
 - [A Tour of Go](https://go.dev/tour)
 - [Learn Go with Tests](https://quii.gitbook.io/learn-go-with-tests)
+
+---
+
+_Built and maintained by [Karan Pratap Singh](https://karanpratapsingh.com), please consider [donating](https://www.buymeacoffee.com/karanps) if you'd like more open-source courses._
