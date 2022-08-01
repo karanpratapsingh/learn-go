@@ -680,7 +680,7 @@ For those who are coming from C/C++ background, this should feel natural, but if
 
 # Flow Control
 
-et's talk about flow control, starting with if/else.
+Let's talk about flow control, starting with if/else.
 
 ## If/Else
 
