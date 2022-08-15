@@ -54,6 +54,7 @@ _This course is also available on my [website](https://www.karanpratapsingh.com/
   - [Context](#context)
 
 - **Appendix**
+
   - [Next Steps](#next-steps)
   - [References](#references)
 
