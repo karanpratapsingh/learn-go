@@ -4,8 +4,6 @@ Hey, welcome to the course, and thanks for learning Go. I hope this course provi
 
 _This course is also available on my [website](https://www.karanpratapsingh.com/courses/go) as well as on [Educative.io](https://www.educative.io/collection/5716974084816896/6319653488164864). Please leave a ⭐ as motivation if this was helpful!_
 
-![banner](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/banner.png)
-
 # Table of contents
 
 - **Getting Started**
