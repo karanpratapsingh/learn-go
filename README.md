@@ -3099,7 +3099,7 @@ Here's how the syntax looks:
 
 ```go
 ...
-delete(m,
+delete(m, "a")
 ```
 
 The first argument is the map, and the second is the key we want to delete.
