@@ -4381,7 +4381,31 @@ ab
 
 We can also use the `constraints` package which defines a set of useful constraints to be used with type parameters.
 
-![constraints-package](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-III/generics/constraints-package.png)
+```go
+type Signed interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64
+}
+
+type Unsigned interface {
+	~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr
+}
+
+type Integer interface {
+	Signed | Unsigned
+}
+
+type Float interface {
+	~float32 | ~float64
+}
+
+type Complex interface {
+	~complex64 | ~complex128
+}
+
+type Ordered interface {
+	Integer | Float | ~string
+}
+```
 
 For that, we will need to install the `constraints` package.
 
