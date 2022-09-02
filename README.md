@@ -830,7 +830,7 @@ func main() {
 
 		if i > 5 {
 			break
-    }
+		}
 	}
 
 	fmt.Println("We broke out!")
@@ -851,7 +851,7 @@ func main() {
 }
 ```
 
-_Note: we can also remove the additional semi-colons to make it a little cleaner_
+_Note: we can also remove the additional semi-colons to make it a little cleaner._
 
 ### Forever loop
 
