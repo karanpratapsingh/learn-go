@@ -2684,7 +2684,7 @@ make([]T, len, cap) []T
 
 ```go
 func main() {
-var s = make([]string, 0, 0)
+	var s = make([]string, 0, 0)
 
 	fmt.Println(s)
 }
@@ -2749,12 +2749,12 @@ _Missing low index implies 0 and missing high index implies the length of the un
 The thing to note here is we can create a slice from other slices too and not just arrays.
 
 ```go
-	var a = []string{
-		"C++",
-		"Go",
-		"Java",
-		"TypeScript",
-	}
+var a = []string{
+	"C++",
+	"Go",
+	"Java",
+	"TypeScript",
+}
 ```
 
 ### Iteration
@@ -2765,7 +2765,7 @@ We can iterate over a slice in the same way you iterate over an array, by using 
 
 So now, let's talk about built-in slice functions provided in Go.
 
-- **copy**
+**copy**
 
 The `copy()` function copies elements from one slice to another. It takes 2 slices, a destination, and a source. It also returns the number of elements copied.
 
@@ -2797,7 +2797,7 @@ Elements: 4
 
 As expected, our 4 elements from the source slice were copied to the destination slice.
 
-- **append**
+**append**
 
 Now, let's look at how we can append data to our slice using the built-in `append` function which appends new elements at the end of a given slice.
 
