@@ -8,14 +8,14 @@ _本课程还可以通过访问[网站](https://www.karanpratapsingh.com/courses
 
 - **开始**
 
-  - [什么是Go?](#what-is-go)
-  - [为什么学习Go?](#why-learn-go)
-  - [安装和配置](#installation-and-setup)
+  - [什么是Go?](#什么是Go)
+  - [为什么学习Go?](#为什么学习Go)
+  - [安装和配置](#安装和配置)
 
-- **Chapter I**
+- **章节 I**
 
-  - [Hello World](#hello-world)
-  - [Variables and Data Types](#variables-and-data-types)
+  - [你好世界](#你好世界)
+  - [变量和数据类型](#变量和数据类型)
   - [String Formatting](#string-formatting)
   - [Flow Control](#flow-control)
   - [Functions](#functions)
@@ -58,7 +58,7 @@ _本课程还可以通过访问[网站](https://www.karanpratapsingh.com/courses
 
 # 什么是Go?
 
-Go (也常称为 _Golang_，注：Golang其实是因为当初go这个域名被抢注使用golang作为域名，所以其实它不是一个正确的称呼)是由Google于2007年开发并且在2009年开源的一门编程语言。
+Go (也常称为 _Golang_，注：Golang其实是因为当初go这个域名被抢注使用golang作为域名，所以其实它不是一个正确的称呼，现在还用了go.dev)是由Google于2007年开发并且在2009年开源的一门编程语言。
 
 专注于设计一个简单，可读以及高效。组合了高效，快速及安全的一门静态编译型语言，同时具备动态语言的简单特性，使得编程更有趣了。
 
@@ -92,107 +92,108 @@ Go发展迅猛，被越来越多的公司采用，同时诞生了许多高收入
 
 # 安装和配置
 
-In this tutorial, we will install Go and setup our code editor.
+本教程我们开始安装Go以及配置代码编辑器。
 
-## Download
+## 下载
 
-We can install Go from the [downloads](https://go.dev/dl) section.
+我们可以从[下载](https://go.dev/dl)区域安装Go。
 
-![download](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/getting-started/installation-and-setup/download.png)
+![下载](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/getting-started/installation-and-setup/download.png)
 
-## Installation
+## 安装
 
-_These instructions are from the [official website](https://go.dev/doc/install)_
+_以下指令摘至[官网](https://go.dev/doc/install)_
 
 ### MacOS
 
-1. Open the package file you downloaded and follow the prompts to install Go.
-   The package installs the Go distribution to `/usr/local/go`. The package should put the `/usr/local/go/bin` directory in your `PATH` environment variable.
-   You may need to restart any open Terminal sessions for the change to take effect.
+1. 打开下载的安装包，根据对话框来进行Go安装。
+   安装包将Go分发在`/usr/local/go`. 安装包还将`/usr/local/go/bin` 目录放置在 `PATH` 环境变量。
+   你可能需要重新打开终端会话使其生效。
 
-2. Verify that you've installed Go by opening a command prompt and typing the following command:
+2. 通过打开命令提示符敲入如下指令来确保Go成功安装：
 
 ```
 $ go version
 ```
 
-3. Confirm that the command prints the installed version of Go.
+3. 确认正确输出了Go安装的版本号。
 
 ### Linux
 
-1. Remove any previous Go installation by deleting the `/usr/local/go` folder (if it exists),
-   then extract the archive you just downloaded into `/usr/local`, creating a fresh Go tree in `/usr/local/go`:
+1. 移除之前已安装Go目录`/usr/local/go`(如果存在)，
+   然后将归档文件解压到目录`/usr/local`, 创建一个全新的Go目录 `/usr/local/go`:
 
 ```
-$ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18.1.linux-amd64.tar.gz
+$ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.1.linux-amd64.tar.gz
 ```
 
-_(You may need to run the command as root or through sudo)_
+_(你可以需要使用root用户来执行，或者使用sudo)_
 
-**Do not untar** the archive into an existing `/usr/local/go` tree. This is known to produce broken Go installations.
+**不要untar** 归档目录至已经存在的`/usr/local/go` 目录下. 这样会导致安装失败。
 
-2. Add `/usr/local/go/bin` to the PATH environment variable.
-   You can do this by adding the following line to your `$HOME/.profile` or `/etc/profile` (for a system-wide installation):
+1. 添加 `/usr/local/go/bin` 到**PATH**环境变量.
+   可以通过添加如下行到 `$HOME/.profile` 或者 `/etc/profile` (对系统全局安装):
 
 ```
 export PATH=$PATH:/usr/local/go/bin
 ```
 
-_Note: Changes made to a profile file may not apply until the next time you log into your computer. To apply the changes immediately, just run the shell commands directly or execute them from the profile using a command such as source `$HOME/.profile`._
+_注意: 以上改变如果在未重启系统情况下可能不会立即生效。要立即生效，只需在shell命令行下执行 source `$HOME/.profile`._
 
-3. Verify that you've installed Go by opening a command prompt and typing the following command:
+1. 通过打开命令对话框敲入如下命令来确保Go安装成功：
 
 ```
 $ go version
 ```
 
-4. Confirm that the command prints the installed version of Go.
+4. 确认命令正确输出了Go安装的版本号。
 
 ### Windows
 
-1. Open the MSI file you downloaded and follow the prompts to install Go.
+1. 打开下载的MSI文件，根据提示框来安装Go。
 
-By default, the installer will install Go to Program Files or Program Files (x86).
-You can change the location as needed. After installing, you will need to close and reopen any open command prompts so that changes to the environment made by the installer are reflected at the command prompt.
+默认，安装器会将Go安装至Program Files 或 Program Files (x86)目录。
+你可以根据需要进行修改。安装完后，你需要关闭并重新打开命令对话框以便安装器对环境变量的变更生效。
 
-2. Verify that you've installed Go.
-   1. In Windows, click the Start menu.
-   2. In the menu's search box, type cmd, then press the Enter key.
-   3. In the Command Prompt window that appears, type the following command:
+2. 确保Go正确安装.
+   1. 系统中单机开始菜单。
+   2. 在菜单搜索框输入cmd，按回车。
+   3. 在命令对话框中输入如下命令：
 
 ```
 $ go version
 ```
 
-3. Confirm that the command prints the installed version of Go.
+3. 确认命令正确输出了Go安装的版本号。
 
 ## VS Code
 
-In this course, I will be using [VS Code](https://code.visualstudio.com) and you can download it from [here](https://code.visualstudio.com/download).
+本教程，我将使用[VS Code](https://code.visualstudio.com) 你可以从[这里](https://code.visualstudio.com/download)下载。
 
 ![vscode](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/getting-started/installation-and-setup/vscode.png)
 
-_Feel free to use any other code editor you prefer._
+_你可以选用你青睐的其它代码编辑器。_
 
-### Extension
+### 扩展
 
-Make sure to also install the [Go extension](https://code.visualstudio.com/docs/languages/go) which makes it easier to work with Go in VS Code.
+确保VS Code安装了 [Go 扩张](https://code.visualstudio.com/docs/languages/go)以便我们更佳的开发体验。
 
 ![extension](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/getting-started/installation-and-setup/extension.png)
 
-This is it for the installation and setup of Go, let's start the course and write our first hello world!
+这就是我们Go安装和配置内容，让我们开始编写我们第一个hello world！
 
-# Hello World
+# 你好世界
 
-Let's write our first hello world program, we can start by initializing a module. For that, we can use the `go mod` command.
+让我们编写第一个你好世界程序，我们从初始化一个module开始,使用`go mod`命令来操作。
 
 ```bash
+$ mkdir example
 $ go mod init example
 ```
 
-But wait...what's a `module`? Don't worry we will discuss that soon! But for now, assume that the module is basically a collection of Go packages.
+等等...`module`是什么鬼？别急，后面我们再讨论！我们先暂定module就是Go包的一个
 
-Moving ahead, let's now create a `main.go` file and write a program that simply prints hello world.
+继续，让我们来创建一个`main.go`文件，编写一个简单输出世界你好的程序。
 
 ```go
 package main
@@ -200,29 +201,29 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("Hello World!")
+	fmt.Println("你好世界！")
 }
 ```
 
-_If you're wondering, `fmt` is part of the Go standard library which is a set of core packages provided by the language._
+_`fmt`是Go标准库_
 
-## Structure of a Go program
+## Go程序结构
 
-Now, let's quickly break down what we did here, or rather the structure of a Go program.
+现在，让我们快速分解这里的代码，熟悉一下Go程序结构。
 
-First, we defined a package such as `main`.
+首先，我们定义了`main`包名。
 
 ```go
 package main
 ```
 
-Then, we have some imports.
+然后，我们导入包。
 
 ```go
 import "fmt"
 ```
 
-Last but not least, is our `main` function which acts as an entry point for our application, just like in other languages like C, Java, or C#.
+最后类似其它编程语言C, Java或者C#一样定义了`main`入口函数。
 
 ```go
 func main() {
@@ -230,87 +231,88 @@ func main() {
 }
 ```
 
-Remember, the goal here is to keep a mental note, and later in the course, we'll learn about `functions`, `imports`, and other things in detail!
+这里先记个大概，后面课程我们会学习`functions`，`imports`和其它详情。
 
-Finally, to run our code, we can simply use `go run` command.
+最后，我们通过使用`go run`命令来执行代码。
 
 ```bash
 $ go run main.go
-Hello World!
+你好世界！
 ```
 
-Congratulations, you just wrote your first Go program!
+恭喜，你完成第一个Go程序的编写！
 
-# Variables and Data Types
+# 变量和数据类型
 
-In this tutorial, we will learn about variables. We will also learn about the different data types that Go provides us.
+本章，我们将学习变量。我还会学习Go提供给我们的不同数据类型。
 
-## Variables
+## 变量
 
-Let's start with declaring a variable.
+让我们从定义一个变量开始。
 
-This is also known as declaration without initialization:
+以下定义了一个未初始化变量：
 
 ```go
 var foo string
 ```
 
-Declaration with initialization:
+定义并且初始化：
 
 ```go
 var foo string = "Go is awesome"
 ```
 
-Multiple declarations:
+多个定义：
 
 ```go
 var foo, bar string = "Hello", "World"
-// OR
+// 或者
 var (
 	foo string = "Hello"
 	bar string  = "World"
 )
 ```
 
-Type is omitted but will be inferred:
+虽然类型省略了，但是能被自动推断：
 
 ```go
 var foo = "What's my type?"
 ```
 
-Shorthand declaration, here we omit `var` keyword and type is always implicit. This is how we will see variables being declared most of the time. We also use the `:=` for declaration plus assignment.
+短声明方式，这里忽略`var`关键字，类型是隐式申明。大部分我们会用这种方式来申明变量。
+我们同时使用`:=`来声明和赋值变量。
 
 ```go
 foo := "Shorthand!"
 ```
 
-_Note: Shorthand only works inside `function` bodies._
+_注意: 短声明仅在 `函数` 体使用._
 
-## Constants
+## 常量
 
-We can also declare constants with the `const` keyword. Which as the name suggests, are fixed values that cannot be reassigned.
+我还可以使用`const`关键字来定义常量，正如其名，它值是固定不能更改。
 
 ```go
 const constant = "This is a constant"
 ```
 
-It is also important to note that, only constants can be assigned to other constants.
+还有一个重要点是，只有常量可以赋值给其它常量。
 
 ```go
 const a = 10
-const b = a // ✅ Works
+const b = a // ✅ 有效
 
 var a = 10
 const b = a // ❌ a (variable of type int) is not constant (InvalidConstInit)
 ```
 
-## Data Types
+## 数据类型
 
 Perfect! Now let's look at some basic data types available in Go. Starting with string.
 
-### String
+### 字符串
 
-In Go, a string is a sequence of bytes. They are declared either using double quotes or backticks which can span multiple lines.
+在Go，字符串是字节序列。它们使用双引号定义或者反引号来定义多行字符串。
 
 ```go
 var name string = "My name is Go"
@@ -319,46 +321,47 @@ var bio string = `I am statically typed.
 									I was designed at Google.`
 ```
 
-### Bool
+### 布尔
 
-Next is `bool` which is used to store boolean values. It can have two possible values - `true` or `false`.
+接下来是用来定义布尔值的`bool`。他只有两种值 `true` or `false`。
 
 ```go
 var value bool = false
 var isItTrue bool = true
 ```
 
-**Operators**
+**操作符**
 
-We can use the following operators on boolean types
+布尔类型还可以使用如下操作符
 
 | Type     | Syntax    |
 | -------- | --------- |
 | Logical  | `&&` `!`  |
 | Equality | `==` `!=` |
 
-### Numeric types
+### 数值类型
 
-Now, let's talk about numeric types, starting with
+现在，我们谈谈数值类型, 先从
 
-**Signed and Unsigned integers**
+**有符号和无符号整型**
 
-Go has several built-in integer types of varying sizes for storing signed and unsigned integers
+Go内建几个不同大小的数值类型，用于存储有符号和无符号整型
 
-The size of the generic `int` and `uint` types are platform-dependent. This means it is 32-bits wide on a 32-bit system and 64-bits wide on a 64-bit system.
+通用的`int`和`uint`类型大小是平台依赖的，在32位系统位32位宽度，在64位系统即64位宽度
+
 
 ```go
-var i int = 404                     // Platform dependent
+var i int = 404                     // 平台依赖
 var i8 int8 = 127                   // -128 to 127
 var i16 int16 = 32767               // -2^15 to 2^15 - 1
 var i32 int32 = -2147483647         // -2^31 to 2^31 - 1
 var i64 int64 = 9223372036854775807 // -2^63 to 2^63 - 1
 ```
 
-Similar to signed integers, we have unsigned integers.
+类似有符号整型，我们还有无符号整型。
 
 ```go
-var ui uint = 404                     // Platform dependent
+var ui uint = 404                     // 平台依赖
 var ui8 uint8 = 255                   // 0 to 255
 var ui16 uint16 = 65535               // 0 to 2^16
 var ui32 uint32 = 2147483647          // 0 to 2^32
@@ -366,48 +369,48 @@ var ui64 uint64 = 9223372036854775807 // 0 to 2^64
 var uiptr uintptr                     // Integer representation of a memory address
 ```
 
-If you noticed, there's also an unsigned integer pointer `uintptr` type, which is an integer representation of a memory address. It is not recommended to use this, so we don't have to worry about it.
+如你所看到的，这里还存在无符号整型`uintptr`类型，它一个整型用来保存内存地址。并不推荐使用它，所以我们大可不必担心它。
 
-**So which one should we use?**
+**该用哪个?**
 
-It is recommended that whenever we need an integer value, we should just use `int` unless we have a specific reason to use a sized or unsigned integer type.
+推荐在使用整型时选用`int`，除非我们需要特性大小或者无符号的整型。
 
-**Integer alias types**
+**整型别名**
 
-Next, let's discuss integer alias types.
+接下来，我们来看看整型的别名。
 
 **Byte and Rune**
 
-Golang has two additional integer types called `byte` and `rune` that are aliases for `uint8` and `int32` data types respectively.
+Go有两个附加的整型称作`byte`和`rune`，它们分别使用`uint8`和`int32`作为原生类型。
 
 ```go
 type byte = uint8
 type rune = int32
 ```
 
-_A `rune` represents a unicode code point._
+_一个 `rune` 表示一个unicode码点。._
 
 ```go
 var b byte = 'a'
 var r rune = '🍕'
 ```
 
-**Floating point**
+**浮点类型**
 
-Next, we have floating point types which are used to store numbers with a decimal component.
+接下来，我们看看用来存储小数的浮点类型。
 
-Go has two floating point types `float32` and `float64`. Both type follows the IEEE-754 standard.
+Go包含两种浮点类型`float32`和`float64`。两种类型遵从IEEE-754标准。
 
-_The default type for floating point values is float64_
+_默认浮点值使用的是float64_
 
 ```go
-var f32 float32 = 1.7812 // IEEE-754 32-bit
-var f64 float64 = 3.1415 // IEEE-754 64-bit
+var f32 float32 = 1.7812 // IEEE-754 32位
+var f64 float64 = 3.1415 // IEEE-754 64位
 ```
 
-**Operators**
+**操作符**
 
-Go provides several operators for performing operations on numeric types.
+Go提供了一些对数值操作的操作符。
 
 | Type                | Syntax                                                   |
 | ------------------- | -------------------------------------------------------- |
@@ -417,20 +420,20 @@ Go provides several operators for performing operations on numeric types.
 | Increment/Decrement | `++` `--`                                                |
 | Assignment          | `=` `+=` `-=` `*=` `/=` `%=` `<<=` `>>=` `&=` `\|=` `^=` |
 
-**Complex**
+**复数**
 
-There are 2 complex types in Go, `complex128` where both real and imaginary parts are `float64` and `complex64` where real and imaginary are `float32`.
+在Go有两种复数类型，`complex128`实部和虚部使用`float64`，`complex64`实部和虚部使用`float32`。
 
-We can define complex numbers either using the built-in complex function or as literals.
+我们可以使用内建的complex函数或者使用字面值来定义复数。
 
 ```go
 var c1 complex128 = complex(10, 1)
 var c2 complex64 = 12 + 4i
 ```
 
-## Zero Values
+## 零值
 
-Now let's discuss zero values. So in Go, any variable declared without an explicit initial value is given its _zero value_. For example, let's declare some variables and see:
+现在，我们来讨论一下零值。在Go，任何声明变量在没有显示声明其初始值时均会初始化为_零值_。例如，我们看定义如下变量：
 
 ```go
 var i int
@@ -446,13 +449,13 @@ $ go run main.go
 0 0 false ""
 ```
 
-So, as we can see `int` and `float` are assigned as 0, `bool` as false, and `string` as an empty string. This is quite different from how other languages do it. For example, most languages initialize unassigned variables as null or undefined.
+所以，正如我们所看到`int`和`float`为赋值为0，`bool`赋值为false，`string`被赋值为空字符串。这和其它编程语言有一些不一样。例如，但部分未显示赋值初始化的变量会被定义为null或者undefined。
 
-This is great, but what are those percent symbols in our `Printf` function? As you've already guessed, they are used for formatting and we will learn about them later.
+很好，那`Printf`这些百分号是啥？正如你所猜到，它们是用来格式化用的，后面我们学习它们。
 
-## Type Conversion
+## 类型转换
 
-Moving on, now that we have seen how data types work, let's see how to do type conversion.
+继续，我们现在已经知道数据类型工作方式，那让我们看看如何做数据转换。
 
 ```go
 i := 42
@@ -467,13 +470,13 @@ $ go run main.go
 float64 uint
 ```
 
-And as we can see, it prints the type as `float64` and `uint`.
+正如我们所看到的，这里打印了`float64`和`unit`。
 
-_Note that this is different from parsing_
+_注意这里是一种不同的解析方式_
 
-## Alias types
+## 类型别名
 
-Alias types were introduced in Go 1.9. They allow developers to provide an alternate name for an existing type and use it interchangeably with the underlying type.
+类型别名首次在Go 1.9出现。它允许开发者提供一个现存类型其它名字。并且可以和底层类型交互使用。
 
 ```go
 package main
@@ -485,13 +488,13 @@ type MyAlias = string
 func main() {
 	var str MyAlias = "I am an alias"
 
-	fmt.Printf("%T - %s", str, str) // Output: string - I am an alias
+	fmt.Printf("%T - %s", str, str) // 输出: string - I am an alias
 }
 ```
 
-## Defined types
+## 自定类型
 
-Lastly, we have defined types that unlike alias types do not use an equals sign.
+最后，还可以自定义类型，它不能像类型别名一样与原始类型相等性比较。
 
 ```go
 package main
@@ -507,15 +510,11 @@ func main() {
 }
 ```
 
-**But wait...what's the difference?**
+**有啥区别**
 
-So, defined types do more than just give a name to a type.
+自定义类型比仅仅是给原始类型定义一个别名，它还完全是一个全新的类型。不能与原始类型互换使用。
 
-It first defines a new named type with an underlying type. However, this defined type is different from any other type, including its underline type.
-
-Hence, it cannot be used interchangeably with the underlying type like alias types.
-
-It's a bit confusing at first, hopefully, this example will make things clear.
+这个可能会让你有点迷糊，我们来看看例子来更清晰一点。
 
 ```go
 package main
@@ -530,17 +529,17 @@ func main() {
 	var alias MyAlias
 	var def MyDefined
 
-	// ✅ Works
+	// ✅ 有效
 	var copy1 string = alias
 
-	// ❌ Cannot use str (variable of type MyDefined) as string value in variable
+	// ❌ Cannot use def (variable of type MyDefined) as string value in variable
 	var copy2 string = def
 
 	fmt.Println(copy1, copy2)
 }
 ```
 
-As we can see, we cannot use the defined type interchangeably with the underlying type, unlike _alias types_.
+正如我们所看到的，我们不能像类型别名那样用自定义类型来与原始类型互换使用。
 
 # String Formatting
 
