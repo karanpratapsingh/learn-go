@@ -1,16 +1,16 @@
-# Go Course
+# Go 教学
 
-Hey, welcome to the course, and thanks for learning Go. I hope this course provides a great learning experience.
+你好，欢迎来到本课程，很高兴你参与到Go学习。我希望本教学内容可以提供一个较好的学习体验。
 
-_This course is also available on my [website](https://www.karanpratapsingh.com/courses/go) as well as on [Educative.io](https://www.educative.io/collection/5716974084816896/6319653488164864). Please leave a ⭐ as motivation if this was helpful!_
+_本课程还可以通过访问[网站](https://www.karanpratapsingh.com/courses/go) 或者 [Educative.io](https://www.educative.io/collection/5716974084816896/6319653488164864). 你的⭐是我的最大动力！
 
-# Table of contents
+# 目录
 
-- **Getting Started**
+- **开始**
 
-  - [What is Go?](#what-is-go)
-  - [Why learn Go?](#why-learn-go)
-  - [Installation and Setup](#installation-and-setup)
+  - [什么是Go?](#what-is-go)
+  - [为什么学习Go?](#why-learn-go)
+  - [安装和配置](#installation-and-setup)
 
 - **Chapter I**
 
@@ -56,41 +56,41 @@ _This course is also available on my [website](https://www.karanpratapsingh.com/
   - [Next Steps](#next-steps)
   - [References](#references)
 
-# What is Go?
+# 什么是Go?
 
-Go (also known as _Golang_) is a programming language developed at Google in 2007 and open-sourced in 2009.
+Go (也常称为 _Golang_，注：Golang其实是因为当初go这个域名被抢注使用golang作为域名，所以其实它不是一个正确的称呼)是由Google于2007年开发并且在2009年开源的一门编程语言。
 
-It focuses on simplicity, reliability, and efficiency. It was designed to combine the efficacy, speed, and safety of a statically typed and compiled language with the ease of programming of a dynamic language to make programming more fun again.
+专注于设计一个简单，可读以及高效。组合了高效，快速及安全的一门静态编译型语言，同时具备动态语言的简单特性，使得编程更有趣了。
 
-In a way, they wanted to combine the best parts of Python and C++ so that they can build reliable systems that can take advantage of multi-core processors.
+也就是说，它们想组合Python和C++最好的部分，以便构建一个可靠、高效利用多核处理器的系统。
 
-# Why learn Go?
+# 为什么学习Go?
 
-Before we start this course, let us talk about why we should learn Go.
+在开始该课程前，我们聊聊为什么要学习Go。
 
-## 1. Easy to learn
+## 1. 容易学
 
-Go is quite easy to learn and has a supportive and active community.
+Go非常简单学习，并且有一个非常活跃的社区支持。
 
-And being a multipurpose language you can use it for things like backend development, cloud computing, and more recently, data science.
+作为一个多范式编程语言，你可以使用它来构建类似后端服务，云计算，甚至是最近流行的数据科学。
 
-## 2. Fast and Reliable
+## 2. 快速及可靠
 
-Which makes it highly suitable for distributed systems. Projects such as Kubernetes and Docker are written in Go.
+非常适合构建分布式系统。流行的Kubernetes和Docker也都是Go实现的。
 
-## 3. Simple yet powerful
+## 3. 简单但强大
 
-Go has just 25 keywords which makes it easy to read, write and maintain. The language itself is concise.
+Go仅包含25个关键字，容易阅读，编写及维护。语言自身也想当简洁。
 
-But don't be fooled by the simplicity, Go has several powerful features that we will later learn in the course.
+但其实Go又不简单，后面我会学习Go几个强大的特性。
 
-## 4. Career opportunities
+## 4. 就业机会大
 
-Go is growing fast and is being adopted by companies of any size. and with that, comes new high-paying job opportunities.
+Go发展迅猛，被越来越多的公司采用，同时诞生了许多高收入工作机会。
 
-I hope this made you excited about Go. Let's start this course.
+希望这能让你对Go产生浓厚的兴趣，让我们来开始课程。
 
-# Installation and Setup
+# 安装和配置
 
 In this tutorial, we will install Go and setup our code editor.
 
