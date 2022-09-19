@@ -533,7 +533,7 @@ func main() {
 	// ✅ Works
 	var copy1 string = alias
 
-	// ❌ Cannot use str (variable of type MyDefined) as string value in variable
+	// ❌ Cannot use def (variable of type MyDefined) as string value in variable
 	var copy2 string = def
 
 	fmt.Println(copy1, copy2)
