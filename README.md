@@ -17,7 +17,7 @@ _本课程还可以通过访问[网站](https://www.karanpratapsingh.com/courses
   - [你好世界](#你好世界)
   - [变量和数据类型](#变量和数据类型)
   - [字符串格式化](#字符串格式化)
-  - [Flow Control](#flow-control)
+  - [流程控制](#流程控制)
   - [Functions](#functions)
   - [Modules](#modules)
   - [Packages](#packages)
@@ -670,14 +670,16 @@ fmt.Println(msg)
 
 真棒！但这只是冰山一角。请你查看go doc里的`fmt`包来了解更多信息。
 
+你将会看到它被广泛使用。
 
-# Flow Control
 
-Let's talk about flow control, starting with if/else.
+# 流程控制
+
+让我们聊聊流程控制，从if/else开始。
 
 ## If/Else
 
-This works pretty much the same as you expect but the expression doesn't need to be surrounded by parentheses `()`.
+它工作方式与你之前接触的其它编程语言基本一致，就是表达式不再使用`()`括号包起来。
 
 ```go
 func main() {
@@ -698,9 +700,9 @@ $ go run main.go
 x is gt 5
 ```
 
-### Compact if
+### 紧凑型 if
 
-We can also compact our if statements.
+我们还可以使用紧凑型if语句。
 
 ```go
 func main() {
@@ -710,16 +712,17 @@ func main() {
 }
 ```
 
-_Note: This pattern is quite common_
+_注意：该模式很常用_
 
 ## Switch
 
-Next, we have `switch` statement, which is often a shorter way to write conditional logic.
+接下来，我们学习`switch`语句，它使得条件逻辑变得短小。
 
-In Go, the switch case only runs the first case whose value is equal to the condition expression and not all the cases that follow. Hence, unlike other languages, `break` statement is automatically added at the end of each case.
+在Go中，switch仅运行匹配case子句表达式，它不需要手动添加`break`语句到每个case子句中。
 
-This means that it evaluates cases from top to bottom, stopping when a case succeeds.
-Let's take a look at an example:
+也就是说它从上到下执行，当匹配case子句后将停止执行其它case子句。
+
+让我们看看例子：
 
 ```go
 func main() {
@@ -741,7 +744,7 @@ $ go run main.go
 time to work!
 ```
 
-Switch also supports shorthand declaration like this.
+switch同样也支持短声明方式：
 
 ```go
 	switch day := "monday"; day {
@@ -754,7 +757,7 @@ Switch also supports shorthand declaration like this.
 	}
 ```
 
-We can also use the `fallthrough` keyword to transfer control to the next case even though the current case might have matched.
+我们可以通过显示使用`fallthrough`关键字让go继续执行后面的case子句（无论条件是否匹配）。
 
 ```go
 	switch day := "monday"; day {
@@ -768,7 +771,8 @@ We can also use the `fallthrough` keyword to transfer control to the next case e
 	}
 ```
 
-And if we run this, we'll see that after the first case matches the switch statement continues to the next case because of the `fallthrough` keyword.
+
+执行该代码，我们看到当第一个case子句匹配后，switch语句遇到`fallthrough`关键字后继续执行了后面的case子句。
 
 ```bash
 $ go run main.go
@@ -776,7 +780,7 @@ time to work!
 let's party
 ```
 
-We can also use it without any condition, which is the same as `switch true`.
+我们还可以在switch中不带任何表达式，相当于`switch true`。
 
 ```go
 x := 10
@@ -789,17 +793,17 @@ switch {
 }
 ```
 
-## Loops
+## 循环
 
-Now, let's turn our attention toward loops.
+现在，让我们将注意转移到循环。
 
-So in Go, we only have one type of loop which is the `for` loop.
+在Go中，我们只有一个循环类型语句即`for`。
 
-But it's incredibly versatile. Same as if statement, for loop, doesn't need any parenthesis `()` unlike other languages.
+但是它用途非常广泛。和if语句一样，我们不需要像其它语句一样使用括号`()`包起来。
 
-### For loop
+### For 循环
 
-Let's start with the basic `for` loop.
+我们从基础`for`循环开始。
 
 ```go
 func main() {
@@ -809,15 +813,15 @@ func main() {
 }
 ```
 
-The basic `for` loop has three components separated by semicolons:
+基础`for`循环使用冒号分隔了三部分：
 
-- **_init statement_**: which is executed before the first iteration.
-- **_condition expression_**: which is evaluated before every iteration.
-- **_post statement_**: which is executed at the end of every iteration.
+- **_初始语句_**: 在首次循环执行前执行。
+- **_条件表达式_**: 在每次循环都会进行判断。
+- **_后置语句_**: 每次循环结束后执行。
 
-**Break and continue**
+**Break 和 continue**
 
-As expected, Go also supports both `break` and `continue` statements for loop control. Let's try a quick example:
+正如预期，Go在for语句中也支持`break`和`continue`控制语句。让我们来看个例子：
 
 ```go
 func main() {
@@ -837,9 +841,9 @@ func main() {
 }
 ```
 
-So, the `continue` statement is used when we want to skip the remaining portion of the loop, and `break` statement is used when we want to break out of the loop.
+所以，`continue`用来跳过本次循环语句，`break`用来结束循环语句。
 
-Also, Init and post statements are optional, hence we can make our `for` loop behave like a while loop as well.
+同样，初始语句和后置语句是可选的，这样`for`可以表现为while同样的形式。
 
 ```go
 func main() {
@@ -853,10 +857,9 @@ func main() {
 
 _Note: we can also remove the additional semi-colons to make it a little cleaner._
 
-### Forever loop
+### 无线循环
 
-Lastly, If we omit the loop condition, it loops forever, so an infinite loop can be compactly expressed. This is also known as the forever loop.
-
+最后，如果我们条件表达式部分的话，它就成为了一个无限循环语句了。
 ```go
 func main() {
 	for {
