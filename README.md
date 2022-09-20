@@ -16,7 +16,7 @@ _本课程还可以通过访问[网站](https://www.karanpratapsingh.com/courses
 
   - [你好世界](#你好世界)
   - [变量和数据类型](#变量和数据类型)
-  - [String Formatting](#string-formatting)
+  - [字符串格式化](#字符串格式化)
   - [Flow Control](#flow-control)
   - [Functions](#functions)
   - [Modules](#modules)
@@ -541,11 +541,11 @@ func main() {
 
 正如我们所看到的，我们不能像类型别名那样用自定义类型来与原始类型互换使用。
 
-# String Formatting
+# 字符串格式化
 
-In this tutorial, we will learn about string formatting or sometimes also known as templating.
+本教程中，我们将学习关于字符串格式化，有时也称之为模板化。
 
-`fmt` package contains lots of functions. So to save time, we will discuss the most frequently used functions. Let's start with `fmt.Print` inside our main function.
+`fmt`包含许多函数。为节省篇幅，我们仅讨论常用的一些函数。我们先从`fmt.Print`开始。
 
 ```go
 ...
@@ -560,9 +560,9 @@ $ go run main.go
 Whatisyourname?Mynameisgolang
 ```
 
-As we can see, `Print` does not format anything, it simply takes a string and prints it.
+如你所见，`Print`做任何格式操作，它仅简单接收字符串参数然后打印它。
 
-Next, we have `Println` which is the same as `Print` but it adds a new line at the end and also inserts space between the arguments.
+接下来，还有一个类似`Print`的`Println`函数，但是它会在末尾增加换行符，并且在参数字符串之间增加空格。
 
 ```go
 ...
@@ -578,11 +578,11 @@ What is your name?
 My name is golang
 ```
 
-That's much better!
+是不是好看多了！
 
-Next, we have `Printf` also known as _"Print Formatter"_, which allows us to format numbers, strings, booleans, and much more.
+接下来，有一个`Printf`，也叫做_"Print Formatter"_，允许我们对数值，字符串，布尔等数据进行格式化。
 
-Let's look at an example.
+我们来看看例子。
 
 ```go
 ...
@@ -599,13 +599,13 @@ What is your name?
 My name is golang
 ```
 
-As we can see that `%s` was substituted with our `name` variable.
+这里`%s`被`name`变量值替换了。
 
-But the question is what is `%s` and what does it mean?
+这里`%s`是什么意思呢？
 
-So, these are called _annotation verbs_ and they tell the function how to format the arguments. We can control things like width, types, and precision with these and there are lots of them. Here's a [cheatsheet](https://pkg.go.dev/fmt).
+这些称为 _占位符_，它用来告诉函数如何格式化参数。我们控制宽度，类型和精度等等。可以参考[手册](https://pkg.go.dev/fmt)。
 
-Now, let's quickly look at some more examples. Here we will try to calculate a percentage and print it to the console.
+现在，让我们马不停蹄的了解更多例子。这里我们试着计算一个百分比然后将它打印到终端。
 
 ```go
 ...
@@ -619,9 +619,9 @@ $ go run main.go
 58.181818
 ```
 
-Let's say we want just `58.18` which is 2 points precision, we can do that as well by using `.2f`
+如果我们指向打印出`58.18`仅包含两个精度的小数，我们可以使用`.2f`格式化占位符。
 
-Also, to add an actual percent sign, we will need to _escape it_.
+同时还想增加一个百分号，这里百分号需要 _转义_ 。
 
 ```go
 ...
@@ -635,9 +635,9 @@ $ go run main.go
 58.18 %
 ```
 
-This brings us to `Sprint`, `Sprintln`, and `Sprintf`. These are basically the same as the print functions, the only difference being they return the string instead of printing it.
+我们看一组对应的`Sprint`, `Sprintln`, 和 `Sprintf`。这些工作机制和之前print的函数一样，唯一的区别是它仅返回格式化字符串而不是打印它们。
 
-Let's take a look at an example.
+让我们来看个例子。
 
 ```go
 ...
@@ -651,9 +651,10 @@ $ go run main.go
 hex:a bin:1010
 ```
 
-So, as we can see `Sprintf` formats our integer as hex or binary and returns it as a string.
+这里`Sprintf`格式化我们的整型为16进制和2进制表示形式并返回为字符串数据格式。
 
-Lastly, we have multiline string literals, which can be used like this.
+
+最后我们看看多行字符串字面量。
 
 ```go
 ...
@@ -666,9 +667,9 @@ fmt.Println(msg)
 ...
 ```
 
-Great! But this is just the tip of the iceberg...so make sure to check out the go doc for `fmt` package.
 
-For those who are coming from C/C++ background, this should feel natural, but if you're coming from, let's say Python or JavaScript, this might be a little strange at first. But it is very powerful and you'll see this functionality used quite extensively.
+真棒！但这只是冰山一角。请你查看go doc里的`fmt`包来了解更多信息。
+
 
 # Flow Control
 
