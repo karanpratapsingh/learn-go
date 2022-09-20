@@ -669,7 +669,7 @@ fmt.Println(msg)
 
 Great! But this is just the tip of the iceberg...so make sure to check out the go doc for `fmt` package.
 
-For those who are coming from C/C++ background, this should feel natural, but if you're coming from, let's say Python or JavaScript, this might be a little strange at first. But it is very powerful and you'll see this functionality used quite extensively.
+It is very powerful and you'll see this functionality used quite extensively.
 
 # Flow Control
 
