@@ -19,7 +19,7 @@ _本课程还可以通过访问[网站](https://www.karanpratapsingh.com/courses
   - [字符串格式化](#字符串格式化)
   - [流程控制](#流程控制)
   - [函数](#函数)
-  - [Modules](#modules)
+  - [模块](#模块)
   - [Packages](#packages)
   - [Workspaces](#workspaces)
   - [Useful Commands](#useful-commands)
@@ -902,16 +902,15 @@ func myFunction(p1 string) {
 $ go run main.go
 ```
 
-
-As we can see it prints our message. We can also do a shorthand declaration if the consecutive parameters have the same type. For example:
+我们看出打印出了输入参数。如果多个参数数据类型一致的话还可以使用短申明方式：
 
 ```go
 func myNextFunction(p1, p2 string) {}
 ```
 
-## Returning the value
+## 返回值
 
-Now let's also return a value.
+现在让我们来返回一个值。
 
 ```go
 func main() {
@@ -925,9 +924,9 @@ func myFunction(p1 string) string {
 }
 ```
 
-### Multiple returns
+### 多返回值
 
-Why return one value at a time, when we can do more? Go also supports multiple returns!
+Go语言支持多返回值！
 
 ```go
 func main() {
@@ -941,9 +940,9 @@ func myFunction(p1 string) (string, int) {
 }
 ```
 
-### Named returns
+### 具名返回值
 
-Another cool feature is [named returns](https://go.dev/tour/basics/7), where return values can be named and treated as their own variables.
+另一个特性是[具名返回值](https://go.dev/tour/basics/7)，返回值可以在申明时指定其具体的名字，这样类似是函数体当中变量一样。
 
 ```go
 func myFunction(p1 string) (s string, i int) {
@@ -954,13 +953,13 @@ func myFunction(p1 string) (s string, i int) {
 }
 ```
 
-Notice how we added a `return` statement without any arguments, this is also known as _naked return_.
+注意我们使用`return`语句时并没有带任何值，这也称为 _裸返回_。
 
-I will say that, although this feature is interesting, please use it with care as this might reduce readability for larger functions.
+虽然这个特性很有趣，但是请谨慎使用，因为这在大型函数减少可读性。
 
-## Functions as values
+## 函数作为值
 
-Next, let's talk about functions as values, in Go functions are first class and we can use them as values. So, let's clean up our function and try it out!
+接下来，让我们谈谈函数作为值，Go函数作为一等公民（first class），我们可以将它们作为值来使用。我们来试试！
 
 ```go
 func myFunction() {
@@ -972,7 +971,7 @@ func myFunction() {
 }
 ```
 
-We can also simplify this by making `fn` an _anonymous function_.
+这里的`fn`我们还可以使用 _匿名函数_ 的方式处理。
 
 ```go
 func myFunction() {
@@ -982,13 +981,14 @@ func myFunction() {
 }
 ```
 
-*Notice how we execute it using the parenth*es*is at the end*
+*注意我们我们通过再末尾使用括号来执行它*
 
-## Closures
+## 闭包
 
-Why stop there? let's also return a function and hence create something called a closure. A simple definition can be that a closure is a function value that references variables from outside its body.
+我们继续来在返回函数中使用闭包。简单来讲就是函数体内引用外部变量。
 
-Closures are lexically scoped, which means functions can access the values in scope when defining the function.
+闭包是此法作用域的，也就是说函数内可以访问定义时作用域值。
+
 
 ```go
 func myFunction() func(int) int {
@@ -1011,13 +1011,13 @@ fmt.Println(add(10))
 ...
 ```
 
-As we can see, we get a result of 15 as `sum` variable is _bound_ to the function. This is a very powerful concept and definitely, a must know.
+这里我们将得到15结果，因为`sum`变量 _绑定_ 到函数中。我们应该掌握这个强大特性。
 
-## Variadic Functions
+## 可变参数
 
-Now let's look at variadic functions, which are functions that can take zero or multiple arguments using the `...` ellipses operator.
+现在让我们来看看函数可变参数，也即函数通过使用`...`操作符来可以接收零个或者多个参数。
 
-An example here would be a function that can add a bunch of values.
+以下是一个可接收多个参数的函数例子。
 
 ```go
 func main() {
@@ -1036,15 +1036,15 @@ func add(values ...int) int {
 }
 ```
 
-Pretty cool huh? Also, don't worry about the `range` keyword, we will discuss it later in the course.
+很酷对吧？别担心`range`关键字，后面课程我们会再讨论。
 
-_**Fun fact**: `fmt.Println` is a variadic function, that's how we were able to pass multiple values to it._
+_**事实上**: `fmt.Println` 就是个可变参数函数，所以我们才可以传递多个值_
 
 ## Init
 
-In Go, `init` is a special lifecycle function that is executed before the `main` function.
+在Go中，`init`是一个特别的生命周期函数，它执行于`main`函数之前。
 
-Similar to `main`, the `init` function does not take any arguments nor returns any value. Let's see how it works with an example.
+类似`main`函数，`init`函数不接收任何参数也不返回任何值。我们来看看例子：
 
 ```go
 package main
@@ -1060,7 +1060,7 @@ func main() {
 }
 ```
 
-As expected, the `init` function was executed before the `main` function.
+正如预期，`init`函数执行于`main`函数之前。
 
 ```bash
 $ go run main.go
@@ -1068,9 +1068,9 @@ Before main!
 Running main
 ```
 
-Unlike `main`, there can be more than one `init` function in single or multiple files.
+不像`main`函数，可以在单个或者多个文件定义任意多个`init`函数。
 
-For multiple `init` in a single file, their processing is done in the order of their declaration, while `init` functions declared in multiple files are processed according to the lexicographic filename order.
+在单个文件中定义多个`init`函数，执行顺序为定义顺序，当`init`函数定义在多个文件时，它的执行顺序依赖名字排序。
 
 ```go
 package main
@@ -1090,7 +1090,7 @@ func main() {
 }
 ```
 
-And if we run this, we'll see the `init` functions were executed in the order they were declared.
+如果我们执行该代码，我们将会看到`init`函数会根据定义的顺序执行。
 
 ```bash
 $ go run main.go
@@ -1099,12 +1099,11 @@ Hello again?
 Running main
 ```
 
-The `init` function is optional and is particularly used for any global setup which might be essential for our program, such as establishing a database connection, fetching configuration files, setting up environment variables, etc.
+`init`函数是可选的，经常用来作为全局基础设置，例如数据库连接，获取配置文件，配置环境等。
 
 ## Defer
 
-Lastly, let's discuss the `defer` keyword, which lets us postpones the execution of a function until the surrounding function returns.
-
+最后，我们来讨论`defer`关键字，它允许在函数结束后延迟执行代码。
 ```go
 func main() {
 	defer fmt.Println("I am finished")
@@ -1112,7 +1111,7 @@ func main() {
 }
 ```
 
-Can we use multiple defer functions? Absolutely, this brings us to what is known as _defer stack_. Let's take a look at an example
+我们是否可以拥有多个defer函数？当然，它会将多个函数置入 _defer栈_，例如：
 
 ```go
 func main() {
@@ -1130,42 +1129,43 @@ Are you?
 I am finished
 ```
 
-As we can see, defer statements are stacked and executed in a _last in first out_ manner.
+正如上面所见，defer语句是一个栈结构，以 _后进先出_ 的形式来执行。
 
-So, Defer is incredibly useful and is commonly used for doing cleanup or error handling.
+所以，Defer非常有用，常用来做清理或者错误处理的工作。
 
-Functions can also be used with generics but we will discuss them later in the course.
+函数还支持泛型，不过我们后面再讨论。
 
-# Modules
+# 模块
 
-In this tutorial, we will learn about modules.
+本章，我们来学习模块。
 
-## What are modules?
+## 什么是模块？
 
-Simply defined, A module is a collection of [Go packages](https://go.dev/ref/spec#Packages) stored in a file tree with a `go.mod` file at its root, provided the directory is _outside_ `$GOPATH/src`.
+简单来说，一个模块就是在`$GOPATH/src`目录外，定义一个目录包含`go.mod`文件且包含[Go 包](https://go.dev/ref/spec#Packages)集合。
 
-Go modules were introduced in Go 1.11, which brings native support for versions and modules. Earlier, we needed the `GO111MODULE=on` flag to turn on the modules functionality when it was experimental. But now after Go 1.13 modules mode is the default for all development.
+Go模块首次出现在 Go.11，带来了原生支持版本和模块。早期，我们需要配置`GO111MODULE=on`来打开试验性模块特性。不过在Go 1.13开始默认打开。
 
-But wait what is `GOPATH`?
+但是什么是`GOPATH`？
 
-Well, `GOPATH` is a variable that defines the root of your workspace and it contains the following folders:
+`GOPATH`是一个变量，用来定义根工作目录，它包含：
 
-- **src**: contains Go source code organized in a hierarchy.
-- **pkg**: contains compiled package code.
-- **bin**: contains compiled binaries and executables.
+- **src**: 包含结构化的Go源码
+- **pkg**: 包含编译的包代码
+- **bin**: 包含编译的二进制可执行文件
 
 ![gopath](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-I/modules/gopath.png)
 
-Like earlier, let's create a new module using `go mod init` command which creates a new module and initializes the `go.mod` file that describes it.
+
+早期，我们就通过使用`go mod init`命令来创建模块，通过使用`go.mod`文件来配置。
 
 ```bash
 $ go mod init example
 ```
 
-_The important thing to note here is that a Go module can correspond to a Github repository as well if you plan to publish this module. For example:_
+_这里要提醒的是如果你打算将模块发布到Github中，你可以使用对应Github 仓库地址。例如:_
 
 ```bash
-$ go mod init example
+$ go mod init github.com/golang/example
 ```
 
 Now, let's explore `go.mod` which is the file that defines the module's _module path_ and also the import path used for the root directory, and its _dependency requirements_.
