@@ -28,8 +28,8 @@ _本课程还可以通过访问[网站](https://www.karanpratapsingh.com/courses
 - **第二章**
 
   - [指针](#指针)
-  - [Structs](#structs)
-  - [Methods](#methods)
+  - [结构](#结构)
+  - [方法](#方法)
   - [Arrays and Slices](#arrays-and-slices)
   - [Maps](#maps)
 
@@ -1662,13 +1662,14 @@ $ go run main.go
 0xc0000b8000
 ```
 
-This must be the value of the memory address of the variable `a`.
+这里即`a`变量的内存地址。
 
-## Dereferencing
+## 解引用
 
-We can also use the `*` asterisk operator to retrieve the value stored in the variable that the pointer points to. This is also called **dereferencing**.
+我还可以使用`*`符号来指针所指向存储的值。称为**解引用**。
 
-For example, we can access the value of the variable `a` through the pointer `p` using that `*` asterisk operator.
+例如，我们通过对`p`指针使用`*`操作符来取得`a`的变量的值。
+
 
 ```go
 package main
@@ -1691,7 +1692,7 @@ address: 0xc000018030
 value: 10
 ```
 
-We can not only access it but change it as well through the pointer.
+我们不但能通过指针访问，还可以修改。
 
 ```go
 package main
@@ -1718,13 +1719,13 @@ address: 0xc000192000
 after: 20
 ```
 
-I think this is pretty neat!
+我认为还是想当简洁的！
 
-## Pointers as function args
+## 使用指针作为参数
 
-Pointers can also be used as arguments for a function when we need to pass some data by reference.
+指针可以用来实现引用传递函数参数。
 
-Here's an example:
+下面是例子：
 
 ```go
 myFunction(&a)
@@ -1733,11 +1734,11 @@ myFunction(&a)
 func myFunction(ptr *int) {}
 ```
 
-## New function
+## new函数
 
-There's also another way to initialize a pointer. We can use the `new` function which takes a type as an argument, allocates enough memory to accommodate a value of that type, and returns a pointer to it.
+还有另外一种初始化指针的方式，使用`new`函数，并传递类型作为参数。它分配对应容纳该类型指针并返回。
 
-Here's an example:
+看看例子：
 
 ```go
 package main
@@ -1759,9 +1760,9 @@ value 100
 address 0xc000018030
 ```
 
-## Pointer to a Pointer
+## 指针的指针
 
-Here's an interesting idea...can we create a pointer to a pointer? The answer is yes! Yes, we can.
+有个奇思妙想就是指针能否指向指针？答案是：可以。
 
 ```go
 package main
@@ -1788,15 +1789,15 @@ P1 value 0xc0000be000  address 0xc0000be000
 Dereferenced value 100
 ```
 
-_Notice how the value of `p1` matches the address of `p`._
+_注意`p1`存储为`p`的地址._
 
-Also, it is important to know that pointers in Go do not support pointer arithmetic like in C or C++.
+Go不支持同C/C++的指针运算。
 
 ```go
 	p1 := p * 2 // Compiler Error: invalid operation
 ```
 
-However, we can compare two pointers of the same type for equality using a `==` operator.
+但是，我们可以使用`==`来匹配两个指针是否相等。
 
 ```go
 p := &a
@@ -1805,35 +1806,35 @@ p1 := &a
 fmt.Println(p == p1)
 ```
 
-## But Why?
+## 为什么
 
-This brings us to the million-dollar question, why do we need pointers?
+为什么需要指针？
 
-Well, there's no definite answer for that, and pointers are just another useful feature that helps us mutate our data efficiently without copying a large amount of data.
+没有绝对的答案，指针给我们一个有用特性是可以不需要通过拷贝数据的方式来高效传递数据。
 
-And can be applied to tons of use cases.
+而且被大量使用。
 
-Lastly, I will add that if you are coming from a language with no notion of pointers, don't panic and try to form a mental model of how pointers work.
+最后，如果你其它语言转过来没有接触过指针概念，先不着急，先尝试构建一个指针工作的心智模型。
 
-# Structs
+# 结构
 
-In this tutorial, we will learn about structs.
+本章，我们来学习结构。
 
-So, a `struct` is a user-defined type that contains a collection of named fields. Basically, it is used to group related data together to form a single unit.
+`struct`是通过包含一系列命名字段的自定义类型。通常用来将一组相关数据组合在一个单元里。
 
-If you're coming from an objected-oriented background, think of structs as lightweight classes which that support composition but not inheritance.
+如果你具备面向对象背景，将结构想象成一个类，但是它仅支持组合，不支持继承。
 
-## Defining
+## 定义
 
-We can define a `struct` like this:
+我们可以如下定义一个`struct`：
 
 ```go
 type Person struct {}
 ```
 
-We use the `type` keyword to introduce a new type, followed by the name and then the `struct` keyword to indicate that we're defining a struct.
+我们使用`type`关键字来创建一个新类型，然后紧跟名字，接着是`struct`关键字用来指明为结构体。
 
-Now, let's give it some fields:
+现在，让我们增加一些字段：
 
 ```go
 type Person struct {
@@ -1843,7 +1844,7 @@ type Person struct {
 }
 ```
 
-And, if the fields have the same type, we can collapse them as well.
+同时，如果相同类型我们还可以联合申明。
 
 ```go
 type Person struct {
@@ -1852,9 +1853,10 @@ type Person struct {
 }
 ```
 
-## Declaring and initializing
+## 声明和初始化
 
-Now that we have our struct, we can declare it the same as other datatypes.
+
+现在我们已经有结构了，我们可以类似其它数据类型方式来定义：
 
 ```go
 func main() {
@@ -1869,9 +1871,9 @@ $ go run main.go
 Person 1: {  0}
 ```
 
-As we can see, all the struct fields are initialized with their zero values. So the `FirstName` and `LastName` are set to `""` empty string and `Age` is set to 0.
+正如所见，所有的结构字段使用零值来初始化。所以`FirstName`和`LastName`设置为`""`空字符串且`Age`设置为0。
 
-We can also initialize it as _"struct literal"_.
+我们还可以使用 _"结构字面量"_ 来初始化。
 
 ```go
 func main() {
@@ -1885,7 +1887,7 @@ func main() {
 }
 ```
 
-For readability, we can separate by new line but this will also require a trailing comma.
+为提高可读性，我们通过换行隔开且最后也要声明逗号。x
 
 ```go
 	var p2 = Person{
@@ -1901,7 +1903,7 @@ Person 1: {  0}
 Person 2: {Karan Pratap Singh 22}
 ```
 
-We can also initialize only a subset of fields.
+还可以只指明部分字段初始化：
 
 ```go
 func main() {
@@ -1933,11 +1935,11 @@ Person 2: {Karan Pratap Singh 22}
 Person 3: {Tony Stark 0}
 ```
 
-As we can see, the age field of person 3 has defaulted to the zero value.
+Person 3的Age字段同样使用了默认零值。
 
-## Without field name
+## 不带字段名
 
-Go structs also supports initialization without field names.
+Go结构还支持不带字段名的初始化方式。
 
 ```go
 func main() {
@@ -1966,7 +1968,7 @@ func main() {
 }
 ```
 
-But here's the catch, we will need to provide all the values during the initialization or it will fail.
+不过要注意的是，这里需要初始化时提供所有的值否则会报错。
 
 ```bash
 $ go run main.go
@@ -1980,7 +1982,7 @@ $ go run main.go
 	fmt.Println("Person 4:", p4)
 ```
 
-We can also declare an anonymous struct.
+我们还可以定义一个匿名结构。
 
 ```go
 func main() {
@@ -2015,9 +2017,9 @@ func main() {
 }
 ```
 
-## Accessing fields
+## 访问字段
 
-Let's clean up our example a bit and see how we can access individual fields.
+让我们来看看如何访问单个字段。
 
 ```go
 func main() {
@@ -2031,7 +2033,7 @@ func main() {
 }
 ```
 
-We can also create a pointer to structs as well.
+我也创建一个指向结构的指针。
 
 ```go
 func main() {
@@ -2048,7 +2050,7 @@ func main() {
 }
 ```
 
-Both statements are equal as in Go we don't need to explicitly dereference the pointer. We can also use the built-in `new` function.
+上面两个语句是相等，我们无需显示对指针进行解引用。我们也可以使用内建的`new`函数。
 
 ```go
 func main() {
@@ -2067,7 +2069,7 @@ $ go run main.go
 Person &{Karan Pratap Singh 22}
 ```
 
-As a side note, two structs are equal if all their corresponding fields are equal as well.
+当两个结构所有字段均相等，那么两个结构即相等。
 
 ```go
 func main() {
@@ -2083,9 +2085,9 @@ $ go run main.go
 true
 ```
 
-## Exported fields
+## 导出字段
 
-Now let's learn what is exported and unexported fields in a struct. Same as the rules for variables and functions, if a struct field is declared with a lower case identifier, it will not be exported and only be visible to the package it is defined in.
+和变量函数一致，结构字段通过使用首字母标识是否导出。
 
 ```go
 type Person struct {
@@ -2095,7 +2097,7 @@ type Person struct {
 }
 ```
 
-So, the `zipCode` field won't be exported. Also, the same goes for the `Person` struct, if we rename it as `person`, it won't be exported as well.
+`zipCode`不会导出。`Person`结构也一样，如果我们改为`person`，它也不会被导出。
 
 ```go
 type person struct {
@@ -2105,9 +2107,9 @@ type person struct {
 }
 ```
 
-## Embedding and composition
+##嵌入和组合
 
-As we discussed earlier, Go doesn't necessarily support inheritance, but we can do something similar with embedding.
+之前我们提到，Go不支持继承，但是我们使用嵌入达到相同目的。
 
 ```go
 type Person struct {
@@ -2121,7 +2123,7 @@ type SuperHero struct {
 }
 ```
 
-So, our new struct will have all the properties of the original struct. And it should behave the same as our normal struct.
+新结构将包含原始结构所有属性。它的行为与原始结构一致。
 
 ```go
 func main() {
@@ -2141,7 +2143,7 @@ $ go run main.go
 {{Bruce Wayne 40} batman}
 ```
 
-However, this is usually not recommended and in most cases, composition is preferred. So rather than embedding, we will just define it as a normal field.
+不过，大多情况下不建议这样使用。我们通常仅定义为一个普通字段而不是嵌入方式。
 
 ```go
 type Person struct {
@@ -2171,13 +2173,13 @@ $ go run main.go
 {{Bruce Wayne 40} batman}
 ```
 
-Again, there is no right or wrong here, but nonetheless, embedding comes in handy sometimes.
+这里没有对错，有时用嵌入会带来便利。
 
-## Struct tags
+## 结构标签
 
-A struct tag is just a tag that allows us to attach metadata information to the field which can be used for custom behavior using the `reflect` package.
+结构标签允许我们为字段添加元信息，可以方便使用`relect`包来自定义行为。
 
-Let's learn how we can define struct tags.
+如下方式定义标签。
 
 ```go
 type Animal struct {
@@ -2186,9 +2188,9 @@ type Animal struct {
 }
 ```
 
-You will often find tags in encoding packages, such as XML, JSON, YAML, ORMs, and Configuration management.
+你将常在编码包中看见它们，例如XML, JSON, YAML, ORMS和配置管理。
 
-Here's a tags example for the JSON encoder.
+以下是JSON编码器中的结构标签用例：
 
 ```go
 type Animal struct {
@@ -2197,13 +2199,13 @@ type Animal struct {
 }
 ```
 
-## Properties
+## 结构传递
 
-Finally, let's discuss the properties of structs.
+最后，我们来讨论结构传递。
 
-Structs are value types. When we assign one `struct` variable to another, a new copy of the `struct` is created and assigned.
+结构为值类型，当我赋值结构给另外一个变量时，将会生成一个全新的结构拷贝。
 
-Similarly, when we pass a `struct` to another function, the function gets its own copy of the `struct`.
+同样当然我们传递结构给函数时，函数同样会获得一个全新的拷贝。
 
 ```go
 package main
@@ -2225,7 +2227,7 @@ func main() {
 }
 ```
 
-Empty struct occupies zero bytes of storage.
+空结构体占用0字节存储。
 
 ```go
 package main
@@ -2241,23 +2243,23 @@ func main() {
 }
 ```
 
-# Methods
+# 方法
 
-Let's talk about methods, sometimes also known as function receivers.
+让我们聊聊方法。有时也称为带有receiver的函数。
 
-Technically, Go is not an object-oriented programming language. It doesn't have classes, objects, and inheritance.
+严格上来说，Go并不是一个面向对象编程语言。它没有类，对象和继承。
 
-However, Go has types. And, you can define **methods** on types.
+然而，Go有类型，而且你还可以给类型定义 **方法**。
 
-A method is nothing but a function with a special _receiver_ argument. Let's see how we can declare methods.
+方法相对函数来说，除了多一个 _receiver_ 参数外没有其它差别。让我们来看看如何定义方法。
 
 ```go
-func (variable T) Name(params) (returnTypes) {}
+func (receiver) Name(params) (returnTypes) {}
 ```
 
-The _receiver_ argument has a name and a type. It appears between the `func` keyword and the method name.
+_receiver_参数包含一个名字和类型。它们在出现在`func`关键字和方法名之间。
 
-For example, let's define a `Car` struct.
+例如，让我们定义一个`Car`结构。
 
 ```go
 type Car struct {
@@ -2266,7 +2268,7 @@ type Car struct {
 }
 ```
 
-Now, let us define a method like `IsLatest` which will tell us if a car was manufactured within the last 5 years.
+现在，我们定义个方法`IsLatest`用来返回该车是否生产与五年内。
 
 ```go
 func (c Car) IsLatest() bool {
@@ -2274,9 +2276,9 @@ func (c Car) IsLatest() bool {
 }
 ```
 
-As you can see, we can access the instance of `Car` using the receiver variable `c`. I like to think of it as `this` keyword from the object-oriented world.
+正如你所见，我们可以使用receiver变量`c`来访问`Car`实例。我习惯将它对应面向对象里的`this`关键字。
 
-Now we should be able to call this method after we initialize our struct, just like we do with classes in other languages.
+现在我们可以在初始化结构体后来访问该方法了，和其它语言中类访问方法类似：
 
 ```go
 func main() {
@@ -2286,13 +2288,13 @@ func main() {
 }
 ```
 
-## Methods with Pointer receivers
+## 使用指针receiver
 
-All the examples that we saw previously had a value receiver.
+上面所有例子我都使用值receiver。
 
-With a value receiver, the method operates on a copy of the value passed to it. Therefore, any modifications done to the receiver inside the methods are not visible to the caller.
+使用值receiver时，传递的是值拷贝。因此，任何在方法内的修改并不会影响到调用方。
 
-For example, let's make another method called `UpdateName` which will update the name of the `Car`.
+例如，我们创建一个`UpdateName`来尝试更新`Car`的名字。
 
 ```go
 func (c Car) UpdateName(name string) {
@@ -2300,7 +2302,7 @@ func (c Car) UpdateName(name string) {
 }
 ```
 
-Now, let's run this.
+现在，让我们来执行。
 
 ```go
 func main() {
@@ -2316,7 +2318,7 @@ $ go run main.go
 Car: {Tesla 2021}
 ```
 
-Seems like the name wasn't updated, so now let's switch our receiver to pointer type and try again.
+貌似名字并没有被修改，现在我们试着用指针receiver看看。
 
 ```go
 func (c *Car) UpdateName(name string) {
@@ -2329,25 +2331,25 @@ $ go run main.go
 Car: {Toyota 2021}
 ```
 
-As expected, methods with pointer receivers can modify the value to which the receiver points. Such modifications are visible to the caller of the method as well.
+如预期，使用指针receiver将会修改原始调用方的值。
 
-## Properties
+## 特性
 
-Let's also see some properties of the methods!
+让我们看一些方法特性！
 
-- Go is smart enough to interpret our function call correctly, and hence, pointer receiver method calls are just syntactic sugar provided by Go for convenience.
+- Go足够聪明使用正确的方式来调用方法，指针receiver只是Go提供方便的语法糖。
 
 ```go
 (&c).UpdateName(...)
 ```
 
-- We can omit the variable part of the receiver as well if we're not using it.
+- 如果我们方法中没有使用receiver我们还可以忽略调用名字。
 
 ```go
 func (Car) UpdateName(...) {}
 ```
 
-- Methods are not limited to structs but can also be used with non-struct types as well.
+- 方法不但可以定义在结构中，非结构类型也同样可以。
 
 ```go
 package main
@@ -2367,17 +2369,17 @@ func main() {
 }
 ```
 
-## Why methods instead of functions?
+## 有函数为什么还要方法?
 
-So the question is, why use methods instead of functions?
+为什么使用方法来替代函数呢？
 
-As always, there's no particular answer for this, and in no way one is better than the other. Instead, they should be used appropriately when the situation arrives.
+没有确切的答案一种方式比另一种好。它们在适合不同场景。
 
-One thing I can think of right now is that methods can help us avoid naming conflicts.
+其中一个我能想到的是方法可以避免命名冲突。
 
-Since a method is tied to a particular type, we can have the same method names for multiple receivers.
+因为方法绑定给了具体类型，所以对于多个receiver可以拥有相同名字。
 
-But in the end, it might just come down to preference, such as _"method calls are much easier to read and understand than function calls"_ or the other way around.
+当然还有是因为个人喜好，例如 _"方法调用比函数调用更容易阅读和理解"_。
 
 # Arrays and Slices
 
