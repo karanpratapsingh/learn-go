@@ -855,7 +855,7 @@ func main() {
 }
 ```
 
-_Note: we can also remove the additional semi-colons to make it a little cleaner._
+_注意：我们还可以移除多余的分号使其更简洁。_
 
 ### 无线循环
 
