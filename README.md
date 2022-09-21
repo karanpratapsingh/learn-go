@@ -891,11 +891,11 @@ func main() {
 }
 
 func myFunction(p1 string) {
-	fmt.Printtln(p1)
+	fmt.Println(p1)
 }
 ```
 
-```jsx
+```bash
 $ go run main.go
 ```
 
