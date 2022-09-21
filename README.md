@@ -18,7 +18,7 @@ _本课程还可以通过访问[网站](https://www.karanpratapsingh.com/courses
   - [变量和数据类型](#变量和数据类型)
   - [字符串格式化](#字符串格式化)
   - [流程控制](#流程控制)
-  - [Functions](#functions)
+  - [函数](#函数)
   - [Modules](#modules)
   - [Packages](#packages)
   - [Workspaces](#workspaces)
@@ -308,7 +308,7 @@ const b = a // ❌ a (variable of type int) is not constant (InvalidConstInit)
 
 ## 数据类型
 
-Perfect! Now let's look at some basic data types available in Go. Starting with string.
+非常好！让我们看看Go里的一些基本数据类型。我们从字符串开始。
 
 ### 字符串
 
@@ -670,7 +670,7 @@ fmt.Println(msg)
 
 真棒！但这只是冰山一角。请你查看go doc里的`fmt`包来了解更多信息。
 
-你将会看到它被广泛使用。
+如果你是具备C/C++背景的话，使用起来会感觉很自然，但是如果接触的是其它语言的话，如Python或者JavaScript，用法可能会有一些区别。但是它非常强大，你将看到它被广泛使用。
 
 
 # 流程控制
@@ -868,17 +868,17 @@ func main() {
 }
 ```
 
-# Functions
+# 函数
 
-In this tutorial, we will discuss how we work with functions in Go. So, let's start with a simple function declaration.
+本章，我们讨论Go中使用函数，先看看如何定义一个简单的函数。
 
-## Simple declaration
+## 定义函数
 
 ```go
 func myFunction() {}
 ```
 
-And we can _call or execute_ it as follows.
+我们如下 _执行_：
 
 ```go
 ...
@@ -886,7 +886,7 @@ myFunction()
 ...
 ```
 
-Let's pass some parameters to it.
+我们来传递一参数
 
 ```go
 func main() {
@@ -894,13 +894,14 @@ func main() {
 }
 
 func myFunction(p1 string) {
-	fmt.Printtln(p1)
+	fmt.Println(p1)
 }
 ```
 
-```jsx
+```bash
 $ go run main.go
 ```
+
 
 As we can see it prints our message. We can also do a shorthand declaration if the consecutive parameters have the same type. For example:
 
