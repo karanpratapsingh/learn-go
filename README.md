@@ -580,7 +580,7 @@ My name is golang
 
 是不是好看多了！
 
-接下来，有一个`Printf`，也叫做_"Print Formatter"_，允许我们对数值，字符串，布尔等数据进行格式化。
+接下来，有一个`Printf`，也叫做 _"Print Formatter"_ ，允许我们对数值，字符串，布尔等数据进行格式化。
 
 我们来看看例子。
 
