@@ -2,7 +2,7 @@
 
 你好，欢迎来到本课程，很高兴你参与到Go学习。我希望本教学内容可以提供一个较好的学习体验。
 
-_本课程还可以通过访问[网站](https://www.karanpratapsingh.com/courses/go) 或者 [Educative.io](https://www.educative.io/collection/5716974084816896/6319653488164864). 你的⭐是我的最大动力！
+_本课程还可以通过访问[网站](https://www.karanpratapsingh.com/courses/go) 或者 [Educative.io](https://www.educative.io/collection/5716974084816896/6319653488164864). 你的⭐是我的最大动力！_
 
 # 目录
 
