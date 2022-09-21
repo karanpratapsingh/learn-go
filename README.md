@@ -1161,7 +1161,7 @@ $ go mod init example
 _The important thing to note here is that a Go module can correspond to a Github repository as well if you plan to publish this module. For example:_
 
 ```bash
-$ go mod init example
+$ go mod init github.com/YOUR-USERNAME/example
 ```
 
 Now, let's explore `go.mod` which is the file that defines the module's _module path_ and also the import path used for the root directory, and its _dependency requirements_.
