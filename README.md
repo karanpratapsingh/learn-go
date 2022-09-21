@@ -1,4 +1,4 @@
-# Go Course
+# Learn Go
 
 Hey, welcome to the course, and thanks for learning Go. I hope this course provides a great learning experience.
 
