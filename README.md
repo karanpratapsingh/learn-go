@@ -1406,7 +1406,7 @@ This is great, but what if we want to modify the `stringutil` module that our co
 
 Until now, we had to do it using the `replace` directive in the `go.mod` file, but now let's see how we can use workspaces here.
 
-So let's create our workspace in the `workspace` directory.
+So let's create our workspace in the `workspaces` directory.
 
 ```bash
 $ go work init
