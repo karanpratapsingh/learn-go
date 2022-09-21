@@ -20,8 +20,8 @@ _本课程还可以通过访问[网站](https://www.karanpratapsingh.com/courses
   - [流程控制](#流程控制)
   - [函数](#函数)
   - [模块](#模块)
-  - [Packages](#packages)
-  - [Workspaces](#workspaces)
+  - [包](#包)
+  - [工作空间](#工作空间)
   - [Useful Commands](#useful-commands)
   - [Build](#build)
 
@@ -1162,13 +1162,13 @@ Go模块首次出现在 Go.11，带来了原生支持版本和模块。早期，
 $ go mod init example
 ```
 
-_这里要提醒的是如果你打算将模块发布到Github中，你可以使用对应Github 仓库地址。例如:_
+_这里要提醒的是如果你打算将模块发布到Github中，你可以使用对应Github仓库地址。例如:_
 
 ```bash
 $ go mod init github.com/golang/example
 ```
 
-Now, let's explore `go.mod` which is the file that defines the module's _module path_ and also the import path used for the root directory, and its _dependency requirements_.
+现在我们来看看`go.mod`，该文件模块路径和依赖关系。
 
 ```go
 module <name>
@@ -1180,33 +1180,33 @@ require (
 )
 ```
 
-And if we want to add a new dependency, we will use `go install` command:
+如果我们需要添加依赖，可以使用`go install`命令：
 
 ```bash
 $ go install github.com/rs/zerolog
 ```
 
-As we can see a `go.sum` file was also created. This file contains the expected [hashes](https://go.dev/cmd/go/#hdr-Module_downloading_and_verification) of the content of the new modules.
+你还会在根目录下看到`go.sum`文件被创建。该文件包含已使用依赖模块的[哈希值](https://go.dev/cmd/go/#hdr-Module_downloading_and_verification)。
 
-We can list all the dependencies using `go list` command as follows:
+我可以使用`go list`命令列出所有的依赖：
 
 ```bash
 $ go list -m all
 ```
 
-If the dependency is not used, we can simply remove it using `go mod tidy` command:
+如果依赖没被使用，我们还可以简单使用`go mod tidy`进行清理：
 
 ```bash
 $ go mod tidy
 ```
 
-Finishing up our discussion on modules, let's also discuss vendoring.
+结束模块的讨论，让我们来聊聊vendoring。
 
-Vendoring is the act of making your own copy of the 3rd party packages your project is using. Those copies are traditionally placed inside each project and then saved in the project repository.
+Vendoring是用来对项目使用的第三方包的完整拷贝。它会伴随项目一起进行贮存。
 
-This can be done through `go mod vendor` command.
+通过使用`go mod vendor`命令来实现。
 
-So let's reinstall the removed module using `go mod tidy`.
+我们就可以使用`go mod tidy`来重新安装模块了。
 
 ```go
 package main
@@ -1241,48 +1241,49 @@ $ go mod vendor
     └── modules.txt
 ```
 
-# Packages
+# 包
 
-In this tutorial, we will talk about packages.
+本章，我们聊聊包。
 
-## What are packages?
+## 什么是包？
 
-A package is nothing but a directory containing one or more Go source files, or other Go packages.
+一个包仅就是一个目录来存放一个或者多个Go源文件，或者是其它包。
 
-This means every Go source file must belong to a package and package declaration is done at top of every source file as follows.
+也就是说每个Go源代码文件都必须属于一个包，包定义在源文件开头处：
 
 ```go
 package <package_name>
 ```
 
-So far, we've done everything inside of `package main`. By convention, executable programs (by that I mean the ones with the `main` package) are called _Commands_, others are simply called _Packages_.
+目前，我们已经在`package main`里完成基础工作。按照约定，可执行程序称为 _Commands_，其它称为 _Packages_。
 
-The `main` package should also contain a `main()` function which is a special function that acts as the entry point of an executable program.
+`main`包应该包含一个`main()`函数，作为可执行程序入口。
 
-Let's take a look at an example by creating our own package `custom` and adding some source files to it such as `code.go`.
+让我们通过创建一个`custom`包，存放在`code.go`文件中。
 
 ```go
 package custom
 ```
 
-Before we proceed any further, we should talk about imports and exports. Just like other languages, go also has a concept of imports and exports but it's very elegant.
+在继续前，我们来聊聊导入和导出。和其它语言一样，go同样有导入导出，不过它更佳优雅。
 
-Basically, any value (like a variable or function) can be exported and visible from other packages if they have been defined with an upper case identifier.
+基本上，任何使用大写字母开头标识的值（例如变量和函数）都可以导出给其它包使用。
 
-Let's try an example in our `custom` package.
+例如`custom`包
 
 ```go
 package custom
 
-var value int = 10 // Will not be exported
-var Value int = 20 // Will be exported
+var value int = 10 // 不被导出
+var Value int = 20 // 被导出
 ```
 
-As we can see lower case identifiers will not be exported and will be private to the package it's defined in. In our case the `custom` package.
+小写字母标识的变量将没有被导出，属于`custom`包的私有变量。
 
-That's great but how do we import or access it? Well, same as we've been doing so far unknowingly. Let's go to our `main.go` file and import our `custom` package.
+那好，我们如何导入与访问呢？让我们在`main.go`文件中导入`custom`包。
 
-Here we can refer to it using the `module` we had initialized in our `go.mod` file earlier.
+我们可以使用我已经之前通过`go.mod`初始化的`模块`。
+
 
 ```go
 ---go.mod---
@@ -1300,9 +1301,9 @@ func main() {
 }
 ```
 
-_Notice how the package name is the last name of the import path._
+_注意包名为导入路径的最后部分。_
 
-We can import multiple packages as well like this.
+我们可以如下方式导入多个包：
 
 ```go
 package main
@@ -1318,7 +1319,7 @@ func main() {
 }
 ```
 
-We can also alias our imports to avoid collisions like this.
+我们还可以对于相同包名时使用别名来避免冲突：
 
 ```go
 package main
@@ -1334,11 +1335,9 @@ func main() {
 }
 ```
 
-## External Dependencies
+## 外部依赖
 
-In Go, we are not only limited to working with local packages, we can also install external packages using `go install` command as we saw earlier.
-
-So let's download a simple logging package `github.com/rs/zerolog/log`.
+Go不限于使用本地包，可以使用`go install`使用外部包，例如下载一个简单的日志包`github.com/rs/zerolog/log`.
 
 ```bash
 $ go install github.com/rs/zerolog
@@ -1358,17 +1357,17 @@ func main() {
 }
 ```
 
-_Also, make sure to check out the go doc of packages you install, which is usually located in the project's readme file. go doc parses the source code and generates documentation in HTML format. Reference to It is usually located in readme files._
+_同时，确保使用go doc查看安装包的说明文档_
 
-Lastly, I will add that, Go doesn't have a particular _"folder structure"_ convention, always try to organize your packages in a simple and intuitive way.
+最后，我要指出的是Go没有强制 _"目录结构"_ 约束，请尽量按照简单易于理解的方式来组织你的包。
 
-# Workspaces
+# 工作空间
 
-In this tutorial, we will learn about multi-module workspaces that were introduced in Go 1.18.
+本章，我们学习首次在Go 1.18出现的多模块工作空间。
 
-Workspaces allow us to work with multiple modules simultaneously without having to edit `go.mod` files for each module. Each module within a workspace is treated as a root module when resolving dependencies.
+工作空间允许我们无需修改`go.mod`文件同时拥有多个模块。工作空间各个模块各自以根模块方式来解决依赖。
 
-To understand this better, let's start by creating a `hello` module.
+为更好理解，我们创建一个`hello`模块：
 
 ```bash
 $ mkdir workspaces && cd workspaces
@@ -1376,7 +1375,7 @@ $ mkdir hello && cd hello
 $ go mod init hello
 ```
 
-For demonstration purposes, I will add a simple `main.go` and install an example package.
+为演示目的，我们简单实现`main.go`，并安装示例包。
 
 ```go
 package main
