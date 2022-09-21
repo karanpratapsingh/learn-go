@@ -1361,11 +1361,11 @@ _同时，确保使用go doc查看安装包的说明文档_
 
 最后，我要指出的是Go没有强制 _"目录结构"_ 约束，请尽量按照简单易于理解的方式来组织你的包。
 
-# 工作空间
+# 工作区
 
-本章，我们学习首次在Go 1.18出现的多模块工作空间。
+本章，我们学习首次在Go 1.18出现的多模块工作区。
 
-工作空间允许我们无需修改`go.mod`文件同时拥有多个模块。工作空间各个模块各自以根模块方式来解决依赖。
+工作区允许我们无需修改`go.mod`文件同时拥有多个模块。工作区各个模块各自以根模块方式来解决依赖。
 
 为更好理解，我们创建一个`hello`模块：
 
@@ -1393,42 +1393,42 @@ func main() {
 ```
 
 ```bash
-$ go get golang.org/x/example
+$ go install golang.org/x/example
 go: downloading golang.org/x/example v0.0.0-20220412213650-2e68773dfca0
 go: added golang.org/x/example v0.0.0-20220412213650-2e68773dfca0
 ```
 
-And if we run this, we should see our output in reverse.
+运行后，我们可以看到反转的字符串。
 
 ```bash
 $ go run main.go
 ecapskroW olleH
 ```
 
-This is great, but what if we want to modify the `stringutil` module that our code depends on?
+这也没什么，但是如果我们想要修改所依赖的`stringutil`模块呢？
 
-Until now, we had to do it using the `replace` directive in the `go.mod` file, but now let's see how we can use workspaces here.
+之前，我们需要使用在`go.mod`文件使用`replace`指令来实现，但是现在我们可以使用工作区来实现。
 
-So let's create our workspace in the `workspace` directory.
+让我们在`workspaces`目录来创建工作区。
 
 ```bash
 $ go work init
 ```
 
-This will create a `go.work` file.
+该命令会创建 `go.work` 文件。
 
 ```bash
 $ cat go.work
 go 1.18
 ```
 
-We will also add our `hello` module to the workspace.
+我们将添加`hello`模块到工作区。
 
 ```bash
 $ go work use ./hello
 ```
 
-This should update the `go.work` file with a reference to our `hello` module.
+它将更新`go.work`文件引用我们的`hello`模块。
 
 ```go
 go 1.18
@@ -1436,7 +1436,7 @@ go 1.18
 use ./hello
 ```
 
-Now, let's download and modify the `stringutil` package and update the `Reverse` function implementation.
+现在让我们下载`stringutil`，修改`Reverse`函数的实现。
 
 ```bash
 $ git clone https://go.googlesource.com/example
@@ -1454,7 +1454,7 @@ func Reverse(s string) string {
 }
 ```
 
-Finally, let's add `example` package to our workspace.
+最后，我们添加`example`包到工作区。
 
 ```bash
 $ go work use ./example
@@ -1467,14 +1467,14 @@ use (
 )
 ```
 
-Perfect, now if we run our `hello` module we will notice that the `Reverse` function has been modified.
+完美，现在让我们执行`hello`模块，注意`Revese`函数的变更。
 
 ```bash
 $ go run hello
 I can do whatever!! Hello Workspace
 ```
 
-_This is a very underrated feature from Go 1.18 but it is quite useful in certain circumstances._
+_这时1.18被低估的特性，但是在某些场景下非常有用._
 
 # Useful Commands
 
