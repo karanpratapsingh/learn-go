@@ -2381,29 +2381,30 @@ func main() {
 
 当然还有是因为个人喜好，例如 _"方法调用比函数调用更容易阅读和理解"_。
 
-# Arrays and Slices
+# 数组和切片
 
-In this tutorial, we will learn about arrays and slices in Go.
+本章，我们来学习Go里的数组和切片。
 
-## Arrays
 
-### What is an array?
+## 数组
 
-An array is a fixed-size collection of elements of the same type. The elements of the array are stored sequentially and can be accessed using their `index`.
+### 什么是数组？
+
+数组包含是包含相同类型固定大小的元素集合。它们使用顺序存储可以用`下标`访问。
 
 ![array](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-II/arrays-and-slices/array.png)
 
-### Declaration
+### 申明
 
-We can declare an array as follows:
+我可以如下方式申明：
 
 ```go
 var a [n]T
 ```
 
-Here, `n` is the length and `T` can be any type like integer, string, or user-defined structs.
+这里`n`是长度,`T`可以是任意类型，如整型，字符串或者自定义结构。
 
-Now, let's declare an array of integers with length 4 and print it.
+现在我们来申明一个长度为4的整型数组，然后打印它。
 
 ```go
 func main() {
@@ -2418,11 +2419,12 @@ $ go run main.go
 [0 0 0 0]
 ```
 
-By default, all the array elements are initialized with the zero value of the corresponding array type.
+默认，所有数组元素会初始化为相应元素的数组类型。
 
-### Initialization
+### 初始化
 
-We can also initialize an array using an array literal.
+我们还可以使用数组字面量来初始化数组。
+
 
 ```go
 var a [n]T = [n]T{V1, V2, ... Vn}
@@ -2441,16 +2443,16 @@ $ go run main.go
 [1 2 3 4]
 ```
 
-We can even do a shorthand declaration.
+同样可以使用短申明方式。
 
 ```go
 ...
 arr := [4]int{1, 2, 3, 4}
 ```
 
-### Access
+### 访问
 
-And similar to other languages, we can access the elements using the `index` as they're stored sequentially.
+和其它语言一样，我们可以使用根据存储顺序的`下标`来访问元素。
 
 ```go
 func main() {
@@ -2465,13 +2467,13 @@ $ go run main.go
 1
 ```
 
-### Iteration
+### 遍历
 
-Now, let's talk about iteration.
+现在，我们来谈谈遍历。
 
-So, there are multiple ways to iterate over arrays.
+有多种遍历数组的方式。
 
-The first one is using the for loop with the `len` function which gives us the length of the array.
+第一种是使用`len`函数来获取到数组长度使用for循环遍历。
 
 ```go
 func main() {
@@ -2491,7 +2493,7 @@ Index: 2, Element: 3
 Index: 3, Element: 4
 ```
 
-Another way is to use the `range` keyword with the `for` loop.
+另一种是使用`range`关键字来使用`for`循环来遍历。
 
 ```go
 func main() {
@@ -2511,25 +2513,25 @@ Index: 2, Element: 3
 Index: 3, Element: 4
 ```
 
-As we can see, our example works the same as before.
+正如我们所看到的，和之前的输出结果一致。
 
-But the range keyword is quite versatile and can be used in multiple ways.
+range是多用途的，可以用在很多场景。
 
 ```go
-for i, e := range arr {} // Normal usage of range
+for i, e := range arr {} // 基本使用方式
 
-for _, e := range arr {} // Omit index with _ and use element
+for _, e := range arr {} // 使用 _ 忽略下标
 
-for i := range arr {} // Use index only
+for i := range arr {} // 只获取下标
 
-for range arr {} // Simply loop over the array
+for range arr {} // 仅循环数组不获取值和小标
 ```
 
-### Multi dimensional
+### 多维数组
 
-All the arrays that we created so far are one-dimensional. We can also create multi-dimensional arrays in Go.
+Go也可以创建多维数组。
 
-Let's take a look at an example:
+我们看看例子。
 
 ```go
 func main() {
@@ -2550,7 +2552,7 @@ Index: 0, Element: [1 2 3 4]
 Index: 1, Element: [5 6 7 8]
 ```
 
-We can also let the compiler infer the length of the array by using `...` ellipses instead of the length.
+我们还是用`...`符号让编译器自动推断数组长度。
 
 ```go
 func main() {
@@ -2571,13 +2573,13 @@ Index: 0, Element: [1 2 3 4]
 Index: 1, Element: [5 6 7 8]
 ```
 
-### Properties
+### 特性
 
-Now let's talk about some properties of arrays.
+现在我们聊聊数组特性。
 
-The array's length is part of its type. So, the array `a` and `b` are completely distinct types, and we cannot assign one to the other.
+数组的长度是其类型的一部分，数组`a`和`b`是完全不同的类型，不能相互赋值。
 
-This also means that we cannot resize an array, because resizing an array would mean changing its type.
+也就是我们不能改变数组大小，因为改变大小也就意味着改变其类型了。
 
 ```go
 package main
@@ -2588,11 +2590,11 @@ func main() {
 }
 ```
 
-Arrays in Go are value types unlike other languages like C, C++, and Java where arrays are reference types.
+Go里的数组不像其它类似C,C++和Java那样是引用类型。
 
-This means that when we assign an array to a new variable or pass an array to a function, the entire array is copied.
+也就是说将数组赋给一个新变量或者传递给函数时，将会对数组完全拷贝。
 
-So, if we make any changes to this copied array, the original array won't be affected and will remain unchanged.
+所以，如果我们对拷贝的数组做任何修改，原数组不会受影响。
 
 ```go
 package main
@@ -2610,23 +2612,24 @@ func main() {
 }
 ```
 
-## Slices
+## 切片
 
-I know what you're thinking, arrays are useful but a bit inflexible due to the limitation caused by their fixed size.
+我知道不会想，数组非常有用，但是又受限于它的固定大小。
 
-This brings us to Slice, so what is a slice?
+这样旧引入的切片，那么切片是什么？
 
-A Slice is a segment of an array. Slices build on arrays and provide more power, flexibility, and convenience.
+切片是数组的片段，切片构建于数组之上，提供了更多功能，可扩展性和更佳方便。
 
 ![slice](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-II/arrays-and-slices/slice.png)
 
-A slice consists of three things:
+切片由以下三部分组成：
 
-- A pointer reference to an underlying array.
-- The length of the segment of the array that the slice contains.
-- And, the capacity, which is the maximum size up to which the segment can grow.
+- 指针指向数组下标
+- 切片包含数组的长度
+- 可以容纳元素的最大容量
 
-Just like `len` function, we can determine the capacity of a slice using the built-in `cap` function. Here's an example:
+
+和`len`函数一样，我们也可以使用内建`cap`函数来获取切片容量，例如：
 
 ```go
 package main
@@ -2638,25 +2641,25 @@ func main() {
 
 	s := a[1:4]
 
-	// Output: Array: [20 15 5 30 25], Length: 5, Capacity: 5
+	// 输出: Array: [20 15 5 30 25], Length: 5, Capacity: 5
 	fmt.Printf("Array: %v, Length: %d, Capacity: %d\n", a, len(a), cap(a))
 
-	// Output: Slice [15 5 30], Length: 3, Capacity: 4
+	// 输出: Slice [15 5 30], Length: 3, Capacity: 4
 	fmt.Printf("Slice: %v, Length: %d, Capacity: %d", s, len(s), cap(s))
 }
 ```
 
-Don't worry, we are going to discuss everything shown here in detail.
+别担心，我们会详细讲解这里所有的东西。
 
-### Declaration
+### 申明
 
-Let's see how we can declare a slice.
+我们来看看如何申明切片。
 
 ```go
 var s []T
 ```
 
-As we can see, we don't need to specify any length. Let's declare a slice of integers and see how it works.
+我们不需要给切片提供长度，试试看字符串切片
 
 ```go
 func main() {
@@ -2673,7 +2676,7 @@ $ go run main.go
 true
 ```
 
-So, unlike arrays, the zero value of a slice is `nil`.
+不同于数组，切片的零值为`nil`。
 
 ### Initialization
 
