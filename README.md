@@ -30,8 +30,8 @@ _本课程还可以通过访问[网站](https://www.karanpratapsingh.com/courses
   - [指针](#指针)
   - [结构](#结构)
   - [方法](#方法)
-  - [Arrays and Slices](#arrays-and-slices)
-  - [Maps](#maps)
+  - [数组和切片](#数组和切片)
+  - [字典](#字典)
 
 - **第三章**
 
@@ -2889,33 +2889,33 @@ func add(values ...int) int {
 }
 ```
 
-`values...`为解包操作。
+这里`values...`符号为对切片进行解包操作。
 
-# Maps
+# 字典
 
-So, Go provides a built-in map type, and we'll learn how to use it.
+Go提供了内建字典类型，我们来学习如何使用它。
 
-But, the question is what are maps? And why do we need them?
+字典是什么呢？又为什么我们需要它呢？
 
 ![maps](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-II/maps/maps.png)
 
-Well, A map is an unordered collection of key-value pairs. It maps keys to values. The keys are unique within a map while the values may not be.
+字典是一个无序的键值对集合。由键对应到值。键必须唯一，值可以相同。
 
-It is used for fast lookups, retrieval, and deletion of data based on keys. It is one of the most used data structures.
+它用于基于键快速查找，获取及删除数据。最常用的数据结构之一。
 
-## Declaration
+## 申明
 
-Let's start with the declaration.
+我们从申明开始。
 
-A map is declared using the following syntax:
+字典使用如下语法申明：
 
 ```go
 var m map[K]V
 ```
 
-Where `K` is the key type and `V` is the value type.
+`K`是key类型，`V`是值类型。
 
-For example, here's how we can declare a map of `string` keys to `int` values.
+例如下面申明了`string`为key对应`int`值的字典。
 
 ```go
 func main() {
@@ -2930,17 +2930,18 @@ $ go run main.go
 nil
 ```
 
-As we can see, the zero value of a map is `nil`.
+如果我们所见，map默认零值为`nil`。
 
-A `nil` map has no keys. Moreover, any attempt to add keys to a `nil` map will result in a runtime error.
+`nil`字典没有键，任何尝试通过对`nil`字典使用键操作均会发生运行时错误(panic)。
 
-## Initialization
 
-There are multiple ways to initialize a map.
+## 初始化
 
-**make function**
+也有好几种初始化字典的方式。
 
-We can use the built-in `make` function, which allocates memory for referenced data types and initializes their underlying data structures.
+**make 函数**
+
+我使用内建的`make`函数通过提供对应字典键值对类型来开辟内存作为底层数据结构。
 
 ```go
 func main() {
@@ -2955,15 +2956,15 @@ $ go run main.go
 map[]
 ```
 
-**map literal**
+**map 字面量**
 
-Another way is using a map literal.
+另一种方式是使用字典字面量。
 
 ```go
 func main() {
 	var m = map[string]int{
 		"a": 0,
-    "b": 1,
+    	"b": 1,
 	}
 
 	fmt.Println(m)
