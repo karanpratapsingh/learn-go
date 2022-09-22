@@ -2765,23 +2765,24 @@ fmt.Println("Slice a: ", a)
 fmt.Println("Slice b: ", b)
 ```
 
-### Iteration
+### 遍历
 
-We can iterate over a slice in the same way you iterate over an array, by using the for loop with either `len` function or `range` keyword.
+我们可以使用遍历数组相同的方式来遍历切片，使用结合`len`函数或者`range`关键字使用for循环遍历。
 
-### Functions
+### 函数
 
-So now, let's talk about built-in slice functions provided in Go.
+
+我们来看看Go提供的切片函数。
 
 **copy**
 
-The `copy()` function copies elements from one slice to another. It takes 2 slices, a destination, and a source. It also returns the number of elements copied.
+`copy()`函数从一切切片拷贝元素到另一个切片中，它接收两个切片参数，一个是目标切片，一个是圆切片。它会返回拷贝元素的长度。
 
 ```go
 func copy(dst, src []T) int
 ```
 
-Let's see how we can use it.
+我们看看如何使用它。
 
 ```go
 func main() {
@@ -2803,19 +2804,19 @@ Dst: [a b c d]
 Elements: 4
 ```
 
-As expected, our 4 elements from the source slice were copied to the destination slice.
+成功将源切片4个元素拷贝到目标切片。
 
 **append**
 
-Now, let's look at how we can append data to our slice using the built-in `append` function which appends new elements at the end of a given slice.
+`append`函数用来给切片追加元素。
 
-It takes a slice and a variable number of arguments. It then returns a new slice containing all the elements.
+它接收一个切片参数和要追加的元素。它返回包含其所有元素的新切片。
 
 ```go
 append(slice []T, elems ...T) []T
 ```
 
-Let's try it in an example by appending elements to our slice.
+让我们来尝试给切片追加元素。
 
 ```go
 func main() {
@@ -2834,19 +2835,19 @@ s1: [a b c d]
 s2: [a b c d e f]
 ```
 
-As we can see, the new elements were appended and a new slice was returned.
+执行`append`后包含新元素的切片被返回。
 
-But if the given slice doesn't have sufficient capacity for the new elements then a new underlying array is allocated with a bigger capacity.
+如果切片不够容量来存放追加元素情况下，切片会申请一个更大容量的底层数组。
 
-All the elements from the underlying array of the existing slice are copied to this new array, and then the new elements are appended.
+所有原数会拷贝至新数组，然后添加追加元素。
 
-### Properties
+### 特性
 
-Finally, let's discuss some properties of slices.
+最后我们来讨论切片的特性。
 
-Slices are reference types, unlike arrays.
+所有的切片均是引用类型，和数组不一样。
 
-This means modifying the elements of a slice will modify the corresponding elements in the referenced array.
+也就是改变切片数组其实是改变所引用的底层数组元素。
 
 ```go
 package main
@@ -2865,7 +2866,7 @@ func main() {
 }
 ```
 
-Slices can be used with variadic types as well.
+切片也可以作为可变参数。
 
 ```go
 package main
@@ -2887,6 +2888,8 @@ func add(values ...int) int {
 	return sum
 }
 ```
+
+`values...`为解包操作。
 
 # Maps
 
