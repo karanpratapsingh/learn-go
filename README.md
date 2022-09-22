@@ -2678,9 +2678,9 @@ true
 
 不同于数组，切片的零值为`nil`。
 
-### Initialization
+### 初始化
 
-There are multiple ways to initialize our slice. One way is to use the built-in `make` function.
+也有多种初始化切片的方式。一种是使用内建的`make`函数。
 
 ```go
 make([]T, len, cap) []T
@@ -2699,7 +2699,7 @@ $ go run main.go
 []
 ```
 
-Similar to arrays, we can use the slice literal to initialize our slice.
+和数组一样，也可以使用切片字面量来初始化切片。
 
 ```go
 func main() {
@@ -2714,7 +2714,7 @@ $ go run main.go
 [Go TypeScript]
 ```
 
-Another way is to create a slice from an array. Since a slice is a segment of an array, we can create a slice from index `low` to `high` as follows.
+另一种方式是从数组创建切片。由于切片是数组的片段。我们可以使用`low(上标)`和`high(下标)`来创建数组。
 
 ```go
 a[low:high]
@@ -2729,9 +2729,9 @@ func main() {
 		"TypeScript",
 	}
 
-	s1 := a[0:2] // Select from 0 to 2
-	s2 := a[:3]  // Select first 3
-	s3 := a[2:]  // Select last 2
+	s1 := a[0:2] // 从0到2
+	s2 := a[:3]  // 开头到第三个
+	s3 := a[2:]  // 从第二个到最后
 
 	fmt.Println("Array:", a)
 	fmt.Println("Slice 1:", s1)
@@ -2748,9 +2748,10 @@ Slice 2: [C++ Go Java]
 Slice 3: [Java TypeScript]
 ```
 
-_Missing low index implies 0 and missing high index implies the length of the underlying array (`len(a)`)._
+_不指定上标即从0开始，不指定下标即数组长度 (`len(a)`)._
 
-The thing to note here is we can create a slice from other slices too and not just arrays.
+
+除了可以从数组构建切片，同样也可以切片上构建切片。
 
 ```go
 var a = []string{
@@ -2759,6 +2760,9 @@ var a = []string{
 	"Java",
 	"TypeScript",
 }
+var b = a[:]
+fmt.Println("Slice a: ", a)
+fmt.Println("Slice b: ", b)
 ```
 
 ### Iteration
