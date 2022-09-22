@@ -38,8 +38,8 @@ _本课程还可以通过访问[网站](https://www.karanpratapsingh.com/courses
   - [接口](#接口)
   - [错误](#错误)
   - [Panic和Recover](#Panic和Recover)
-  - [Testing](#testing)
-  - [Generics](#generics)
+  - [测试](#测试)
+  - [泛型](#泛型)
 
 - **第四章**
 
@@ -3957,11 +3957,13 @@ Recovered: Woah
 
 这个是常见场景，例如，解`nil`指针引用将引发panic。
 
-# Testing
+# 测试
 
-In this tutorial, we will talk about testing in Go. So, let's start using a simple example.
 
-We have created a `math` package that contains an `Add` function Which as the name suggests, adds two integers.
+本章，我们聊聊Go中的测试。从一个简单的例子开始。
+
+我们创建一个`math`包，它包含一个`Add`函数，返回其两个整型做加法运算的结果。
+
 
 ```go
 package math
@@ -3971,7 +3973,7 @@ func Add(a, b int) int {
 }
 ```
 
-It's being used in our `main` package like this.
+在`main`包中如下使用：
 
 ```go
 package main
@@ -3988,14 +3990,14 @@ func main() {
 
 ```
 
-And, if we run this, we should see the result.
+执行我们将得到其结果。
 
 ```bash
 $ go run main.go
 4
 ```
 
-Now, we want to test our `Add` function. So, in Go, we declare test files with `_test` suffix in the file name. So for our `add.go`, we will create a test as `add_test.go`. Our project structure should look like this.
+现在，我们来对我们的`Add`函数编写测试。在Go，使用`_test`后缀文件名来对应测试。所以我们的`add.go`对应为`add_test.go`。我们的项目结构类似如下：
 
 ```bash
 .
@@ -4006,13 +4008,13 @@ Now, we want to test our `Add` function. So, in Go, we declare test files with `
     └── add_test.go
 ```
 
-We will start by using a `math_test` package, and importing the `testing` package from the standard library. That's right! Testing is built into Go, unlike many other languages.
+我们命名包为`math_test`，导入标准库的`testing`包。是的，Go内建测试库，这点和其它编程语言不一样。
 
-But wait...why do we need to use `math_test` as our package, can't we just use the same `math` package?
+但是为什么要用`math_test`命名包，而不是简单使用`math`包？
 
-Well yes, we can write our test in the same package if we wanted, but I personally think doing this in a separate package helps us write tests in a more decoupled way.
+是的，当然可以，不过我个人喜欢通过分开包名解耦来编写测试。
 
-Now, we can create our `TestAdd` function. It will take an argument of type `testing.T` which will provide us with helpful methods.
+现在让我们来创建`TestAdd`函数。它接收一个`testing.T`参数，该参数提供了拥有的辅助方法。
 
 ```go
 package math_test
@@ -4022,14 +4024,14 @@ import "testing"
 func TestAdd(t *testing.T) {}
 ```
 
-Before we add any testing logic, let's try to run it. But this time, we cannot use `go run` command, instead, we will use the `go test` command.
+在添加测试逻辑之前，先尝试来执行它。这个时候我们不能使用`go run`命令，而是`go test`命令。
 
 ```bash
 $ go test ./math
 ok      example/math 0.429s
 ```
 
-Here, we will have our package name which is `math`, but we can also use the relative path `./...` to test all packages.
+这里我们传入了`math`包路径，我们也可以使用相对路径`./..`来测试所有的包。
 
 ```bash
 $ go test ./...
@@ -4037,9 +4039,9 @@ $ go test ./...
 ok      example/math 0.348s
 ```
 
-And if Go doesn't find any test in a package, it will let us know.
+如果Go没有找到任何需要测试的包，它将会告知我们。
 
-Perfect, let's write some test code. To do this, we will check our result with an expected value and if they do not match, we can use the `t.Fail` method to fail the test.
+很好，让我们编写代码。我们通过检查返回的值，如果与预期值不匹配执行`t.Fail`方法来让测试失败。
 
 ```go
 package math_test
@@ -4056,14 +4058,14 @@ func TestAdd(t *testing.T) {
 }
 ```
 
-Great! Our test seems to have passed.
+真棒，我们测试通过了！
 
 ```bash
 $ go test math
 ok      example/math    0.412s
 ```
 
-Let's also see what happens if we fail the test, for that, we can simply change our expected result.
+我们来看看如果测试失败结果是怎么样的，我们仅仅修改我们期望值。
 
 ```go
 package math_test
@@ -4085,7 +4087,7 @@ $ go test ./math
 ok      example/math    (cached)
 ```
 
-If you see this, don't worry. For optimization, our tests are cached. We can use the `go clean` command to clear our cache and then re-run the test.
+如果你看到结果如上。为了优化，我们测试缓存了。可以使用`go clean`命令清理缓存然后重新执行测试。
 
 ```bash
 $ go clean -testcache
@@ -4096,15 +4098,15 @@ FAIL    example/math    0.354s
 FAIL
 ```
 
-So, this is what a test failure will look like.
+以上就是测试失败的结果
 
-## Table driven tests
+## 测试驱动开发
 
-This brings us to table-driven tests. But what exactly are they?
+这就引出了测试驱动开发。那它是什么呢？
 
-So earlier, we had function arguments and expected variables which we compared to determine if our tests passed or fail. But what if we defined all that in a slice and iterate over that? This will make our tests a little bit more flexible and help us run multiple cases easily.
+我们有函数参数和期望变量来对比确保测试通过。那如果我们有一个切片包含一系列值的话，这就可以让我们的测试足够灵活，可以帮助我们测试多个例子。
 
-Don't worry, we will learn this by example. So we will start by defining our `addTestCase` struct.
+别急，我们通过例子来学习。我们先定义一个`addTestCase`结构体。
 
 ```go
 package math_test
@@ -4137,7 +4139,7 @@ func TestAdd(t *testing.T) {
 }
 ```
 
-Notice, how we declared `addTestCase` with a lower case. That's right we don't want to export it as it's not useful outside our testing logic. Let's run our test.
+注意，我们定义小写字母开头的`addTestCase`变量。因为它没有必要作为导出变量。让我们执行我们的测试。
 
 ```bash
 $ go run main.go
@@ -4148,7 +4150,7 @@ FAIL    example/math    0.334s
 FAIL
 ```
 
-Seems like our tests broke, let's fix them by updating our test cases.
+视乎咱们的测试失败了，让我们来修复它。
 
 ```go
 var testCases = []addTestCase{
@@ -4159,25 +4161,25 @@ var testCases = []addTestCase{
 }
 ```
 
-Perfect, it's working!
+完美，正常了！	
 
 ```bash
 $ go run main.go
 ok      example/math    0.589s
 ```
 
-## Code coverage
+## 代码覆盖率
 
-Finally, let's talk about code coverage. When writing tests, it is often important to know how much of your actual code the tests cover. This is generally referred to as code coverage.
+最后我们来聊聊，代码覆盖率。当编写测试时，通常我们需要有个测试涵盖的指标。通常指的就是测试覆盖率。
 
-To calculate and export the coverage for our test, we can simply use the `-coverprofile` argument with the `go test` command.
+要计算测试所涵盖的覆盖率，仅需要在测试时指定`-coverprofile`参数。
 
 ```bash
 $ go test ./math -coverprofile=coverage.out
 ok      example/math    0.385s  coverage: 100.0% of statements
 ```
 
-Seems like we have great coverage. Let's also check the report using the `go tool cover` command which gives us a detailed report.
+看起来我们覆盖率很好。让我们使用`go tool cover`命令来查看详细报告。
 
 ```bash
 $ go tool cover -html=coverage.out
@@ -4185,19 +4187,19 @@ $ go tool cover -html=coverage.out
 
 ![coverage](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-III/testing/coverage.png)
 
-As we can see, this is a much more readable format. And best of all, it is built right into standard tooling.
+你看这里的格式具有很好的可读性。最重要的是，它内置于标准工具中。
 
-## Fuzz testing
+## 模糊测试
 
-Lastly, let's look at fuzz testing which was introduced in Go version 1.18.
+最后，我们来看看首次出现在 Go 1.18的（fuzz testing）模糊测试。
 
-Fuzzing is a type of automated testing that continuously manipulates inputs to a program to find bugs.
+Fuzzing是通过持续生成数据来执行自动化测试。
 
-Go fuzzing uses coverage guidance to intelligently walk through the code being fuzzed to find and report failures to the user.
+Go模糊测试通过覆盖指引来智能化遍历代码执行模糊测试。
 
-Since it can reach edge cases that humans often miss, fuzz testing can be particularly valuable for finding bugs and security exploits.
+由于它可以触达用户经常遗漏的边缘情况，模糊测试对于发现错误和安全具备较高价值。
 
-Let's try an example:
+让我们看看例子：
 
 ```go
 func FuzzTestAdd(f *testing.F) {
@@ -4207,7 +4209,7 @@ func FuzzTestAdd(f *testing.F) {
 }
 ```
 
-If we run this, we'll see that it'll automatically create test cases. Because our `Add` function is quite simple, tests will pass.
+如果我们执行它， 我们将看到它自动创建测试案例，因为我们的`Add`函数非常简单，它将通过测试。
 
 ```bash
 $ go test -fuzz FuzzTestAdd example/math
@@ -4221,7 +4223,7 @@ PASS
 ok      foo 12.692s
 ```
 
-But if we update our `Add` function with a random edge case such that the program will panic if `b + 10` is greater than `a`.
+如果我们更新更新`Add`函数来随机触发一个边缘情况，例如当`b + 10`大于`a`时引发panic。
 
 ```go
 func Add(a, b int) int {
@@ -4233,7 +4235,7 @@ func Add(a, b int) int {
 }
 ```
 
-And if we re-run the test, this edge case will be caught by fuzz testing.
+如果我们重新执行测试，该边缘情况会被模糊测试发觉。
 
 ```bash
 $ go test -fuzz FuzzTestAdd example/math
@@ -4245,9 +4247,9 @@ fuzz: elapsed: 0s, execs: 1 (25/sec), new interesting: 0 (total: 0)
         testing.go:1349: panic: B is greater than A
 ```
 
-I think this is a really cool feature of Go 1.18. You can learn more about fuzz testing from the [official Go blog](https://go.dev/doc/fuzz/).
+我个人认为这时Go 1.18很棒的特性。你可以通过查看[官方博客](https://go.dev/doc/fuzz/)对于关于模糊测试描述。
 
-# Generics
+# 泛型
 
 In this section, we will learn about Generics which is a much awaited feature that was released with Go version 1.18.
 
