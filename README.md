@@ -35,9 +35,9 @@ _本课程还可以通过访问[网站](https://www.karanpratapsingh.com/courses
 
 - **第三章**
 
-  - [Interfaces](#interfaces)
-  - [Errors](#errors)
-  - [Panic and Recover](#panic-and-recover)
+  - [接口](#接口)
+  - [错误](#错误)
+  - [Panic和Recover](#Panic和Recover)
   - [Testing](#testing)
   - [Generics](#generics)
 
@@ -1816,13 +1816,13 @@ fmt.Println(p == p1)
 
 最后，如果你其它语言转过来没有接触过指针概念，先不着急，先尝试构建一个指针工作的心智模型。
 
-# 结构
+# 结构体
 
-本章，我们来学习结构。
+本章，我们来学习结构体。
 
 `struct`是通过包含一系列命名字段的自定义类型。通常用来将一组相关数据组合在一个单元里。
 
-如果你具备面向对象背景，将结构想象成一个类，但是它仅支持组合，不支持继承。
+如果你具备面向对象背景，将结构体想象成一个类，但是它仅支持组合，不支持继承。
 
 ## 定义
 
@@ -1856,7 +1856,7 @@ type Person struct {
 ## 声明和初始化
 
 
-现在我们已经有结构了，我们可以类似其它数据类型方式来定义：
+现在我们已经有结构体了，我们可以类似其它数据类型方式来定义：
 
 ```go
 func main() {
@@ -1871,9 +1871,9 @@ $ go run main.go
 Person 1: {  0}
 ```
 
-正如所见，所有的结构字段使用零值来初始化。所以`FirstName`和`LastName`设置为`""`空字符串且`Age`设置为0。
+正如所见，所有的结构体字段使用零值来初始化。所以`FirstName`和`LastName`设置为`""`空字符串且`Age`设置为0。
 
-我们还可以使用 _"结构字面量"_ 来初始化。
+我们还可以使用 _"结构体字面量"_ 来初始化。
 
 ```go
 func main() {
@@ -1939,7 +1939,7 @@ Person 3的Age字段同样使用了默认零值。
 
 ## 不带字段名
 
-Go结构还支持不带字段名的初始化方式。
+Go结构体还支持不带字段名的初始化方式。
 
 ```go
 func main() {
@@ -1982,7 +1982,7 @@ $ go run main.go
 	fmt.Println("Person 4:", p4)
 ```
 
-我们还可以定义一个匿名结构。
+我们还可以定义一个匿名结构体。
 
 ```go
 func main() {
@@ -2033,7 +2033,7 @@ func main() {
 }
 ```
 
-我也创建一个指向结构的指针。
+我也创建一个指向结构体的指针。
 
 ```go
 func main() {
@@ -2069,7 +2069,7 @@ $ go run main.go
 Person &{Karan Pratap Singh 22}
 ```
 
-当两个结构所有字段均相等，那么两个结构即相等。
+当两个结构体所有字段均相等，那么两个结构体即相等。
 
 ```go
 func main() {
@@ -2087,7 +2087,7 @@ true
 
 ## 导出字段
 
-和变量函数一致，结构字段通过使用首字母标识是否导出。
+和变量函数一致，结构体字段通过使用首字母标识是否导出。
 
 ```go
 type Person struct {
@@ -2097,7 +2097,7 @@ type Person struct {
 }
 ```
 
-`zipCode`不会导出。`Person`结构也一样，如果我们改为`person`，它也不会被导出。
+`zipCode`不会导出。`Person`结构体也一样，如果我们改为`person`，它也不会被导出。
 
 ```go
 type person struct {
@@ -2123,7 +2123,7 @@ type SuperHero struct {
 }
 ```
 
-新结构将包含原始结构所有属性。它的行为与原始结构一致。
+新结构体将包含原始结构体所有属性。它的行为与原始结构体一致。
 
 ```go
 func main() {
@@ -2175,9 +2175,9 @@ $ go run main.go
 
 这里没有对错，有时用嵌入会带来便利。
 
-## 结构标签
+## 结构体标签
 
-结构标签允许我们为字段添加元信息，可以方便使用`relect`包来自定义行为。
+结构体标签允许我们为字段添加元信息，可以方便使用`relect`包来自定义行为。
 
 如下方式定义标签。
 
@@ -2190,7 +2190,7 @@ type Animal struct {
 
 你将常在编码包中看见它们，例如XML, JSON, YAML, ORMS和配置管理。
 
-以下是JSON编码器中的结构标签用例：
+以下是JSON编码器中的结构体标签用例：
 
 ```go
 type Animal struct {
@@ -2199,13 +2199,13 @@ type Animal struct {
 }
 ```
 
-## 结构传递
+## 结构体传递
 
 最后，我们来讨论结构传递。
 
-结构为值类型，当我赋值结构给另外一个变量时，将会生成一个全新的结构拷贝。
+结构体为值类型，当我赋值结构给另外一个变量时，将会生成一个全新的结构体拷贝。
 
-同样当然我们传递结构给函数时，函数同样会获得一个全新的拷贝。
+同样当然我们传递结构体给函数时，函数同样会获得一个全新的拷贝。
 
 ```go
 package main
@@ -2349,7 +2349,7 @@ Car: {Toyota 2021}
 func (Car) UpdateName(...) {}
 ```
 
-- 方法不但可以定义在结构中，非结构类型也同样可以。
+- 方法不但可以定义在结构体中，非结构体类型也同样可以。
 
 ```go
 package main
@@ -2402,7 +2402,7 @@ func main() {
 var a [n]T
 ```
 
-这里`n`是长度,`T`可以是任意类型，如整型，字符串或者自定义结构。
+这里`n`是长度,`T`可以是任意类型，如整型，字符串或者自定义结构体。
 
 现在我们来申明一个长度为4的整型数组，然后打印它。
 
@@ -2971,14 +2971,14 @@ func main() {
 }
 ```
 
-_Note that the last trailing comma is necessary_
+_注意最后面的逗号不能少_
 
 ```bash
 $ go run main.go
 map[a:0 b:1]
 ```
 
-As always, we can use our custom types as well.
+同样我们还可以字典中使用自定义类型：
 
 ```go
 type User struct {
@@ -2995,7 +2995,7 @@ func main() {
 }
 ```
 
-We can even remove the value type and Go will figure it out!
+设置上面还可以移除值类型，Go会自动推断！
 
 ```go
 var m = map[string]User{
@@ -3009,9 +3009,9 @@ $ go run main.go
 map[a:{Peter} b:{Seth}]
 ```
 
-## Add
+## 增加
 
-Now, let's see how we can add a value to our map.
+让我们来看看如何在字典新增值。
 
 ```go
 func main() {
@@ -3031,9 +3031,9 @@ $ go run main.go
 map[a:{Peter} b:{Seth} c:{Steve}]
 ```
 
-### Retrieve
+### 获取
 
-We can also retrieve our values from the map using the key.
+使用键从字典中获取到值。
 
 ```go
 ...
@@ -3046,7 +3046,7 @@ $ go run main.go
 key c: {Steve}
 ```
 
-**What if we use a key that is not present in the map?**
+**如果我们获取的键在字典不存在会怎么样？**
 
 ```go
 ...
@@ -3054,7 +3054,7 @@ d := m["d"]
 fmt.Println("Key d:", d)
 ```
 
-Yes, you guessed it! we will get the zero value of the map's value type.
+你可能猜到了，它将返回该字典值类型的零值。
 
 ```bash
 $ go run main.go
@@ -3062,11 +3062,11 @@ Key c: {Steve}
 Key d: {}
 ```
 
-### Exists
+### 键是否存在
 
-When you retrieve the value assigned to a given key, it returns an additional boolean value as well. The boolean variable will be `true` if the key exists, and `false` otherwise.
+当你通过键来获取值时，它同时会返回一个布尔值，如果该值为`true`说明键存在，否则`false`即不存在。
 
-Let's try this in an example:
+我们看看例子：
 
 ```go
 ...
@@ -3083,9 +3083,9 @@ Key c: {Steve} Present: true
 Key d: {} Present: false
 ```
 
-### Updating
+### 更新
 
-We can also update the value for a key by simply re-assigning a key.
+我们通过给key重新赋值来更新该key的值。
 
 ```go
 ...
@@ -3097,29 +3097,29 @@ $ go run main.go
 map[a:{Roger} b:{Seth} c:{Steve}]
 ```
 
-### Deleting
+### 删除
 
-Or, we can delete the key using the built-in `delete` function.
+还可以使用内建的`delete`函数来删除键。
 
-Here's how the syntax looks:
+如下：
 
 ```go
 ...
 delete(m, "a")
 ```
 
-The first argument is the map, and the second is the key we want to delete.
+第一个参数是字典，第二个参数为要删除的键。
 
-The `delete()` function doesn't return any value. Also, it doesn't do anything if the key doesn't exist in the map.
+`delete()` 并不返回任何值，所以键不存在的话那旧啥也不会发生。
 
 ```bash
 $ go run main.go
 map[a:{Roger} c:{Steve}]
 ```
 
-### Iteration
+### 遍历
 
-Similar to arrays or slices, we can iterate over maps with the `range` keyword.
+同数组和切片一样，我们可以使用`range`来遍历字典。
 
 ```go
 package main
@@ -3147,15 +3147,15 @@ Key: a, Value: {Peter}
 Key: b, Value: {Seth}
 ```
 
-Note that a map is an unordered collection, and therefore the iteration order of a map is not guaranteed to be the same every time we iterate over it.
+注意字典是一个无序集合，所以不能保证遍历每次都会以相同的顺序。
 
-### Properties
+### 特性
 
-Lastly, let's talk about map properties.
+最后我们谈谈字典特性。
 
-Maps are reference types, which means when we assign a map to a new variable, they both refer to the same underlying data structure.
+字典是引用类型，也就是当我们将字典赋于一个新变量时，它们两引用的底层数据结构是同一个。
 
-Therefore, changes done by one variable will be visible to the other.
+因此，任何一方的改变都会影响到另一方。
 
 ```go
 package main
@@ -3180,23 +3180,23 @@ func main() {
 }
 ```
 
-# Interfaces
+# 接口
 
-In this section, let's talk about the interfaces.
+本章我们来聊聊接口。
 
-## What is an interface?
+## 什么是接口？
 
-So, an interface in Go is an **abstract type** that is defined using a set of method signatures. The interface defines the **behavior** for similar types of objects.
+Go中的接口是一个用来定义一系列方法签名的**抽象类型**。接口定义相同对象类型的**行为**。
 
-_Here, **behavior** is a key term that we will discuss shortly._
+_这里**行为**概念我们后面会讨论_
 
-Let's take a look at an example to understand this better.
+我们通过例子来尝试更好的理解。
 
-One of the best real-world examples of interfaces is the power socket. Imagine that we need to connect different devices to the power socket.
+一个接近真实的接口例子就是电源插座。想象我们需要连接不同的设备到电源插座。
 
 ![no-interface](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-III/interfaces/no-interface.png)
 
-Let's try to implement this. Here are the device types we will be using.
+我们尝试来实现它。我们使用的设备类型如下：
 
 ```go
 type mobile struct {
@@ -3218,7 +3218,7 @@ type kettle struct {
 type socket struct{}
 ```
 
-Now, let's define a `Draw` method on a type, let's say `mobile`. Here we will simply print the properties of the type.
+我们定一个`Draw`方法到类型上，比如`mobile`将输出类型的属性。
 
 ```go
 func (m mobile) Draw(power int) {
@@ -3226,7 +3226,7 @@ func (m mobile) Draw(power int) {
 }
 ```
 
-Great, now we will define the `Plug` method on the `socket` type which accepts our `mobile` type as an argument.
+我定义`Plug`方法到`socket`类型上，它接收一个`mobile`类型作为第一个参数。
 
 ```go
 func (socket) Plug(device mobile, power int) {
@@ -3234,7 +3234,7 @@ func (socket) Plug(device mobile, power int) {
 }
 ```
 
-Let's try to _"connect"_ or _"plug in"_ the `mobile` type to our `socket` type in the `main` function.
+我们尝试在`main`函数 _"插入"_ 我们的`mobile`类型到`socket`类型里 。
 
 ```go
 package main
@@ -3249,15 +3249,14 @@ func main() {
 }
 ```
 
-And if we run this we'll see the following.
+执行该代码，我们将得到如下结果。
 
 ```bash
 $ go run main.go
 main.mobile -> brand: Apple, power: 10
 ```
 
-This is interesting, but let's say now we want to connect our `laptop` type.
-
+很好，那如果我们需要连接我们的`laptop`类型呢？
 ```go
 package main
 
@@ -3274,23 +3273,22 @@ func main() {
 }
 ```
 
-As we can see, this will throw an error.
+正如所看到的，这里抛出了一个错误。
 
-**What should we do now? Define another method? Such as `PlugLaptop`?**
+**咋搞？定义一个新方法？例如 `PlugLaptop`？**
 
-Sure, but then every time we add a new device type we will need to add a new method to the socket type as well and that's not ideal.
+当然可以，不过每次新增类型都要新增对应方法到socket类型的话就太不理想了。
 
-This is where the `interface` comes in. Essentially, we want to define a **contract** that, in the future, must be implemented.
+我们可以通过简单定义一个`PowerDrawer`的接口，并且在`Plug`函数中接收任何满足该接口标准，就是必须实现接口定义的`Draw`签名方法。
 
-We can simply define an interface such as `PowerDrawer` and use it in our `Plug` function to allow any device that satisfies the criteria, which is that the type must have a `Draw` method matching the signature that the interface requires.
-
-And anyways, the socket doesn't need to know anything about our device and can simply call the `Draw` method.
+socket也不需要知道任何关于device的信息，仅仅需要调用其`Draw`方法。
 
 ![interface](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-III/interfaces/interface.png)
 
-Now let's try to implement our `PowerDrawer` interface. Here's how it will look.
 
-The convention is to use **"-er"** as a suffix in the name. And as we discussed earlier, an interface should only describe the **expected behavior**. Which in our case is the `Draw` method.
+现在，让我们尝试实现`PowerDrawer`接口，它看起来类似如下：
+
+按照约定使用 **"-er"** 作为名字的后缀。早期我们还有提及，一个接口仅需描述其 **期望行为**， 比如咱们例子里的 `Draw` 方法。
 
 ![interface-implementation](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-III/interfaces/interface-implementation.png)
 
@@ -3300,7 +3298,7 @@ type PowerDrawer interface {
 }
 ```
 
-Now, we need to update our `Plug` method to accept a device that implements the `PowerDrawer` interface as an argument.
+现在，我们需要更新`Plug`方法，将`PowerDrawer`接口类型作为其接收参数。
 
 ```go
 func (socket) Plug(device PowerDrawer, power int) {
@@ -3308,7 +3306,7 @@ func (socket) Plug(device PowerDrawer, power int) {
 }
 ```
 
-And to satisfy the interface, we can simply add `Draw` methods to all the device types.
+为满足接口，我们需要为各个device类型添加`Draw`方法。
 
 ```go
 type mobile struct {
@@ -3344,7 +3342,7 @@ func (k kettle) Draw(power int) {
 }
 ```
 
-Now, we can connect all our devices to the socket with the help of our interface!
+现在，在接口的帮助下实现了所有devices均可连接socket！
 
 ```go
 func main() {
@@ -3362,7 +3360,7 @@ func main() {
 }
 ```
 
-And just as we expected, it works.
+正常工作。
 
 ```bash
 $ go run main.go
@@ -3372,36 +3370,35 @@ main.toaster -> amount: 4, power: 30
 main.kettle -> quantity: Half Empty, power: 25
 ```
 
-**But why is this considered such a powerful concept?**
+**为什么需要它？**
 
-Well, an interface can help us decouple our types. For example, because we have the interface, we don't need to update our `socket` implementation. We can just define a new device type with a `Draw` method.
+接口帮助我们解耦类型。例如，有了接口，我们不需要更新`socket`的实现。我们只需要给新的device定义`Draw`方法。
 
-Unlike other languages, Go Interfaces are implemented **implicitly**, so we don't need something like an `implements` keyword. This means that a type satisfies an interface automatically when it has _"all the methods"_ of the interface.
+和其它语言不同，Go接口使用**隐式**实现，不需要额外使用`implements`关键字。也就是说当一个类型满足接口**所有方法**那么它即符合该接口。
 
-## Empty Interface
+## 空接口
 
-Next, let's talk about the empty interface. An empty interface can take on a value of any type.
-
-Here's how we declare it.
+空接口可以接收任意类型的值。
 
 ```go
 var x interface{}
 ```
 
-**But why do we need it?**
+**为什么需要它**
 
-Empty interfaces can be used to handle values of unknown types.
+空接口通常用来接收未知类型。
 
-Some examples are:
+例如：
 
-- Reading heterogeneous data from an API.
-- Variables of an unknown type, like in the `fmt.Println` function.
+- 从API获取复杂的数据。
+- 接口未知参数值，例如 `fmt.Println` 函数。
 
-To use a value of type empty `interface{}`, we can use _type assertion_ or a _type switch_ to determine the type of the value.
 
-## Type Assertion
+在使用了空`interface{}`，我们可以使用 _类型断言（type assertion）_ 或者 _类型切换（type switch）_ 来确定值类型。
 
-A _type assertion_ provides access to an interface value's underlying concrete value.
+## 类型断言
+
+_类型断言_ 提供了访问底层数据的能力。
 
 For example:
 
@@ -3414,32 +3411,32 @@ func main() {
 }
 ```
 
-This statement asserts that the interface value holds a concrete type and assigns the underlying type value to the variable.
+该语句推断其接口确切的类型，然后将该值赋于变量。
 
-We can also test whether an interface value holds a specific type.
+我们还可以测试某个接口值是否为指定类型。
 
-A type assertion can return two values:
+类型断言返回两个值:
 
-- The first one is the underlying value.
-- The second is a boolean value that reports whether the assertion succeeded.
+- 第一个为际值。
+- 第二个为布尔值，标识断言是否成功。
 
 ```go
 s, ok := i.(string)
 fmt.Println(s, ok)
 ```
 
-This can help us test whether an interface value holds a specific type or not.
+它能帮助我们测试接口是否保存的是所指定的类型。
 
-In a way, this is similar to how we read values from a map.
+它和从字典获取值方式类似。
 
-And If this is not the case then, `ok` will be false and the value will be the zero value of the type, and no panic will occur.
+如果类型失败，`ok`将返回为false，值类型会被赋值为该推断类型的零值，并不会发生panic。
 
 ```go
 f, ok := i.(float64)
 fmt.Println(f, ok)
 ```
 
-But if the interface does not hold the type, the statement will trigger a panic.
+但是如果没有接收该布尔值，推断语句就会触发panic。
 
 ```go
 f = i.(float64)
@@ -3454,9 +3451,9 @@ hello true
 panic: interface conversion: interface {} is string, not float64
 ```
 
-### Type Switch
+### 类型切换
 
-Here, a `switch` statement can be used to determine the type of a variable of type empty `interface{}`.
+使用 `switch` 语句可以用来匹配空 `interface{}`实际值类型。
 
 ```go
 var t interface{}
@@ -3474,20 +3471,20 @@ default:
 }
 ```
 
-And if we run this, we can verify that we have a `string` type.
+运行该代码，我们确认了该空接口为`string`类型。
 
 ```bash
 $ go run main.go
 string: hello
 ```
 
-### Properties
+### 特性
 
-Let's discuss some properties of interfaces.
+我们看看接口的特性
 
-**Zero value**
+**零值**
 
-The zero value of an interface is `nil`.
+接口的零值为`nil`。
 
 ```go
 package main
@@ -3505,9 +3502,9 @@ func main() {
 }
 ```
 
-**Embedding**
+**嵌入**
 
-We can embed interfaces like structs.
+我们可以像结构体那样嵌入接口。
 
 _For example_
 
@@ -3526,9 +3523,9 @@ type interface3 interface {
 }
 ```
 
-**Values**
+**值可比较**
 
-Interface values are comparable.
+接口可比较。
 
 ```go
 package main
@@ -3553,7 +3550,7 @@ func main() {
 
 **Interface Values**
 
-Under the hood, an interface value can be thought of as a tuple consisting of a value and a concrete type.
+在底层，我们可以认接口是由一个值和其类型的所构成的元素。
 
 ```go
 package main
@@ -3579,17 +3576,17 @@ func main() {
 }
 ```
 
-With that, we covered interfaces in Go.
+这样我即描述Go接口涵盖内容了。
 
-It's a really powerful feature, but remember, _"Bigger the interface, the weaker the abstraction"_ - Rob Pike.
+它是一个强大的特性，但是记住 _"Bigger the interface, the weaker the abstraction（接口越大，抽象越弱）"_ - Rob Pike。
 
-# Errors
+# 错误
 
-In this tutorial, let's talk about error handling.
+本章我们聊聊错误处理。
 
-Notice I said errors and not exceptions as there is no exception handling in Go.
+注意我说的是错误而非异常，因为Go就没有异常处理。
 
-Instead, we can just return a built-in `error` type which is an interface type.
+而其是通过返回一个内建`error`接口类型来替代。
 
 ```go
 type error interface {
@@ -3597,9 +3594,9 @@ type error interface {
 }
 ```
 
-We will circle back to this shortly. First, let's try to understand the basics.
+等下我们很快在绕回来，先来理解一些基础。
 
-So, let's declare a simple `Divide` function which, as the name suggests, will divide integer `a` by `b`.
+我们来编写一个`Divide`函数，该函数返回`a`除以`b`的结果。
 
 ```go
 func Divide(a, b int) int {
@@ -3607,15 +3604,15 @@ func Divide(a, b int) int {
 }
 ```
 
-Great. Now, we want to return an error, let's say, to prevent the division by zero. This brings us to error construction.
+很好，我们通过返回错误来阻止0作为被除数的情况，这就引出了错误构造。
 
-## Constructing Errors
+## 错误构造
 
-There are multiple ways to do this, but we will look at the two most common ones.
+有多种方式，我们来看最常用的几种。
 
-### `errors` package
+### `errors` 包
 
-The first is by using the `New` function provided by the `errors` package.
+首先使用`errors`包提供的`New`函数。
 
 ```go
 package main
@@ -3633,7 +3630,9 @@ func Divide(a, b int) (int, error) {
 }
 ```
 
-Notice, how we return an `error` with the result. And if there is no error we simply return `nil` as it is the zero value of an error because after all, it's an interface.
+注意，我们是如何返回`error`结果的。如果没有错误我们使用`nil`来作为返回值，因为其是个接口类型，而nil是它的零值。
+
+那我们如何处理呢？先让我们在`main`函数来执行`Divide`函数。
 
 But how do we handle it? So, for that, let's call the `Divide` function in our `main` function.
 
@@ -3666,13 +3665,13 @@ $ go run main.go
 cannot divide by zero
 ```
 
-As you can see, we simply check if the error is `nil` and build our logic accordingly. This is considered quite idiomatic in Go and you will see this being used a lot.
+这里我们通过检查err变量是否为`nil`来推断是否错误发生，这种方式是Go里惯法。
 
-Another way to construct our errors is by using the `fmt.Errorf` function.
+另一个构造错误的方式使用`fmt.Errorf`函数。
 
-This function is similar to `fmt.Sprintf` and it lets us format our error. But instead of returning a string, it returns an error.
+该函数和`fmt.Sprintf`相似，允许我们对信息进行格式化操作, 只不过实际返回的是error类型而非string。
 
-It is often used to add some context or detail to our errors.
+它通常用来为我们错误信息附加上下文信息。
 
 ```go
 ...
@@ -3685,16 +3684,16 @@ func Divide(a, b int) (int, error) {
 }
 ```
 
-And it should work similarly.
+输出类似如下结果：
 
 ```bash
 $ go run main.go
 cannot divide 4 by zero
 ```
 
-### Sentinel Errors
+### 错误哨兵
 
-Another important technique in Go is defining expected Errors so they can be checked explicitly in other parts of the code. These are sometimes referred to as sentinel errors.
+通过预定义错误以便在其它部分代码可以用来做错误检查，称之为错误哨兵。
 
 ```go
 package main
@@ -3717,13 +3716,13 @@ func Divide(a, b int) (int, error) {
 }
 ```
 
-In Go, it is considered conventional to prefix the variable with `Err`. For example, `ErrNotFound`.
+Go中约定给哨兵错误使用`Err`前缀命名，例如`ErrNotFound`。
 
-**But what's the point?**
+**关键点？**
 
-So, this becomes useful when we need to execute a different branch of code if a certain kind of error is encountered.
+这在通过返回不同错误执行不同代码分支情况下很有用。
 
-For example, now we can check explicitly which error occurred using the `errors.Is` function.
+例如，我们可以通过`errors.Is`函数来判断具体错误类型。
 
 ```go
 package main
@@ -3740,7 +3739,7 @@ func main() {
 		switch {
     case errors.Is(err, ErrDivideByZero):
         fmt.Println(err)
-				// Do something with the error
+		// 错误发生后做一些其它操作
     default:
         fmt.Println("no idea!")
     }
@@ -3749,7 +3748,7 @@ func main() {
 	}
 
 	fmt.Println(result)
-	// Use the result
+	// 使用result
 }
 
 func Divide(a, b int) (int, error) {...}
@@ -3760,13 +3759,13 @@ $ go run main.go
 cannot divide by zero
 ```
 
-## Custom Errors
+## 自定义错误
 
-This strategy covers most of the error handling use cases. But sometimes we need additional functionalities such as dynamic values inside of our errors.
+目前为止，错误构造涵盖了太多数场景。不过有时我们需要在错误里添加附加功能。
 
-Earlier, we saw that `error` is just an interface. So basically, anything can be an `error` as long as it implements the `Error()` method which returns an error message as a string.
+前面我们有说到`error`仅是个接口。基本上，任何实现了`Error()`方法返回一个错误消息的类型均可作为`error`。
 
-So, let's define our custom `DivisionError` struct which will contain an error code and a message.
+我们来自定义`DivisionError`结构体并包含错误代码和消息。
 
 ```go
 package main
@@ -3799,7 +3798,7 @@ func Divide(a, b int) (int, error) {
 }
 ```
 
-Here, we will use `errors.As` instead of `errors.Is` function to convert the error to the correct type.
+这里，我们使用`errors.As`而不是`errors.Is`函数将error转换为正确类型。
 
 ```go
 func main() {
@@ -3811,7 +3810,7 @@ func main() {
 		switch {
 		case errors.As(err, &divErr):
 			fmt.Println(divErr)
-			// Do something with the error
+			// 错误发生后执行操作
 		default:
 			fmt.Println("no idea!")
 		}
@@ -3820,7 +3819,7 @@ func main() {
 	}
 
 	fmt.Println(result)
-	// Use the result
+	// 使用result
 }
 
 func Divide(a, b int) (int, error) {...}
@@ -3831,11 +3830,11 @@ $ go run man.go
 code 2000: cannot divide by zero
 ```
 
-**But what's the difference between `errors.Is` and `errors.As`?**
+**那么 `errors.Is` 和 `errors.As`不同？**
 
-The difference is that this function checks whether the error has a specific type, unlike the [`Is`](https://pkg.go.dev/errors#Is) function, which examines if it is a particular error object.
+[`Is`](https://pkg.go.dev/errors#Is)仅检测是否为对应错误类型，而`As`会转换为丢应类型，这样才能实际去访问其内部属性。
 
-We can also use type assertions but it's not preferred.
+类型断言也可以同样实现，不过不太建议！
 
 ```go
 func main() {
@@ -3850,13 +3849,13 @@ func main() {
 }
 ```
 
-Lastly, I will say that error handling in Go is quite different compared to the traditional `try/catch` idiom in other languages. But it is very powerful as it encourages the developer to actually handle the error in an explicit way, which improves readability as well.
+最后，我想说的是Go在错误处理方面和其它传统的`try/catch`式编程语言走了一条不同的路径。不过这是它鼓励程序员显示错误处理，并且还提高了可读性。
 
-# Panic and Recover
+# Panic和Recover
 
-So earlier, we learned that the idiomatic way of handling abnormal conditions in a Go program is using errors. While errors are sufficient for most cases, there are some situations where the program cannot continue.
+前面，我们介绍了Go使用errors机制来处理错误机制的习惯用法。错误满足大部分场景，不过有时在某些情况程序将无法继续执行。
 
-In those cases, we can use the built-in `panic` function.
+该场景，我们使用内建的`panic`函数
 
 ## Panic
 
@@ -3864,11 +3863,11 @@ In those cases, we can use the built-in `panic` function.
 func panic(interface{})
 ```
 
-The panic is a built-in function that stops the normal execution of the current `goroutine`. When a function calls `panic`, the normal execution of the function stops immediately and the control is returned to the caller. This is repeated until the program exits with the panic message and stack trace.
+`panic`是内建的函数用来组织当前`goroutine`执行。当函数执行`panic`，当前函数将立即停止执行，并将控制权交换给调用方，这个动作将重复执行直到退出（伴随panic消息和堆栈追踪信息）
 
-_Note: We will discuss `goroutines` later in the course._
+_注意：我们在后面课程再讨论`goroutines`._
 
-So, let's see how we can use the `panic` function.
+让我们来看看如何使用`panic`函数。
 
 ```go
 package main
@@ -3882,7 +3881,7 @@ func WillPanic() {
 }
 ```
 
-And if we run this, we can see `panic` in action.
+执行后，我们在输出中看到`panic`信息。
 
 ```bash
 $ go run main.go
@@ -3896,19 +3895,20 @@ main.main()
 exit status 2
 ```
 
-As expected, our program printed the panic message, followed by the stack trace, and then it was terminated.
+如预期，我们程序打印了panic消息，并且还带有堆栈信息，然后旧终止。
 
-So, the question is, what to do when an unexpected panic happens?
+问题在于如果一个未预料的panic发生我们该怎么办？
 
 ## Recover
 
-Well, it is possible to regain control of a panicking program using the built-in `recover` function, along with the `defer` keyword.
+我们可以通过使用`defer`关键执行内建`recover`函数重新将发生了panic应用获取控制权。
+
 
 ```go
 func recover() interface{}
 ```
 
-Let's try an example by creating a `handlePanic` function. And then, we can call it using `defer`.
+我们来创建一个`HandlePanic`函数，然后使用`defer`。
 
 ```go
 package main
@@ -3926,6 +3926,7 @@ func handlePanic() {
 
 func WillPanic() {
 	defer handlePanic()
+	// or defer func() { fmt.Println("Recovered:", data) }()
 
 	panic("Woah")
 }
@@ -3936,25 +3937,25 @@ $ go run main.go
 Recovered: Woah
 ```
 
-As we can see, our panic was recovered and now our program can continue execution.
+正如所见，我们应用程序得到了恢复并继续执行了。
 
-Lastly, I will mention that `panic` and `recover` can be considered similar to the `try/catch` idiom in other languages. But one important factor is that we should avoid panic and recover and use [errors](https://karanpratapsingh.com/courses/go/errors) when possible.
+最后我要提及的是`panic`和`recover`可以考虑类似其它语言的`try/catch`机制。但是我们应该避免在程序使用panic和recover而是尽可能使用[errors](https://karanpratapsingh.com/courses/go/errors)。
 
-If so, then this brings us to the question, when should we use `panic`?
+那么什么时候使用`panic`？
 
-## Use Cases
+## 用例
 
-There are two valid use cases for `panic`:
+两个使用`panic`的场景：
 
-- **An unrecoverable error**
+- **无法恢复的error**
 
-Which can be a situation where the program cannot simply continue its execution.
+当应用遇到某个场景以致没法再继续执行。
 
-For example, reading a configuration file which is important to start the program, as there is nothing else to do if the file read itself fails.
+例如，启动应用时高度依赖某个配置文件，那如果这个配置文件不存在那程序只能停止执行。
 
-- **Developer error**
+- **开发的error**
 
-This is the most common situation. For example, dereferencing a pointer when the value is `nil` will cause a panic.
+这个是常见场景，例如，解`nil`指针引用将引发panic。
 
 # Testing
 
