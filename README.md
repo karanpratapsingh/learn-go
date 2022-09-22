@@ -4247,19 +4247,19 @@ fuzz: elapsed: 0s, execs: 1 (25/sec), new interesting: 0 (total: 0)
         testing.go:1349: panic: B is greater than A
 ```
 
-我个人认为这时Go 1.18很棒的特性。你可以通过查看[官方博客](https://go.dev/doc/fuzz/)对于关于模糊测试描述。
+我个人认为这时Go 1.18很棒的特性。你可以通过查看[官方博客](https://go.dev/doc/fuzz/)对于模糊测试的描述。
 
 # 泛型
 
-In this section, we will learn about Generics which is a much awaited feature that was released with Go version 1.18.
+本章，我们来学习泛型，它首次出现于 Go 1.18版本，是最为期待的一个特性。
 
-## What are Generics?
+## 什么是泛型？
 
-Generics means parameterized types. Put simply, generics allow programmers to write code where the type can be specified later because the type isn't immediately relevant.
+泛型意味着参数化类型。简单来说，泛型允许程序员延后确定类型。
 
-Let's take a look at an example to understand this better.
+我们通过例子来理解。
 
-For our example, we have simple sum functions for different types such as `int`, `float64`, and `string`. Since method overriding is not allowed in Go we usually have to create new functions.
+例如，我们有个针对不同类型如`int`，`float64`和`string`计算总和的函数。由于Go不支持方法覆写，通常我需要定义多个函数来处理。
 
 ```go
 package main
@@ -4285,9 +4285,9 @@ func main() {
 }
 ```
 
-As we can see, apart from the types, these functions are pretty similar.
+就如上所示，除了类型不同，函数基本上是一样的。
 
-Let's see how we can define a generic function.
+我们看看如何定义泛型函数。
 
 ```go
 func fnName[T constraint]() {
@@ -4295,11 +4295,11 @@ func fnName[T constraint]() {
 }
 ```
 
-Here, `T` is our type parameter and `constraint` will be the interface that allows any type implementing the interface.
+这里`T`为我们的类型参数`constraint`是限定实现该接口的类型。
 
-I know, I know, this is confusing. So, let's start building our generic `sum` function.
+是不是有点晕，我们来试着构建`sum`泛型函数。
 
-Here, we will use `T` as our type parameter with an empty `interface{}` as our constraint.
+这里，我们使用`T`作为类型参数，并且协定`interface{}`为类型约束。
 
 ```go
 func sum[T interface{}](a, b T) T {
@@ -4307,7 +4307,7 @@ func sum[T interface{}](a, b T) T {
 }
 ```
 
-Also, starting with Go 1.18 we can use `any`, which is pretty much equivalent to the empty interface.
+Go 1.18可以使用`any`来代替空接口。
 
 ```go
 func sum[T any](a, b T) T {
@@ -4315,7 +4315,7 @@ func sum[T any](a, b T) T {
 }
 ```
 
-With type parameters, comes the need to pass type arguments, which can make our code verbose.
+有了类型参数，我们就需要实际执行时传递所需要的类型，使得代码显得更冗长。
 
 ```go
 sum[int](1, 2) // explicit type argument
@@ -4323,7 +4323,7 @@ sum[float64](4.0, 2.0)
 sum[string]("a", "b")
 ```
 
-Luckily, Go 1.18 comes with **type inference** which helps us to write code that calls generic functions without explicit types.
+幸运的是 Go 1.18具备**类型推断**能力使得我们在执行期间不需要指明类型。
 
 ```go
 sum(1, 2)
@@ -4331,7 +4331,7 @@ sum(4.0, 2.0)
 sum("a", "b")
 ```
 
-Let's run this and see if it works.
+让我们来执行看看是否正常工作
 
 ```bash
 $ go run main.go
@@ -4340,7 +4340,7 @@ $ go run main.go
 a b
 ```
 
-Now, let's update the `sum` function to add our variables.
+现在，让我们更新`sum`函数对我们变量执行加法运算。
 
 ```go
 func sum[T any](a, b T) T {
@@ -4354,20 +4354,20 @@ fmt.Println(sum(4.0, 2.0))
 fmt.Println(sum("a", "b"))
 ```
 
-But now if we run this, we will get an error that operator `+` is not defined in the constraint.
+当我们执行时却得到了：operator `+` is not defined in the constraint。
 
 ```bash
 $ go run main.go
 ./main.go:6:9: invalid operation: operator + not defined on a (variable of type T constrained by any)
 ```
 
-While constraint of type `any` generally works it does not support operators.
+当使用`any`类型约束时，通常不支持操作符。
 
-So let's define our own custom constraint using an interface. Our interface should define a type set containing `int`, `float`, and `string`.
+让我们使用接口来实现自定义约束。我们接口需要定义类型集合包含`int`，`float`和`string`。
 
 ![typeset](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-III/generics/typeset.png)
 
-Here's how our `SumConstraint` interface looks.
+`SumConstraint`接口类似如下：
 
 ```go
 type SumConstraint interface {
@@ -4385,7 +4385,7 @@ func main() {
 }
 ```
 
-And this should work as expected
+这样就正常工作了。
 
 ```bash
 $ go run main.go
@@ -4394,7 +4394,7 @@ $ go run main.go
 ab
 ```
 
-We can also use the `constraints` package which defines a set of useful constraints to be used with type parameters.
+`constraints`包预定义了一些作用类型参数的常用约束。
 
 ```go
 type Signed interface {
@@ -4422,7 +4422,7 @@ type Ordered interface {
 }
 ```
 
-For that, we will need to install the `constraints` package.
+要使用它我们需要安装`constraints`包。
 
 ```bash
 $ go get golang.org/x/exp/constraints
@@ -4447,7 +4447,7 @@ func main() {
 }
 ```
 
-Here we are using the `Ordered` constraint.
+这里我们使用了 `Ordered` 约束。
 
 ```go
 type Ordered interface {
@@ -4455,9 +4455,9 @@ type Ordered interface {
 }
 ```
 
-`~` is a new token added to Go and the expression `~string` means the set of all types whose underlying type is `string`.
+`~`是Go新增的符号，`~string`代码所有底层数据类型是`string`。
 
-And it still works as expected.
+同样正常工作
 
 ```bash
 $ go run main.go
@@ -4466,19 +4466,17 @@ $ go run main.go
 ab
 ```
 
-Generics is an amazing feature because it permits writing abstract functions that can drastically reduce code duplication in certain cases.
+泛型是一个惊人特性，它允许构建抽象的函数避免在某些情况下编写重复代码。
 
-## When to use generics
+## 什么时候使用泛型
 
-So, when to use generics? We can take the following use cases as an example:
+所以，什么时候使用泛型？考虑在如下场景下：
 
-- Functions that operate on arrays, slices, maps, and channels.
-- General purpose data structures like stack or linked list.
-- To reduce code duplication.
+- 函数操作数组，切片，字典还有通道。
+- 通用数据结构，如栈和链表。
+- 减少代码重复。
 
-Lastly, I will add that while generics are a great addition to the language, they should be used sparingly.
-
-And, it is advised to start simple and only write generic code once we have written very similar code at least 2 or 3 times.
+泛型作为语言附加能力，我们应该少量的使用它。建议只有在编写重复代码2到3次时考虑使用泛型。
 
 # Concurrency
 
