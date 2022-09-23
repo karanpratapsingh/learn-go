@@ -5148,11 +5148,11 @@ func main() {
 	go c.Update(19, &wg)
 
 	wg.Wait()
-	fmt.Println(c.value)
+	fmt.Printf("Result is %d\b", c.value)
 }
 ```
 
-Let's run this and see what happens.
+让我们看看输出结果
 
 ```bash
 $ go run main.go
@@ -5163,11 +5163,11 @@ Adding 25 to 0
 Result is 49
 ```
 
-That doesn't look accurate, seems like our value is always zero but we somehow got the correct answer.
+奇怪，似乎我们获取到的值总为0，缺得到了正确的答案。
 
-Well, this is because, in our example, multiple goroutines are updating the `value` variable. And as you must have guessed, this is not ideal.
+例子中，多个goroutine同时更新`value`变量，你或许猜到了，这并不理想。
 
-This is the perfect use case for Mutex. So, let's start by using `sync.Mutex` and wrap our critical section in between `Lock()` and `Unlock()` methods.
+这就是一个使用Mutex极佳的雷子。让我们开始使用`sync.Mutex`通过`Lock()`和`Unlock()`方法来包装临界区。
 
 ```go
 package main
@@ -5203,6 +5203,8 @@ func main() {
 	go c.Update(19, &wg)
 
 	wg.Wait()
+	
+	fmt.Printf("Result is %d\n", c.value);
 }
 ```
 
@@ -5215,9 +5217,9 @@ Adding 10 to 39
 Result is 49
 ```
 
-Looks like we solved our issue and the output looks correct as well.
+看起来我们解决问题得到了正确答案。
 
-_Note: Similar to WaitGroup a Mutex must **not be copied** after first use._
+_Note: 同WaitGroup一样，Mutex 也不能作为 **拷贝** 方式传递。_
 
 ## RWMutex
 
