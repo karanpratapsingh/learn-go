@@ -43,9 +43,9 @@ _本课程还可以通过访问[网站](https://www.karanpratapsingh.com/courses
 
 - **第四章**
 
-  - [Concurrency](#concurrency)
+  - [并发](#并发)
   - [Goroutines](#goroutines)
-  - [Channels](#channels)
+  - [通道](#通道)
   - [Select](#select)
   - [Sync Package](#sync-package)
   - [Advanced Concurrency Patterns](#advanced-concurrency-patterns)
@@ -4478,141 +4478,143 @@ ab
 
 泛型作为语言附加能力，我们应该少量的使用它。建议只有在编写重复代码2到3次时考虑使用泛型。
 
-# Concurrency
+# 并发
 
-In this lesson, we will learn about concurrency which is one of the most powerful features of Go.
+本课程我们来学习Go最强大的特性之一**并发**。
 
-So, let's start by asking What is _"concurrency"_?
+我们先来一探究竟，啥是 _"并发"_ ?
 
-## What is Concurrency
+## 什么是并发
 
-Concurrency, by definition, is the ability to break down a computer program or algorithm into individual parts, which can be executed independently.
+并发，根据其定义，允许将计算机程序或者算法分解为独立部分，并且独立执行。
 
-The final outcome of a concurrent program is the same as that of a program that has been executed sequentially.
+并发执行结果与顺序执行结果相同。
 
-Using concurrency, we can achieve the same results in lesser time, thus increasing the overall performance and efficiency of our programs.
+使用并发我们在完成一件事情时用更少的时间，从而提高程序整体性能和效率。
 
-## Concurrency vs Parallelism
+## 并发和并行
 
 ![concurrency-vs-parallelism](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/concurrency/concurrency-vs-parallelism.png)
 
-A lot of people confuse concurrency with parallelism because they both somewhat imply executing code simultaneously, but they are two completely different concepts.
+很多人对于并发和并行会混淆，因为它们某种程序上都是同时执行代码，但却概念上完全不同。
 
-Concurrency is the task of running and managing multiple computations at the same time, while parallelism is the task of running multiple computations simultaneously.
+并发是同时在多个不同计算任务去做事，而并行同时去做多个计算任务。
 
-A simple quote from Rob Pike pretty much sums it up.
+Rob Pike对此有个完美诠释：
 
-_"Concurrency is about dealing with lots of things at once. Parallelism is about doing lots of things at once"_
+_"并发用于在同时处理很多事件，而并行是同时做很多事件"_
 
-But concurrency in Go is more than just syntax. In order to harness the power of Go, we need to first understand how Go approaches concurrent execution of code. Go relies on a concurrency model called CSP (Communicating Sequential Processes).
+但Go并发不仅仅是一个语法，为了来理解Go这强大特性，我们需要理解Go是如何并发执行代码的。Go依赖一个称为CSP（Communicating Sequential Processes）并发模型。
 
-## Communicating Sequential Processes (CSP)
+## 通信顺序进程 (CSP)
 
-[Communicating Sequential Processes](https://dl.acm.org/doi/10.1145/359576.359585) (CSP) is a model put forth by [Tony Hoare](https://en.wikipedia.org/wiki/Tony_Hoare) in 1978 which describes interactions between concurrent processes. It made a breakthrough in Computer Science, especially in the field of concurrency.
+[通信顺序进程](https://dl.acm.org/doi/10.1145/359576.359585) (CSP) 是由[Tony Hoare](https://en.wikipedia.org/wiki/Tony_Hoare)提出用来描述并发进行交互的模型。它对计算机科学领域产生了较大突破，尤其是在并发领域。
 
-Languages like Go and Erlang have been highly inspired by the concept of communicating sequential processes (CSP).
+类似Go和Erlang语句都借鉴了通信顺序进程(CSP)概念。
 
-Concurrency is hard, but CSP allows us to give a better structure to our concurrent code and provides a model for thinking about concurrency in a way that makes it a little easier. Here, processes are independent and they communicate by sharing channels between them.
+并发实现是复杂的，但是CSP给我们的并发提供更好的结构，以便大伙使用更简单的方式来实现并发。它主张进程使用通道来通信。
 
 ![csp](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/concurrency/csp.png)
 
-_We'll learn how Golang implements it using goroutines and channels later in the course._
+_我们后面会讨论Go如何使用goroutine和通道来实现它。_
 
-## Basic Concepts
+## 基本概念
 
-Now, let's get familiar with some basic concurrency concepts
+我们来熟悉一些并发基本概念
 
-### Data Race
+### 数据竞争
 
-A data race occurs when processes have to access the same resource concurrently.
+当进程并发访问相同资源时产生数据竞争。
 
-_For example, one process reads while another simultaneously writes to the exact same resource._
+_例如一个进程在读某个资源时，另一个进程同时在写入该资源。_
 
-### Race Conditions
+### 竞争条件
 
-A race condition occurs when the timing or order of events affects the correctness of a piece of code.
+当事件的时间或者顺序会影响代码的正确时我们就说发生了竞争条件。
 
-### Deadlocks
+### 死锁
 
-A deadlock occurs when all processes are blocked while waiting for each other and the program cannot proceed further.
+当所有进程因为相互在等待其对方释放某个资源而挂起时我们就说发生死锁。
 
-**Coffman Conditions**
+**科夫曼条件**
 
-There are four conditions, known as the Coffman conditions, all of them must be satisfied for a deadlock to occur.
+有四种条件，称之为科夫曼条件，必须满足所有条件才会发生死锁。
 
-- **Mutual Exclusion**
+- **互斥**
 
+一个并发进程持有至少一个资源，并且是non-sharable（不可分享）。
 A concurrent process holds at least one resource at any one time making it non-sharable.
 
-_In the diagram below, there is a single instance of Resource 1 and it is held by Process 1 only._
+_如何图示，有一个进程1持有单个资源1_
 
 ![mutual-exclusion](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/concurrency/mutual-exclusion.png)
 
-- **Hold and wait**
+- **等待**
 
-A concurrent process holds a resource and is waiting for an additional resource.
+一个并发进程持有一个资源且等待另一个资源。
 
-_In the diagram given below, Process 2 holds Resource 2 and Resource 3 and is requesting the Resource 1 which is held by Process 1._
+_下面图示，进程2持有资源2和资源3，并且尝试请求被进程1持有的资源1._
 
 ![hold-and-wait](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/concurrency/hold-and-wait.png)
 
-- **No preemption**
+- **无抢占**
 
-A resource held by a concurrent process cannot be taken away by the system. It can only be freed by the process holding it.
+一个资源被一个并发进程持有时不能被系统抢占，只有当它自己释放时才可以被其它进程持有。
 
-_In the diagram below, Process 2 cannot preempt Resource 1 from Process 1. It will only be released when Process 1 relinquishes it voluntarily after its execution is complete._
+_如下图示，进程2不能从进程1抢占资源1.只有当进程1z执行完成后自愿放弃资源1时才可以获得。._
 
 ![no-preemption](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/concurrency/no-preemption.png)
 
-- **Circular wait**
+- **环型等待**
 
-A process is waiting for the resource held by the second process, which is waiting for the resource held by the third process, and so on, till the last process is waiting for a resource held by the first process. Hence, forming a circular chain.
+一个进程等待另一个进程资源，而另一个进程又在等待第三个进程的资源。等等，最后进程又在等待第一个进程资源，这样形成了一个环型链。
 
-_In the diagram below, Process 1 is allocated Resource2 and it is requesting Resource 1. Similarly, Process 2 is allocated Resource 1 and it is requesting Resource 2. This forms a circular wait loop._
+_如下图示，进程1持有资源2请求资源1，同时进程2持有资源1请求资源2。这样形成了环形等待。_
 
 ![circular-wait](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/concurrency/circular-wait.png)
 
-### Livelocks
+### 活锁
 
-Livelocks are processes that are actively performing concurrent operations, but these operations do nothing to move the state of the program forward.
+活锁是进程积极执行并发操作（你让我我让你），但是对于推动程序进行没有任何帮助。
 
-### Starvation
+### 饥饿
 
-Starvation happens when a process is deprived of necessary resources and is unable to complete its function.
+当进程所需资源被其它进程抢占以致无法继续执行，我们就说发生了饥饿。
 
-Starvation can happen because of deadlocks or inefficient scheduling algorithms for processes. In order to solve starvation, we need to employ better resource-allotment algorithms that make sure that every process gets its fair share of resources.
+饥饿可发生在死锁，或者低效的调度算法。为了解决饥饿，我们需要一个更好资源分配算法，让每个进程都可以公平得获取到资源。
 
 # Goroutines
 
-In this lesson, we will learn about Goroutines.
+本课程我们来学习Goroutines
 
-But before we start our discussion, I wanted to share an important Go proverb.
+在学习之前，我想给大伙分享Go箴言。
 
-_"Don't communicate by sharing memory, share memory by communicating."_ - Rob Pike
+_"不要通过共享内存来通信，而是通过通信来共享内存。"_ - Rob Pike
 
-## What is a goroutine?
+## 那什么是 goroutine？
 
-A _goroutine_ is a lightweight thread of execution that is managed by the Go runtime and essentially let us write asynchronous code in a synchronous manner.
+_goroutine_是一个轻量级线程，由Go运行时管理，以便能够以同步的方式来编写异步代码。
 
-It is important to know that they are not actual OS threads and the main function itself runs as a goroutine.
+需要知道的是实际执行goroutine时并没有实际开辟系统线程，且main函数自身也是一个goroutine。
 
-A single thread may run thousands of goroutines in them by using the Go runtime scheduler which uses cooperative scheduling. This implies that if the current goroutine is blocked or has been completed, the scheduler will move the other goroutines to another OS thread. Hence, we achieve efficiency in scheduling where no routine is blocked forever.
+但线程可能执行上千个goroutine，由Go运行时使用合作调度方式(cooperative scheduling)来进行调度。也就是说当一个goroutine挂起了或者完成了，调度器将其它goroutine调度到其它系统线程中执行。该高效调度方式使得不会有使得routine处于完全挂起状态。
 
-We can turn any function into a goroutine by simply using the `go` keyword.
+我们可以通过使用`go`关键字来将一个函数转换为goroutine。
 
 ```go
 go fn(x, y, z)
 ```
 
-Before we write any code, it is important to briefly discuss the fork-join model.
+在编写代码之前，有必要先来讨论一下fork-join模型。
 
-## Fork-Join Model
+## Fork-Join模型
 
-Go uses the idea of the fork-join model of concurrency behind goroutines. The fork-join model essentially implies that a child process splits from its parent process to run concurrently with the parent process. After completing its execution, the child process merges back into the parent process. The point where it joins back is called the **join point**.
+Go在goroutine被后使用fork-join模型。fork-join模型是一个将父进程分解为多个子进程且与父进程并发之前。在执行完成后，进程将结果合并到父进程中。合并这个点我们称为**join pont**。
 
 ![fork-join](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/goroutines/fork-join.png)
 
-Now, let's write some code and create our own goroutine.
+
+现在，让我们来编写goroutine。
 
 ```go
 package main
@@ -4628,18 +4630,18 @@ func main() {
 }
 ```
 
-Here the `speak` function call is prefixed with the `go` keyword. This will allow it to run as a separate goroutine. And that's it, we just created our first goroutine. It's that simple!
+这里我们通过在`speak`函数前增加`go`关键字来执行。这样会产生独立的goroutine来执行。简单吧！
 
-Great, let's run this:
+我们执行看看：
 
 ```bash
 $ go run main.go
 
 ```
 
-Interesting, it seems like our program did not run completely as it's missing some output. This is because our main goroutine exited and did not wait for the goroutine that we created.
+似乎我们程序并没有完全执行，没有任何输出。这是因为goroutine在main没有直言等待的话，其它goroutine会随着main goroutine一起退出。
 
-What if we make our program wait using the `time.Sleep` function?
+如果我们让程序使用`time.Sleep`函数来等待呢？
 
 ```go
 func main() {
@@ -4648,42 +4650,42 @@ func main() {
 }
 ```
 
-And now, if we run this.
+现在我们再运行看看
 
 ```bash
 $ go run main.go
 Hello World
 ```
 
-There we go, we can see our complete output now.
+现在，我们可以看到完整的输出了。
 
-**Okay, so this works but it's not ideal. So how do we improve this?**
+**好了，虽然可以工作，但是我们还能怎么改善？**
 
-Well, the most tricky part about using goroutines is knowing when they will stop. It is important to know that goroutines run in the same address space, so access to shared memory must be synchronized.
+最棘手的部分是在使用goroutine时知道何时会停止。还需要知道时goroutines运行在相同内存空间，所以访问共享内存时确保是同步的。
 
-# Channels
+# 通道
 
-In this lesson, we will learn about Channels.
+本课程我们将学习通道。
 
-## So what are channels?
+## 什么是通道
 
-Well, simply defined a channel is a communications pipe between goroutines. Things go in one end and come out another in the same order until the channel is closed.
+简单来说通道就是用来在goroutine之间通信的管道。一边输入一边输出，且保持相同的顺序直到通道关闭。
 
 ![channel](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/channels/channel.png)
 
-As we learned earlier, channels in Go are based on Communicating Sequential Processes (CSP).
+正如之前所学，Go中的通道基于通信顺序进程（CSP）。
 
-## Creating a channel
+## 创建通道
 
-Now that we understand what channels are, let's see how we can declare them.
+现在我们知道通道了，让我们来学习如何申明它们。
 
 ```go
 var ch chan T
 ```
 
-Here, we prefix our type `T` which is the data type of the value we want to send and receive with the keyword `chan` which stands for a channel.
+这里`T`是我们需要发送和接收的数据类型，关键字`chan`代表为通道类型。
 
-Let's try printing the value of our channel `c` of type `string`.
+让我们尝试输出打印`string`通道`c`的值。
 
 ```go
 func main() {
@@ -4698,9 +4700,9 @@ $ go run main.go
 <nil>
 ```
 
-As we can see, the zero value of a channel is `nil` and if we try to send data over the channel our program will panic.
+正如我们所见，通道的零值为`nil`，如果我们对其发送输出将会引发panic。
 
-So, similar to slices we can initialize our channel using the built-in `make` function.
+和切片类似，我们可以使用内建`make`函数来初始化通道。
 
 ```go
 func main() {
@@ -4710,16 +4712,16 @@ func main() {
 }
 ```
 
-And if we run this, we can see our channel was initialized.
+执行该代码，我们看到我们通道已经被初始化了。
 
 ```bash
 $ go run main.go
 0x1400010e060
 ```
 
-## Sending and Receiving data
+## 发送和接收数据
 
-Now that we have a basic understanding of channels, let us implement our earlier example using channels to learn how we can use them to communicate between our goroutines.
+现在我们对通道有个基本了解，让我们实现goroutines之间如何使用通道通信。
 
 ```go
 package main
@@ -4727,7 +4729,7 @@ package main
 import "fmt"
 
 func speak(arg string, ch chan string) {
-	ch <- arg // Send
+	ch <- arg // 发送
 }
 
 func main() {
@@ -4735,29 +4737,30 @@ func main() {
 
 	go speak("Hello World", ch)
 
-	data := <-ch // Receive
+	data := <-ch // 接收
 	fmt.Println(data)
 }
 ```
 
-Notice how we can send data using the `channel<-data` and receive data using the `data := <-channel` syntax.
+注意这里使用`channel < -data`发送数据，使用 `data := <-channel`语法来获取数据。
 
-And if we run this
+如果我们执行该代码：
 
 ```bash
 $ go run main.go
 Hello World
 ```
 
-Perfect, our program ran as we expected.
+完美，我们程序如期执行。
 
-## Buffered Channels
+## 缓冲通道
 
-We also have buffered channels that accept a limited number of values without a corresponding receiver for those values.
+
+我们还可以定义具备缓冲区的管道来限定最大可容纳的值个数。
 
 ![buffered-channel](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/channels/buffered-channel.png)
 
-This _buffer length_ or _capacity_ can be specified using the second argument to the `make` function.
+通过`make`函数的第二个参数来指定 _缓冲长度_ 或者 _容量_。
 
 ```go
 func main() {
@@ -4774,19 +4777,19 @@ func main() {
 }
 ```
 
-Because this channel is buffered, we can send these values into the channel without a corresponding concurrent receive. This means _sends_ to a buffered channel block only when the buffer is full and _receives_ block when the buffer is empty.
+因为通道是缓冲，我们可以发送多个值至通道并发接收，也就是说 _发送_ 到缓冲通道只有当通道满了才挂起，而 _接收_ 在通道为空时挂起。
 
-By default, a channel is unbuffered and has a capacity of 0, hence, we omit the second argument to the `make` function.
+默认通道是无缓冲，具备0容量。也就是忽略`make`函数的第二个参数。
 
-Next, we have directional channels.
+接下来我们看看定向通道。
 
-## Directional channels
+## 定向通道
 
-When using channels as function parameters, we can specify if a channel is meant to only send or receive values. This increases the type-safety of our program as by default a channel can both send and receive values.
+当使用通道作为函数时。我们可以指明该通道是用来发送还是接收值。默认通道是可以收发的，增加定向符可以提高类型安全。
 
 ![directional-channels](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/channels/directional-channels.png)
 
-In our example, we can update our `speak` function's second argument such that it can only send a value.
+在我们例子中，我们将其`speak`函数所有接收第二个通道参数配置为限定发送通道。
 
 ```go
 func speak(arg string, ch chan<- string) {
@@ -4794,13 +4797,13 @@ func speak(arg string, ch chan<- string) {
 }
 ```
 
-Here, `chan<-` can only be used for sending values and will panic if we try to receive values.
+这里 `chan<-` 只能用来发送至，如果尝试读取操作会引发panic。
 
-## Closing channels
+## 关闭通道
 
-Also, just like any other resource, once we're done with our channel, we need to close it. This can be achieved using the built-in `close` function.
+同样，和其它资源一样，一旦使用完通道我们需要关闭它。通过内建的`close`函数实现。
 
-Here, we can just pass our channel to the `close` function.
+这里我们将我们通道作为参数传递给`close`函数。
 
 ```go
 func main() {
@@ -4819,7 +4822,7 @@ func main() {
 }
 ```
 
-Optionally, receivers can test whether a channel has been closed by assigning a second parameter to the receive expression.
+我们可以通过可选接收通道的第二个参数用来判定通道是否关闭。
 
 ```go
 func main() {
@@ -4838,29 +4841,29 @@ func main() {
 }
 ```
 
-if `ok` is `false` then there are no more values to receive and the channel is closed.
+如果`ok`的值为`false`那么说明没有值可以接收了，通道已经被关闭。
 
-_In a way, this is similar to how we check if a key exists or not in a map._
+_和我们在字典检测键是否存在相似。_
 
-## Properties
+## 特性
 
-Lastly, let's discuss some properties of channels:
+最后我们来讨论通道的特性：
 
-- A send to a nil channel blocks forever.
+- 给nil通道发送值将会使通道永远挂起。
 
 ```go
 var c chan string
 c <- "Hello, World!" // Panic: all goroutines are asleep - deadlock!
 ```
 
-- A receive from a nil channel blocks forever.
+- 从nil通道读取值也会永远挂起。
 
 ```go
 var c chan string
 fmt.Println(<-c) // Panic: all goroutines are asleep - deadlock!
 ```
 
-- A send to a closed channel panics.
+- 给关闭的通道发送至会运发panic。
 
 ```go
 var c = make(chan string, 1)
@@ -4869,7 +4872,7 @@ close(c)
 c <- "Hello, Panic!" // Panic: send on closed channel
 ```
 
-- A receive from a closed channel returns the zero value immediately.
+- 从关闭的通道获取值会返回零值。
 
 ```go
 var c = make(chan int, 2)
@@ -4881,9 +4884,9 @@ for i := 0; i < 4; i++ {
 }
 ```
 
-- Range over channels.
+- 在通道上使用Range。
 
-We can also use `for` and `range` to iterate over values received from a channel.
+我们也可以通过在通道上结合`for`和`range`来遍历获取值。
 
 ```go
 package main
@@ -4906,11 +4909,11 @@ func main() {
 
 # Select
 
-In this tutorial, we will learn about the `select` statement in Go.
+本章，我们学习如何在Go使用`select`语句。
 
-The `select` statement blocks the code and waits for multiple channel operations simultaneously.
+`select`语句块用来实现同时对多个通道操作。
 
-A `select` blocks until one of its cases can run, then it executes that case. It chooses one at random if multiple are ready.
+`select`语句块一直等待任何一个子句可执行，如果多个子句可执行的话旧随机选择一个。
 
 ```go
 package main
@@ -4946,7 +4949,7 @@ func main() {
 }
 ```
 
-Similar to `switch`, `select` also has a default case that runs if no other case is ready. This will help us send or receive without blocking.
+和`switch`语句一样，`select`同样指明一个默认分支，它将在没人任何case子句符合执行条件时执行，这样发送和接收时不会挂起。
 
 ```go
 func main() {
@@ -4982,7 +4985,7 @@ func main() {
 }
 ```
 
-It's also important to know that an empty `select {}` blocks forever.
+空`select {}`语句会永远挂起。
 
 ```go
 func main() {
@@ -4994,25 +4997,25 @@ func main() {
 }
 ```
 
-# Sync Package
+# Sync包
 
-As we learned earlier, goroutines run in the same address space, so access to shared memory must be synchronized. The [`sync`](https://go.dev/pkg/sync/) package provides useful primitives.
+我们前面所提到的，goroutine运行在相同内存空间，相互共享内存必须使用同步机制。[`sync`](https://go.dev/pkg/sync/)包提供了一些有用原子性操作。
 
 ## WaitGroup
 
-A WaitGroup waits for a collection of goroutines to finish. The main goroutine calls `Add` to set the number of goroutines to wait for. Then each of the goroutines runs and calls `Done` when finished. At the same time, `Wait` can be used to block until all goroutines have finished.
+WaitGroup用来等待一系列goroutine集合完成。main goroutine通过执行`Add`来增加要等待的goroutine。每个goroutine通过执行`Done`来告知完成。同时，`Wait`在所有goroutine完成前挂起等待。
 
-### Usage
+### 用例
 
-We can use the `sync.WaitGroup` using the following methods:
+`sync.WaitGroup`具备如下方法：
 
-- `Add(delta int)` takes in an integer value which is essentially the number of goroutines that the `WaitGroup` has to wait for. This must be called before we execute a goroutine.
-- `Done()` is called within the goroutine to signal that the goroutine has successfully executed.
-- `Wait()` blocks the program until all the goroutines specified by `Add()` have invoked `Done()` from within.
+- `Add(delta int)` 接收一个整型值，用来指定`WaitGroup`需要等待的goroutine个数。它需要再执行goroutine之前先执行。
+- `Done()` 在goroutine完成后执行。
+- `Wait()` 在通过`Add()`对应所有goroutine完成执行了`Done()`操作前挂起等待。
 
-### Example
+### 例子
 
-Let's take a look at an example.
+让我们看个例子。
 
 ```go
 package main
@@ -5039,14 +5042,14 @@ func main() {
 }
 ```
 
-If we run this, we can see our program runs as expected.
+执行代码，程序如期工作。
 
 ```bash
 $ go run main.go
 working...
 ```
 
-We can also pass the `WaitGroup` to the function directly.
+我们也可以直接传递`WaitGroup`给函数。
 
 ```go
 func work(wg *sync.WaitGroup) {
@@ -5065,9 +5068,9 @@ func main() {
 }
 ```
 
-But is important to know that a `WaitGroup` must **not be copied** after first use. And if it's explicitly passed into functions, it should be done by a _pointer._ This is because it can affect our counter which will disrupt the logic of our program.
+不过要注意这里`WaitGroup`不能使用`复制`传递，我们需要使用 _引用_ 传递方式。因为这样会使得计算器不一致影响程序执行逻辑。
 
-Let's also increase the number of goroutines by calling the `Add` method to wait for 4 goroutines.
+我们通过指定传递数值到`Add`方法指定等待4个goroutines。
 
 ```go
 func main() {
@@ -5084,7 +5087,7 @@ func main() {
 }
 ```
 
-And as expected, all our goroutines were executed.
+正如预期，我们所有的goroutine均被执行。
 
 ```bash
 $ go run main.go
@@ -5094,25 +5097,25 @@ working...
 working...
 ```
 
-## Mutex
+## 互斥
 
-A Mutex is a mutual exclusion lock that prevents other processes from entering a critical section of data while a process occupies it to prevent race conditions from happening.
+互斥是一个排它锁，用来在某个时期阻止其它进程访问数据临界区，从而防止竞争条件发生。
 
-### What's a critical section?
+### 数据临界区？
 
-So, a critical section can be a piece of code that must not be run by multiple threads at once because the code contains shared resources.
+所以，一个数据临界区就是不能同时被多个线程执行，因为它们共享资源。
 
-### Usage
+### 用例
 
-We can use `sync.Mutex` using the following methods:
+`sync.Mutex` 提供如下方法：
 
-- `Lock()` acquires or holds the lock.
-- `Unlock()` releases the lock.
-- `TryLock()` tries to lock and reports whether it succeeded.
+- `Lock()` 请求和持有锁。
+- `Unlock()` 释放锁。
+- `TryLock()` 尝试获取锁并返回成功状态。
 
-### Example
+### 例子
 
-Let's take a look at an example, we will create a `Counter` struct and add an `Update` method which will update the internal value.
+让我们看看例子，我们创建一个`Counter`结构体，实现一个`Update`方法来更新内部值。
 
 ```go
 package main
