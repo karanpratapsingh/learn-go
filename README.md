@@ -5097,9 +5097,9 @@ working...
 working...
 ```
 
-## 互斥
+## Mutex
 
-互斥是一个排它锁，用来在某个时期阻止其它进程访问数据临界区，从而防止竞争条件发生。
+Mutex是一个排它锁，用来在某个时期阻止其它进程访问数据临界区，从而防止竞争条件发生。
 
 ### 数据临界区？
 
@@ -5219,32 +5219,32 @@ Result is 49
 
 看起来我们解决问题得到了正确答案。
 
-_Note: 同WaitGroup一样，Mutex 也不能作为 **拷贝** 方式传递。_
+_注意：同WaitGroup一样，Mutex 也不能作为 **拷贝** 方式传递。_
 
 ## RWMutex
 
-An RWMutex is a reader/writer mutual exclusion lock. The lock can be held by an arbitrary number of readers or a single writer.
+RWMutex是一个读写互斥锁。该锁可以任意读，只能单个写。
 
-In other words, readers don't have to wait for each other. They only have to wait for writers holding the lock.
+用其他话来说，相互读无需等待。只有写入时才需要持有锁。
 
-`sync.RWMutex` is thus preferable for data that is mostly read, and the resource that is saved compared to a `sync.Mutex` is time.
+`sync.RWMutex`适用大量读场景，相比`sync.Mutex`可以节省资源。
 
-### Usage
+### 用例
 
-Similar to `sync.Mutex`, we can use `sync.RWMutex` using the following methods:
+同 `sync.Mutex`， 我们可以使用 `sync.RWMutex` 如下方法：
 
-- `Lock()` acquires or holds the lock.
-- `Unlock()` releases the lock.
-- `RLock()` acquires or holds the read lock.
-- `RUnlock()` releases the read lock.
+- `Lock()` 获取锁。
+- `Unlock()` 释放锁。
+- `RLock()` 请求读锁。
+- `RUnlock()` 释放读锁。
 
-_Notice how RWMutex has additional `RLock` and `RUnlock`_ methods _compared to Mutex._
+_相比Mutex，RWMutex多了`RLock` 和 `RUnlock`_ 方法。_
 
-### Example
+### 例子
 
-Let's add a `GetValue` method which will read the counter value. We will also change `sync.Mutex` to `sync.RWMutex`.
+让我们添加一个`GetValue`方法来读取counter的值。我们将`sync.Mutex`修改为`sync.RWMutex`。
 
-Now, we can simply use the `RLock` and `RUnlock` methods so that readers don't have to wait for each other.
+我们可以通过使用`RLock`和`RUnlock`方法以便相互读无需等待。
 
 ```go
 package main
@@ -5302,7 +5302,7 @@ Get value: 10
 Get value: 10
 ```
 
-_Note: Both `sync.Mutex` and `sync.RWMutex` implements the `sync.Locker` interface:_
+_注意： `sync.Mutex` 和 `sync.RWMutex` 均实现了 `sync.Locker` 接口。_
 
 ```go
 type Locker interface {
@@ -5313,28 +5313,28 @@ type Locker interface {
 
 ## Cond
 
-The `sync.Cond` condition variable can be used to coordinate those goroutines that want to share resources. When the state of shared resources changes, it can be used to notify goroutines blocked by a mutex.
+`sync.Cond`条件变量用来协调goroutines来共享资源。当共享资源状态变更时，它会使用通知方式来唤醒挂起的goroutines。
 
-Each Cond has an associated lock (often a `*Mutex` or `*RWMutex`), which must be held when changing the condition and when calling the Wait method.
+每个Cond关联了一个锁（通常是`*Mutex`或`*RWMutex`）。当执行条件变更或者执行Wait方法时必须持有该锁。
 
-### But why do we need it?
+### 为什么需要它
 
-One scenario can be when one process is receiving data, and other processes must wait for this process to receive data before they can read the correct data.
+一个场景就是当一个进程需要处理数据，其它进程需要等待该进程处理完后才能读取。
 
-If we simply use a [channel](https://karanpratapsingh.com/courses/go/channels) or mutex, only one process can wait and read the data. There is no way to notify other processes to read the data. Thus, we can `sync.Cond` to coordinate shared resources.
+如果使用[通道](https://karanpratapsingh.com/courses/go/channels)或者互斥的话，只有一个进程可以等待读取该数据。没有其它机制可以通知其它机制来读取数据。然而`sync.Cond`可以协调共享资源。
 
-### Usage
+### 用例
 
-`sync.Cond` comes with the following methods:
+`sync.Cond` 包含如下方法：
 
-- `NewCond(l Locker)` returns a new Cond.
-- `Broadcast()` wakes all goroutines waiting on the condition.
-- `Signal()` wakes one goroutine waiting on the condition if there is any.
-- `Wait()` atomically unlocks the underlying mutex lock.
+- `NewCond(l Locker)` 创建一个Cond。
+- `Broadcast()` 通知所有在等待的goroutines。
+- `Signal()` 仅唤醒一个goroutine。
+- `Wait()` 自动解开底层的互斥锁。
 
-### Example
+### 例如
 
-Here is an example that demonstrates the interaction of different goroutines using the `Cond`.
+以下是一个不同goroutines通过使用`Cond`进行交互示例。
 
 ```go
 package main
@@ -5390,21 +5390,21 @@ Reader 3 starts reading
 Reader 1 starts reading
 ```
 
-As we can see, the readers were suspended using the `Wait` method until the writer used the `Broadcast` method to wake up the process.
+正如所见，所有读经过`Wait`方法挂起，写通过使用`Broadcast`方法来唤醒进程。
 
 ## Once
 
-Once ensures that only one execution will be carried out even among several goroutines.
+Once 确保多个goroutines只有一个执行。
 
-### Usage
+### 用例
 
-Unlike other primitives, `sync.Once` only has a single method:
+和其它原语不同，`sync.Once`只有一个方法：
 
-- `Do(f func())` calls the function `f` **only once**. If `Do` is called multiple times, only the first call will invoke the function `f`.
+- `Do(f func())` 只执行 `f` **一次**. 如果 `Do` 调用多次，`f`只被第一次调用执行。
 
-### Example
+### 示例
 
-This seems pretty straightforward, let's take an example:
+看起来很简单，我们来看看例子：
 
 ```go
 package main
@@ -5443,34 +5443,34 @@ $ go run main.go
 Count is 1
 ```
 
-As we can see, even when we ran 100 goroutines, the count only got incremented once.
+正如所见，就算我们执行了100个goroutines，也只有一个被执行。
 
 ## Pool
 
-Pool is s a scalable pool of temporary objects and is also concurrency safe. Any stored value in the pool can be deleted at any time without receiving notification. In addition, under high load, the object pool can be dynamically expanded, and when it is not used or the concurrency is not high, the object pool will shrink.
+Pool是一个可伸缩的对象池，同样是并发安全的。任何存储在的pool值不需要任何通知即可删除。还有，高负载时对象池会扩展，低负载时对象池会收缩。
 
-_The key idea is the reuse of objects to avoid repeated creation and destruction, which will affect the performance._
+_主要目的重复使用对象并且重复创建和销毁对象影响性能。_
 
-### But why do we need it?
+### 我们为什么需要它？
 
-Pool's purpose is to cache allocated but unused items for later reuse, relieving pressure on the garbage collector. That is, it makes it easy to build efficient, thread-safe free lists. However, it is not suitable for all free lists.
+Pool将不使用对象做缓存为后面使用，减轻垃圾回收器的压力。它使得非常容易构建高效，线程安全的空闲列表。但是并不适用所有的空闲列表。
 
-The appropriate use of a Pool is to manage a group of temporary items silently shared among and potentially reused by concurrent independent clients of a package. Pool provides a way to spread the cost of allocation overhead across many clients.
+Pool的用途是管理在客户端之间共享可重用的临时对象。它也提供了将创建对象开销分散到不同客户端的途径。
 
-_It is important to note that Pool also has its performance cost. It is much slower to use `sync.Pool` than simple initialization. Also, a Pool must not be copied after first use._
+_需要注意的是Pool本身也有一定的开销，`sync.Pool`对比简单列表要慢得多。首次使用时Pool也能被拷贝。_
 
-### Usage
+### 用例
 
-`sync.Pool` gives us the following methods:
+`sync.Pool` 提供了如下方法：
 
-- `Get()` selects an arbitrary item from the Pool, removes it from the Pool, and returns it to the caller.
-- `Put(x any)` adds the item to the pool.
+- `Get()` 提供了从Pool获取对象的抽象能力，从Pool中删除，并返回给调用方。
+- `Put(x any)` 将元素添加到pool。
 
-### Example
+### 例子
 
-Now, let's look at an example.
+我们来看看例子。
 
-First, we will create a new `sync.Pool`, where we can optionally specify a function to generate a value when we call, `Get`, otherwise it will return a `nil` value.
+首先我创建一个`sync.Pool`, 我们可以提供一个可选生成值的函数，否则`Get`在没有对象时返回`nil`值。
 
 ```go
 package main
@@ -5506,7 +5506,7 @@ func main() {
 }
 ```
 
-And if we run this, we'll see an interesting output:
+运行它我们虎得到有趣的输出：
 
 ```bash
 $ go run main.go
@@ -5519,41 +5519,43 @@ Creating a new person...
 There is no object in the pool now (new one will be created): &{}
 ```
 
-_Notice how we did [type assertion](https://karanpratapsingh.com/courses/go/interfaces#type-assertion) when we call `Get`._
+_注意我们是如何使用`Get`进行[类型推断](https://karanpratapsingh.com/courses/go/interfaces#type-assertion)。_
 
-It can be seen that the `sync.Pool` is strictly a temporary object pool, which is suitable for storing some temporary objects that will be shared among goroutines.
+可以看出`sync.Pool`严格来说就是一个临时对象池，适合存放一些在goroutine之间共享的临时对象。
 
 ## Map
 
-Map is like the standard `map[any]any` but is safe for concurrent use by multiple goroutines without additional locking or coordination. Loads, stores, and deletes are spread over constant time.
+Map和标准的`map[any]any`类似，但是它对于多个goroutine是并发安全，并且不需要附加锁和协同，加载，存储和删除在常量事件内。
 
-### But why do we need it?
+### 什么需要它
 
-The Map type is _specialized_. Most code should use a plain Go map instead, with separate locking or coordination, for better type safety and to make it easier to maintain other invariants along with the map content.
 
-The Map type is optimized for two common use cases:
+该字典类型是 _特别的_。大部分时候我们优先使用Go基础map类型，通过独立的锁或者协调，实现更好类型安全，使得其容易与其它不变量一些管理。
 
-- When the entry for a given key is only ever written once but read many times, as in caches that only grow.
-- When multiple goroutines read, write, and overwrite entries for disjoint sets of keys. In these two cases, the use of a `sync.Map` may significantly reduce lock contention compared to a Go map paired with a separate `Mutex` or `RWMutex`.
 
-_The zero Map is empty and ready for use. A Map must not be copied after first use._
+两种情况使用该优化map类型：
 
-## Usage
+- 当一个 key 只被写入一次但被多次读取时，例如在只会增长的缓存中，就存在这种业务场景
+- 当多个 goroutine 读取、写入和覆盖不相交键集的条目时。这两种情况下使用`sync.Map`相比单独使用`Mutex`或者`RWMutex`可以减少锁争夺。
 
-`sync.Map` gives us the following methods:
+_Map零值有效，在第一次使用后不能进行拷贝。_
 
-- `Delete()` deletes the value for a key.
-- `Load(key any)` returns the value stored in the map for a key, or nil if no value is present.
-- `LoadAndDelete(key any)` deletes the value for a key, returning the previous value if any. The loaded result reports whether the key was present.
-- `LoadOrStore(key, value any)` returns the existing value for the key if present. Otherwise, it stores and returns the given value. The loaded result is true if the value was loaded, and false if stored.
-- `Store(key, value any)` sets the value for a key.
-- `Range(f func(key, value any) bool)` calls `f` sequentially for each key and value present in the map. If `f` returns false, the range stops the iteration.
+## 用例
 
-_Note: Range does not necessarily correspond to any consistent snapshot of the Map's contents._
+`sync.Map` 提供如下方法：
 
-## Example
+- `Delete()` 通过key删除值.
+- `Load(key any)` 通过key来获取map里的值，如果key不存在返回nil。
+- `LoadAndDelete(key any)` 返回值后立即删除该key。加载的结果指示该key是否存在。
+- `LoadOrStore(key, value any)` 如果key已经存在就返回该值，否则，将给定的值存入。返回loaded的结果只是true说明已经存在该key，false则说明不存在并存入了所提供的值。
+- `Store(key, value any)` 设置key对应的值。
+- `Range(f func(key, value any) bool)` 通过函数参数`f`对map中的每个键值对进行遍历。如果函数`f`返回false则终止遍历。
 
-Let's look at an example. Here, we will launch a bunch of goroutines that will add and retrieve values from our map concurrently.
+_注意：Range并不保证可以获得Map内容的一致快照。_
+
+## 例子
+
+让我们来看个例子。这里，我们启动一些goroutines并发从map中添加及获取值。
 
 ```go
 package main
@@ -5590,7 +5592,7 @@ func main() {
 }
 ```
 
-As expected, our store and retrieve operation will be safe for concurrent use.
+如预期，我们的存储和读取操作是并发安全的。
 
 ```bash
 $ go run main.go
@@ -5608,11 +5610,11 @@ Reading: value 3
 
 ## Atomic
 
-Package atomic provides low-level atomic memory primitives for integers and pointers that are useful for implementing synchronization algorithms.
+atomic包提供了对于整型和指针实现同步算法的低级原子内存原语。
 
-### Usage
+### 用例
 
-`atomic` package provides [several functions](https://pkg.go.dev/sync/atomic#pkg-functions) which do the following 5 operations for `int`, `uint`, and `uintptr` types:
+`atomic`包提供了[几个函数](https://pkg.go.dev/sync/atomic#pkg-functions)针对`int`，`uint`和 `uintptr`类型进行5种操作：
 
 - Add
 - Load
@@ -5620,9 +5622,9 @@ Package atomic provides low-level atomic memory primitives for integers and poin
 - Swap
 - Compare and Swap
 
-### Example
+### 例子
 
-We won't be able to cover all of the functions here. So, let's take a look at the most commonly used function like `AddInt32` to get an idea.
+我们不会介绍这里所有的函数，就让我们看看最为常用的函数如`Addint32`来举例。
 
 ```go
 package main
@@ -5653,26 +5655,26 @@ func main() {
 }
 ```
 
-Here, `atomic.AddInt32` guarantees that the result of `n` will be 1000 as the instruction execution of atomic operations cannot be interrupted.
+这里`atomic.AddInt32`保证`n`的结果为 1000，因为原子操作的指令执行不会被中断。
 
 ```bash
 go run main.go
 Result: 1000
 ```
 
-# Advanced Concurrency Patterns
+# 高级并发模式
 
-In this tutorial, we will discuss some advanced concurrency patterns in Go. Often, these patterns are used in combination in the real world.
+本章，我们来讨论Go中一些高级并发模式。这些模式常出现于现实当中。
 
 ## Generator
 
 ![generator](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/advanced-concurrency-patterns/generator.png)
 
-Then generator Pattern is used to generate a sequence of values which is used to produce some output.
+生成器模式用来生成一系列值。
 
-In our example, we have a `generator` function that simply returns a channel from which we can read the values.
+在我们例子中，我们有一个`generator`函数，该函数简单返回一个channel,我们根据该channel来读取值。
 
-This works on the fact that _sends_ and _receives_ block until both the sender and receiver are ready. This property allowed us to wait until the next value is requested.
+这适用于 _发送_ 和 _接收_ 阻塞，直到发送方和接收方都就绪。这个特性允许我们等到下一个值被请求。
 
 ```go
 package main
@@ -5701,8 +5703,7 @@ func generator() <-chan int {
 }
 ```
 
-If we run this, we'll notice that we can consume values that were produced on demand.
-
+执行该代码，我注意到可以按需生成值。
 ```bash
 $ go run main.go
 Value: 0
@@ -5712,17 +5713,17 @@ Value: 3
 Value: 4
 ```
 
-_This is a similar behavior as `yield` in JavaScript and Python._
+_与JavaScript和Python的`yield`行为相似._
 
 ## Fan-in
 
 ![fan-in](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/advanced-concurrency-patterns/fan-in.png)
 
-The fan-in pattern combines multiple inputs into one single output channel. Basically, we multiplex our inputs.
+fan-in（扇入）模式是将多个输入到单个channel。基本上来说，就是复用输入。
 
-In our example, we create the inputs `i1` and `i2` using the `generateWork` function. Then we use our [variadic function](https://karanpratapsingh.com/courses/go/functions#variadic-functions) `fanIn` to combine values from these inputs to a single output channel from which we can consume values.
+在我们例子中，使用`generateWork`函数创建`i1`和`i2`输入。然后使用[可变参数函数](https://karanpratapsingh.com/courses/go/functions#variadic-functions)`fanIn`组合这些输入多个值到单个输出channel来消费这些值。
 
-_Note: order of input will not be guaranteed._
+_注意：输入顺序将是不确定的。_
 
 ```go
 package main
@@ -5803,11 +5804,12 @@ Value: 7
 
 ![fan-out](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/advanced-concurrency-patterns/fan-out.png)
 
-Fan-out patterns allow us to essentially split our single input channel into multiple output channels. This is a useful pattern to distribute work items into multiple uniform actors.
+Fan-out（扇出）允许将单个输入管道输出到多个管道。该模式非常适合将工作分发到多个不同actors。
 
-In our example, we break the input channel into 4 different output channels. For a dynamic number of outputs, we can merge outputs into a shared _"aggregate"_ channel and use `select`.
+我们的例子中，我们将输入管道拆分为4个不同输出管道。对于动态数量的输出，我们可以使用`select`合并输出到一个共享的 _“聚合”_ 管道。
 
-_Note: fan-out pattern is different from pub/sub._
+_注意：fan-out 模式不同于pub/sub（订阅发送）模式_
+
 
 ```go
 package main
@@ -5866,7 +5868,7 @@ func generateWork(work []int) <-chan int {
 }
 ```
 
-As we can see, our work has been split between multiple goroutines.
+正如所见，我们的工作分配到多个goroutines里了。
 
 ```bash
 $ go run main.go
@@ -5884,22 +5886,23 @@ Output 1 got: 8
 
 ![pipeline](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/advanced-concurrency-patterns/pipeline.png)
 
-The pipeline pattern is a series of _stages_ connected by channels, where each stage is a group of goroutines running the same function.
+管道模式是通过channels连接的一系列 _stages_，每个stage是一组执行相同的函数的goroutines。
 
-In each stage, the goroutines:
 
-- Receive values from _upstream_ via _inbound_ channels.
-- Perform some function on that data, usually producing new values.
-- Send values _downstream_ via _outbound_ channels.
+每个stage及goroutines：
 
-Each stage has any number of inbound and outbound channels, except the first and last stages, which have only outbound or inbound channels, respectively. The first stage is sometimes called the _source_ or _producer_; the last stage is the _sink_ or _consumer_.
+- 通过 _输入_ 管道获取 _上游_ 的值
+- 在数据上执行一些函数操作，通常会产生一个新值
+- 通过 _输出_ 管道将值发送给 _下游_
 
-By using a pipeline, we separate the concerns of each stage, which provides numerous benefits such as:
+每个stage拥有任意个输入和输出管道，除了首个和末尾stage，只有单个输出或者输入管道。相应的，第一个stage有时称为 _source_ 或者 _producer_，最后一个通常称为 _sink_ 或者 _consumer_ 。
 
-- Modify stages independent of one another.
-- Mix and match how stages are combined independently of modifying the stage.
+通过使用管道，我们相关操作分开到每个stage，提供了如下好处：
 
-In our example, we have defined three stages, `filter`, `square`, and `half`.
+- 独立
+- 组合
+
+在我们例子中，定义了三个stages，`filter`, `square`, 和 `half`.
 
 ```go
 package main
@@ -5982,7 +5985,7 @@ func generateWork(work []int) <-chan int {
 }
 ```
 
-Seem like our input was processed correctly by the pipeline in a concurrent manner.
+我们程序通过管道中并发执行了。
 
 ```bash
 $ go run main.go
@@ -5997,13 +6000,14 @@ $ go run main.go
 
 ![worker-pool](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/advanced-concurrency-patterns/worker-pool.png)
 
-The worker pool is a really powerful pattern that lets us distributes the work across multiple workers (goroutines) concurrently.
+worker pool（工作池）是一个非常强大的模式，让我们使用并发将任务分布到多个workers(groutines)。
 
-In our example, we have a `jobs` channel to which we will send our jobs and a `results` channel where our workers will send the results once they've finished doing the work.
+在我们例子中，我们有一个`job`通道来发送我们的工作，`results`通道用来在wokers工作完后输出结果。
 
-After that, we can launch our workers concurrently and simply receive the results from the `results` channel.
+最后，我们通过并发执行workers，然后从`results`管道来获取结果。
 
-_Ideally, `totalWorkers` should be set to `runtime.NumCPU()` which gives us the number of logical CPUs usable by the current process._
+
+_理想情况下，`totalWorkers`应该设置为`runtime.NumCPU()`，也即当前进程可用内存数。_
 
 ```go
 package main
@@ -6080,15 +6084,15 @@ Worker 2 finished job 4
 
 ![queuing](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/advanced-concurrency-patterns/queuing.png)
 
-Queuing pattern allows us to process `n` number of items at a time.
+Queuing(队列)模式允许我们同时处理`n`个值。
 
-In our example, we use a buffered channel to simulate a queue behavior. We simply send an [empty struct](https://karanpratapsingh.com/courses/go/structs#properties) to our `queue` channel and wait for it to be released by the previous process so that we can continue.
+在我们的例子中，我使用缓冲管道来模拟队列行为。我们简单通过发送一个[空结构体](https://karanpratapsingh.com/courses/go/structs#properties)到我们`queue`管道中，等待它被上一个进程释放以便我们可以继续处理。
 
-This is because _sends_ to a buffered channel block only when the buffer is full and _receives_ block when the buffer is empty.
+这时因为 _发送_ 到一个已满缓冲区管道将会导致挂起，当缓冲区为空时 _接收_ 也会挂起。
 
-Here, we have total work of 10 items and we have a limit of 2. This means we can process 2 items at a time.
+这里，我们一共有10个元素，我们限制为2个元素。也即同时仅处理2个元素。
 
-_Notice how our `queue` channel is of type `struct{}` as an empty struct occupies zero bytes of storage._
+_注意使用空结构`struct{}`作为`queue`管道的类型占用0字节存储。_
 
 ```go
 package main
@@ -6134,7 +6138,7 @@ func process(work int, queue chan struct{}, wg *sync.WaitGroup) {
 }
 ```
 
-If we run this, we will notice that it briefly pauses when every 2nd item (which is our limit) is processed as our queue waits to be dequeued.
+如果执行该代码，我们注意这里会短暂的停止，然后由于队列再等待出队，程序按照每两个（我们所限制的）进行处理。
 
 ```bash
 $ go run main.go
@@ -6152,9 +6156,9 @@ Processed: 10
 Work complete
 ```
 
-## Additional patterns
+## 更多模式
 
-Some additional patterns that might be useful to know:
+还有一些其它有用模式：
 
 - Tee channel
 - Bridge channel
@@ -6163,17 +6167,18 @@ Some additional patterns that might be useful to know:
 
 # Context
 
-In concurrent programs, it's often necessary to preempt operations because of timeouts, cancellations, or failure of another portion of the system.
+在并发程序中，由于超时，取消或者是故障，通常需要进行抢占操作。
 
-The `context` package makes it easy to pass request-scoped values, cancellation signals, and deadlines across API boundaries to all the goroutines involved in handling a request.
+`context`包用来传递请求作用域值,取消信号，截止日期，API边界之间绑定到相关goroutines来处理请求。
 
-## Types
 
-Let's discuss some core types of the `context` package.
+## 类型
+
+让我们来讨论`context`包一些核心类型。
 
 ### Context
 
-The `Context` is an `interface` type that is defined as follows:
+`Context`是一个`接口`类型，定义如下：
 
 ```go
 type Context interface {
@@ -6184,30 +6189,31 @@ type Context interface {
 }
 ```
 
-The `Context` type has the following methods:
+`Context` 类型具备如下方法:
 
-- `Done() <- chan struct{}` returns a channel that is closed when the context is canceled or times out. Done may return `nil` if the context can never be canceled.
-- `Deadline() (deadline time.Time, ok bool)` returns the time when the context will be canceled or timed out. Deadline returns `ok` as `false` when no deadline is set.
-- `Err() error` returns an error that explains why the Done channel was closed. If Done is not closed yet, it returns `nil`.
-- `Value(key any) any` returns the value associated with the key or `nil` if none.
+- `Done() <- chan struct{}` 返回一个通道，指示context取消或者超时。如果context不能被取消则返回`nil`。
+- `Deadline() (deadline time.Time, ok bool)` 当context被取消或者超时时返回时间。如果没有设置截止时间`ok`返回`false`。
+- `Err() error` 返回一个error，用来解释通道关闭原因。如果Done还没有关闭，它将返回`nil`。
+- `Value(key any) any` 返回关联键的值，如果没有返回`nil`。
 
 ### CancelFunc
 
-A `CancelFunc` tells an operation to abandon its work and it does not wait for the work to stop. If it is called by multiple goroutines simultaneously, after the first call, subsequent calls to a `CancelFunc` do nothing.
+`CancelFunc`告知不用等待工作完成旧发起工作了。如果它被多个goroutines同时执行，在第一执行后，后面的`CancelFunc`操作啥也不做。
 
 ```go
 type CancelFunc func()
 ```
 
-## Usage
+## 用例
 
-Let's discuss functions that are exposed by the `context` package:
+让我们来讨论`context`包提供的相关函数：
 
 ### Background
 
-Background returns a non-nil, empty `Context`. It is never canceled, has no values, and has no deadline.
+Background返回空`Context`。它从不取消，没有值，也没有截止时间。
 
-_It is typically used by the main function, initialization, and tests, and as the top-level Context for incoming requests._
+_常用来作为main函数，初始化或者测试，作为请求的顶级Context_
+
 
 ```go
 func Background() Context
@@ -6215,9 +6221,10 @@ func Background() Context
 
 ### TODO
 
-Similar to the `Background` function `TODO` function also returns a non-nil, empty `Context`.
+同`Background`函数一样，`TODO`也返回一个空`Context`。
 
-However, it should only be used when we are not sure what context to use or if the function has not been updated to receive a context. This means we plan to add context to the function in the future.
+然后，它使用在仅当我们无法确定函数是否会接收context，也就是我们计划再未来给函数加入context。
+
 
 ```go
 func TODO() Context
@@ -6225,11 +6232,11 @@ func TODO() Context
 
 ### WithValue
 
-This function takes in a context and returns a derived context where the value `val` is associated with `key` and flows through the context tree with the context.
+该函数接收一个派生的context，然后一对键值对，通过上下文进行传递。
 
-This means that once you get a context with value, any context that derives from this gets this value.
+也就是说一旦你赋于context值，那么所有由此context派生的context都将获得该值。
 
-_It is not recommended to pass in critical parameters using context values, instead, functions should accept those values in the signature making it explicit._
+_不建议利用context来传递参数，仅当使用函数明确指明参数。_
 
 ```go
 func WithValue(parent Context, key, val any) Context
@@ -6237,7 +6244,7 @@ func WithValue(parent Context, key, val any) Context
 
 **Example**
 
-Let's take a simple example to see how we can add a key-value pair to the context.
+让我们来看一个添加键值对到context的例子：
 
 ```go
 package main
@@ -6262,7 +6269,7 @@ func ProcessRequest(ctx context.Context) {
 }
 ```
 
-And if we run this, we'll see the `processID` being passed via our context.
+当我们执行该代码，我们看到`processID`通过context进行传递。
 
 ```bash
 $ go run main.go
@@ -6271,11 +6278,11 @@ Processing ID: abc-xyz
 
 ### WithCancel
 
-This function creates a new context from the parent context and derived context and the cancel function. The parent can be a `context.Background` or a context that was passed into the function.
+该函数通过父级context创建一个新的context，具备取消函数。父级可以是`context.Background`或者通过函数传递的context。
 
-Canceling this context releases resources associated with it, so the code should call cancel as soon as the operations running in this context is completed.
+取消该context将会释放相关资源，所以当操作完成后需要执行cancel。
 
-_Passing around the `cancel` function is not recommended as it may lead to unexpected behavior._
+_不建议传递`cancel`函数，可能会得到未预料的行为_
 
 ```go
 func WithCancel(parent Context) (ctx Context, cancel CancelFunc)
@@ -6283,9 +6290,10 @@ func WithCancel(parent Context) (ctx Context, cancel CancelFunc)
 
 ### WithDeadline
 
-This function returns a derived context from its parent that gets canceled when the deadline exceeds or the cancel function is called.
+该函数返回从父级派生的context，当超过截止时间或者取消函数调用后将会取消。
 
-For example, we can create a context that will automatically get canceled at a certain time in the future and pass that around in child functions. When that context gets canceled because of the deadline running out, all the functions that got the context gets notified to stop work and return.
+例如，我们可以通过指定一个未来时间自动取消，当时间到达后context取消，所有的函数都会提到通知停止工作并返回。
+
 
 ```go
 func WithDeadline(parent Context, d time.Time) (Context, CancelFunc)
@@ -6293,7 +6301,7 @@ func WithDeadline(parent Context, d time.Time) (Context, CancelFunc)
 
 ### WithTimeout
 
-This function is just a wrapper around the `WithDeadline` function with the added timeout.
+通过指定超时时间包装`WithDeadline`函数。
 
 ```go
 func WithTimeout(parent Context, timeout time.Duration) (Context, CancelFunc) {
@@ -6301,11 +6309,11 @@ func WithTimeout(parent Context, timeout time.Duration) (Context, CancelFunc) {
 }
 ```
 
-## Example
+## 例子
 
-Let's look at an example to solidify our understanding of the context.
+让我们使用例子来巩固对context的理解：
 
-In the example below, we have a simple HTTP server that handles a request.
+如下，我们有一个简单的HTTP服务器来处理请求。
 
 ```go
 package main
@@ -6321,11 +6329,11 @@ func handleRequest(w http.ResponseWriter, req *http.Request) {
 	context := req.Context()
 
 	select {
-	// Simulating some work by the server, waits 5 seconds and then responds.
+	// 模拟服务器工作，等待5秒回后响应
 	case <-time.After(5 * time.Second):
 		fmt.Fprintf(w, "Response from the server")
 
-	// Handling request cancellation
+	// 处理请求取消
 	case <-context.Done():
 		err := context.Err()
 		fmt.Println("Error:", err)
@@ -6342,7 +6350,7 @@ func main() {
 }
 ```
 
-Let's open two terminals. In terminal one we'll run our example.
+让我们打开两个终端，一个终端执行我们的例子。
 
 ```bash
 $ go run main.go
@@ -6351,23 +6359,23 @@ Handler started
 Handler complete
 ```
 
-In the second terminal, we will simply make a request to our server. And if we wait for 5 seconds, we get a response back.
+另一个终端，对我们服务发起请求。如果我们等待五秒，我们拿到了输出结果。
 
 ```bash
 $ curl localhost:4000/request
 Response from the server
 ```
 
-Now, let's see what happens if we cancel the request before it completes.
+如果们在完成前取消请求会发生什么呢？
 
-_Note: we can use `ctrl + c` to cancel the request midway._
+_注意：我们通过使用`ctrl + c`来中途取消请求。_
 
 ```bash
 $ curl localhost:4000/request
 ^C
 ```
 
-And as we can see, we're able to detect the cancellation of the request because of the request context.
+正如所见，我们通过请求context检测到了取消操作。
 
 ```bash
 $ go run main.go
@@ -6377,15 +6385,15 @@ Error: context canceled
 Handler complete
 ```
 
-I'm sure you can already see how this can be immensely useful.
+我确信你已经知道它强大的用途。
 
-For example, we can use this to cancel any resource-intensive work if it's no longer needed or has exceeded the deadline or a timeout.
+例如，我们可以使用该方法来取消不在需要，超过截止时间，超时等资源密集的工作。
 
-# Next Steps
+# 下一步
 
-Congratulations, you've finished the course!
+恭喜，你已经完成了课程！
 
-Now that you know the fundamentals of Go, here are some additional things for you to try:
+你已经了解了Go基础，这里有一些其它可以尝试的资源：
 
 - [Build a REST API with Go - For Beginners](https://www.youtube.com/watch?v=bFYZrEuEDLE)
 - [Connecting to PostgreSQL using GORM](https://www.youtube.com/watch?v=Yk5ZjKq4qDQ)
@@ -6393,13 +6401,13 @@ Now that you know the fundamentals of Go, here are some additional things for yo
 - [Dockerize your Go app](https://www.youtube.com/watch?v=zUc2LihXjlw)
 - [DevOps Roadmap](https://www.youtube.com/watch?v=np_seazJL3Q)
 
-I hope this course was a great learning experience. I would love to hear feedback from you.
+我希望你有一个较好的学习体验。非常乐于得到你的反馈。
 
-Wishing you all the best for further learning!
+祝你未来较好收货。
 
-# References
+# 参考
 
-Here are the resources that were referenced while creating this course.
+以下是本教材所参考的一些资源。
 
 - [The Go Programming Language](https://www.gopl.io)
 - [Official Go documentation](https://go.dev/doc)
