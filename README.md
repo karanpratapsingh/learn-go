@@ -47,14 +47,14 @@ _本课程还可以通过访问[网站](https://www.karanpratapsingh.com/courses
   - [Goroutines](#goroutines)
   - [通道](#通道)
   - [Select](#select)
-  - [Sync Package](#sync-package)
-  - [Advanced Concurrency Patterns](#advanced-concurrency-patterns)
+  - [Sync包](#Sync包)
+  - [高级并发模式](#高级并发模式)
   - [Context](#context)
 
 - **附录**
 
-  - [Next Steps](#next-steps)
-  - [References](#references)
+  - [下一步](#下一步)
+  - [参考](#参考)
 
 # 什么是Go?
 
