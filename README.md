@@ -332,10 +332,10 @@ var isItTrue bool = true
 
 We can use the following operators on boolean types
 
-| Type     | Syntax           |
-| -------- | ---------------- |
-| Logical  | `&&` `\|\|` `!`  |
-| Equality | `==` `!=`        |
+| Type     | Syntax          |
+| -------- | --------------- |
+| Logical  | `&&` `\|\|` `!` |
+| Equality | `==` `!=`       |
 
 ### Numeric types
 
@@ -409,13 +409,13 @@ var f64 float64 = 3.1415 // IEEE-754 64-bit
 
 Go provides several operators for performing operations on numeric types.
 
-| Type                | Syntax                                                        |
-| ------------------- | ------------------------------------------------------------- |
-| Arithmetic          | `+` `-` `*` `/` `%`                                           |
-| Comparison          | `==` `!=` `<` `>` `<=` `>=`                                   |
-| Bitwise             | `&` `\|` `^` `<<` `>>`                                        |
-| Increment/Decrement | `++` `--`                                                     |
-| Assignment          | `=` `+=` `-=` `*=` `/=` `%=` `<<=` `>>=` `&=` `\|=` `^=`      |
+| Type                | Syntax                                                   |
+| ------------------- | -------------------------------------------------------- |
+| Arithmetic          | `+` `-` `*` `/` `%`                                      |
+| Comparison          | `==` `!=` `<` `>` `<=` `>=`                              |
+| Bitwise             | `&` `\|` `^` `<<` `>>`                                   |
+| Increment/Decrement | `++` `--`                                                |
+| Assignment          | `=` `+=` `-=` `*=` `/=` `%=` `<<=` `>>=` `&=` `\|=` `^=` |
 
 **Complex**
 
