@@ -2,7 +2,7 @@
 
 Hey, welcome to the course, and thanks for learning Go. I hope this course provides a great learning experience.
 
-_This course is also available on my [website](https://www.karanpratapsingh.com/courses/go) as well as on [Educative.io](https://www.educative.io/collection/5716974084816896/6319653488164864). Please leave a ⭐ as motivation if this was helpful!_
+_This course is also available on my [website](https://karanpratapsingh.com/courses/go) and as an ebook on [leanpub](https://leanpub.com/go). Please leave a ⭐ as motivation if this was helpful!_
 
 # Table of contents
 
@@ -102,7 +102,7 @@ We can install Go from the [downloads](https://go.dev/dl) section.
 
 ## Installation
 
-_These instructions are from the [official website](https://go.dev/doc/install)_
+_These instructions are from the [official website](https://go.dev/doc/install)._
 
 ### MacOS
 
@@ -127,7 +127,7 @@ $ go version
 $ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18.1.linux-amd64.tar.gz
 ```
 
-_(You may need to run the command as root or through sudo)_
+_Note: You may need to run the command as root or through sudo._
 
 **Do not untar** the archive into an existing `/usr/local/go` tree. This is known to produce broken Go installations.
 
@@ -339,7 +339,7 @@ We can use the following operators on boolean types
 
 ### Numeric types
 
-Now, let's talk about numeric types, starting with
+Now, let's talk about numeric types.
 
 **Signed and Unsigned integers**
 
@@ -372,10 +372,6 @@ If you noticed, there's also an unsigned integer pointer `uintptr` type, which i
 
 It is recommended that whenever we need an integer value, we should just use `int` unless we have a specific reason to use a sized or unsigned integer type.
 
-**Integer alias types**
-
-Next, let's discuss integer alias types.
-
 **Byte and Rune**
 
 Golang has two additional integer types called `byte` and `rune` that are aliases for `uint8` and `int32` data types respectively.
@@ -398,7 +394,7 @@ Next, we have floating point types which are used to store numbers with a decima
 
 Go has two floating point types `float32` and `float64`. Both type follows the IEEE-754 standard.
 
-_The default type for floating point values is float64_
+_The default type for floating point values is float64._
 
 ```go
 var f32 float32 = 1.7812 // IEEE-754 32-bit
@@ -419,7 +415,7 @@ Go provides several operators for performing operations on numeric types.
 
 **Complex**
 
-There are 2 complex types in Go, `complex128` where both real and imaginary parts are `float64` and `complex64` where real and imaginary are `float32`.
+There are 2 complex types in Go, `complex128` where both real and imaginary parts are `float64` and `complex64` where real and imaginary parts are `float32`.
 
 We can define complex numbers either using the built-in complex function or as literals.
 
@@ -469,7 +465,7 @@ float64 uint
 
 And as we can see, it prints the type as `float64` and `uint`.
 
-_Note that this is different from parsing_
+_Note that this is different from parsing._
 
 ## Alias types
 
@@ -620,7 +616,7 @@ $ go run main.go
 58.181818
 ```
 
-Let's say we want just `58.18` which is 2 points precision, we can do that as well by using `.2f`
+Let's say we want just `58.18` which is 2 points precision, we can do that as well by using `.2f`.
 
 Also, to add an actual percent sign, we will need to _escape it_.
 
@@ -710,7 +706,7 @@ func main() {
 }
 ```
 
-_Note: This pattern is quite common_
+_Note: This pattern is quite common._
 
 ## Switch
 
@@ -811,9 +807,9 @@ func main() {
 
 The basic `for` loop has three components separated by semicolons:
 
-- **_init statement_**: which is executed before the first iteration.
-- **_condition expression_**: which is evaluated before every iteration.
-- **_post statement_**: which is executed at the end of every iteration.
+- **init statement**: which is executed before the first iteration.
+- **condition expression**: which is evaluated before every iteration.
+- **post statement**: which is executed at the end of every iteration.
 
 **Break and continue**
 
@@ -978,7 +974,7 @@ func myFunction() {
 }
 ```
 
-*Notice how we execute it using the parenth*es*is at the end*
+_Notice how we execute it using the parenthesis at the end._
 
 ## Closures
 
@@ -1108,7 +1104,7 @@ func main() {
 }
 ```
 
-Can we use multiple defer functions? Absolutely, this brings us to what is known as _defer stack_. Let's take a look at an example
+Can we use multiple defer functions? Absolutely, this brings us to what is known as _defer stack_. Let's take a look at an example:
 
 ```go
 func main() {
@@ -1142,7 +1138,7 @@ Simply defined, A module is a collection of [Go packages](https://go.dev/ref/spe
 
 Go modules were introduced in Go 1.11, which brings native support for versions and modules. Earlier, we needed the `GO111MODULE=on` flag to turn on the modules functionality when it was experimental. But now after Go 1.13 modules mode is the default for all development.
 
-But wait what is `GOPATH`?
+**But wait, what is `GOPATH`?**
 
 Well, `GOPATH` is a variable that defines the root of your workspace and it contains the following folders:
 
@@ -1158,7 +1154,7 @@ Like earlier, let's create a new module using `go mod init` command which create
 $ go mod init example
 ```
 
-_The important thing to note here is that a Go module can correspond to a Github repository as well if you plan to publish this module. For example:_
+The important thing to note here is that a Go module can correspond to a Github repository as well if you plan to publish this module. For example:
 
 ```bash
 $ go mod init example
@@ -1202,7 +1198,7 @@ Vendoring is the act of making your own copy of the 3rd party packages your proj
 
 This can be done through `go mod vendor` command.
 
-So let's reinstall the removed module using `go mod tidy`.
+So, let's reinstall the removed module using `go mod tidy`.
 
 ```go
 package main
@@ -1223,6 +1219,8 @@ go: found github.com/rs/zerolog/log in github.com/rs/zerolog v1.26.1
 ```bash
 $ go mod vendor
 ```
+
+After the `go mod vendor` command is executed, a `vendor` directory will be created.
 
 ```
 ├── go.mod
@@ -1354,7 +1352,7 @@ func main() {
 }
 ```
 
-_Also, make sure to check out the go doc of packages you install, which is usually located in the project's readme file. go doc parses the source code and generates documentation in HTML format. Reference to It is usually located in readme files._
+Also, make sure to check out the go doc of packages you install, which is usually located in the project's readme file. go doc parses the source code and generates documentation in HTML format. Reference to It is usually located in readme files.
 
 Lastly, I will add that, Go doesn't have a particular _"folder structure"_ convention, always try to organize your packages in a simple and intuitive way.
 
@@ -1406,7 +1404,7 @@ This is great, but what if we want to modify the `stringutil` module that our co
 
 Until now, we had to do it using the `replace` directive in the `go.mod` file, but now let's see how we can use workspaces here.
 
-So let's create our workspace in the `workspaces` directory.
+So, let's create our workspace in the `workspaces` directory.
 
 ```bash
 $ go work init
@@ -1497,7 +1495,7 @@ $ go vet
 
 Next, we have `go env` which simply prints all the go environment information, we'll learn about some of these build-time variables later.
 
-Lastly, we have, `go doc` which shows documentation for a package or symbol, here's an example of the `fmt` package.
+Lastly, we have `go doc` which shows documentation for a package or symbol, here's an example of the `fmt` package.
 
 ```bash
 $ go doc -src fmt Printf
@@ -1811,8 +1809,6 @@ fmt.Println(p == p1)
 This brings us to the million-dollar question, why do we need pointers?
 
 Well, there's no definite answer for that, and pointers are just another useful feature that helps us mutate our data efficiently without copying a large amount of data.
-
-And can be applied to tons of use cases.
 
 Lastly, I will add that if you are coming from a language with no notion of pointers, don't panic and try to form a mental model of how pointers work.
 
@@ -2959,7 +2955,7 @@ func main() {
 }
 ```
 
-_Note that the last trailing comma is necessary_
+_Note that the trailing comma is required._
 
 ```bash
 $ go run main.go
@@ -3019,7 +3015,7 @@ $ go run main.go
 map[a:{Peter} b:{Seth} c:{Steve}]
 ```
 
-### Retrieve
+## Retrieve
 
 We can also retrieve our values from the map using the key.
 
@@ -3050,7 +3046,7 @@ Key c: {Steve}
 Key d: {}
 ```
 
-### Exists
+## Exists
 
 When you retrieve the value assigned to a given key, it returns an additional boolean value as well. The boolean variable will be `true` if the key exists, and `false` otherwise.
 
@@ -3071,7 +3067,7 @@ Key c: {Steve} Present: true
 Key d: {} Present: false
 ```
 
-### Updating
+## Update
 
 We can also update the value for a key by simply re-assigning a key.
 
@@ -3085,7 +3081,7 @@ $ go run main.go
 map[a:{Roger} b:{Seth} c:{Steve}]
 ```
 
-### Deleting
+## Delete
 
 Or, we can delete the key using the built-in `delete` function.
 
@@ -3105,7 +3101,7 @@ $ go run main.go
 map[a:{Roger} c:{Steve}]
 ```
 
-### Iteration
+## Iteration
 
 Similar to arrays or slices, we can iterate over maps with the `range` keyword.
 
@@ -3137,7 +3133,7 @@ Key: b, Value: {Seth}
 
 Note that a map is an unordered collection, and therefore the iteration order of a map is not guaranteed to be the same every time we iterate over it.
 
-### Properties
+## Properties
 
 Lastly, let's talk about map properties.
 
@@ -3350,7 +3346,7 @@ func main() {
 }
 ```
 
-And just as we expected, it works.
+And it works just as we expected.
 
 ```bash
 $ go run main.go
@@ -3442,7 +3438,7 @@ hello true
 panic: interface conversion: interface {} is string, not float64
 ```
 
-### Type Switch
+## Type Switch
 
 Here, a `switch` statement can be used to determine the type of a variable of type empty `interface{}`.
 
@@ -3469,11 +3465,11 @@ $ go run main.go
 string: hello
 ```
 
-### Properties
+## Properties
 
 Let's discuss some properties of interfaces.
 
-**Zero value**
+### Zero value
 
 The zero value of an interface is `nil`.
 
@@ -3493,11 +3489,9 @@ func main() {
 }
 ```
 
-**Embedding**
+### Embedding
 
-We can embed interfaces like structs.
-
-_For example_
+We can embed interfaces like structs. For example:
 
 ```go
 type interface1 interface {
@@ -3514,7 +3508,7 @@ type interface3 interface {
 }
 ```
 
-**Values**
+### Values
 
 Interface values are comparable.
 
@@ -3539,7 +3533,7 @@ func main() {
 }
 ```
 
-**Interface Values**
+### Interface Values
 
 Under the hood, an interface value can be thought of as a tuple consisting of a value and a concrete type.
 
@@ -3575,7 +3569,7 @@ It's a really powerful feature, but remember, _"Bigger the interface, the weaker
 
 In this tutorial, let's talk about error handling.
 
-Notice I said errors and not exceptions as there is no exception handling in Go.
+Notice how I said errors and not exceptions as there is no exception handling in Go.
 
 Instead, we can just return a built-in `error` type which is an interface type.
 
@@ -3815,7 +3809,7 @@ func Divide(a, b int) (int, error) {...}
 ```
 
 ```bash
-$ go run man.go
+$ go run main.go
 code 2000: cannot divide by zero
 ```
 
@@ -4232,7 +4226,7 @@ fuzz: elapsed: 0s, execs: 1 (25/sec), new interesting: 0 (total: 0)
         testing.go:1349: panic: B is greater than A
 ```
 
-I think this is a really cool feature of Go 1.18. You can learn more about fuzz testing from the [official Go blog](https://go.dev/doc/fuzz/).
+I think this is a really cool feature of Go 1.18. You can learn more about fuzz testing from the [official Go blog](https://go.dev/doc/fuzz).
 
 # Generics
 
@@ -4370,7 +4364,7 @@ func main() {
 }
 ```
 
-And this should work as expected
+And this should work as expected.
 
 ```bash
 $ go run main.go
@@ -4507,7 +4501,7 @@ _We'll learn how Golang implements it using goroutines and channels later in the
 
 ## Basic Concepts
 
-Now, let's get familiar with some basic concurrency concepts
+Now, let's get familiar with some basic concurrency concepts.
 
 ### Data Race
 
@@ -4527,7 +4521,7 @@ A deadlock occurs when all processes are blocked while waiting for each other an
 
 There are four conditions, known as the Coffman conditions, all of them must be satisfied for a deadlock to occur.
 
-- **Mutual Exclusion**
+- Mutual Exclusion
 
 A concurrent process holds at least one resource at any one time making it non-sharable.
 
@@ -4535,7 +4529,7 @@ _In the diagram below, there is a single instance of Resource 1 and it is held b
 
 ![mutual-exclusion](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/concurrency/mutual-exclusion.png)
 
-- **Hold and wait**
+- Hold and wait
 
 A concurrent process holds a resource and is waiting for an additional resource.
 
@@ -4543,7 +4537,7 @@ _In the diagram given below, Process 2 holds Resource 2 and Resource 3 and is re
 
 ![hold-and-wait](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/concurrency/hold-and-wait.png)
 
-- **No preemption**
+- No preemption
 
 A resource held by a concurrent process cannot be taken away by the system. It can only be freed by the process holding it.
 
@@ -4551,7 +4545,7 @@ _In the diagram below, Process 2 cannot preempt Resource 1 from Process 1. It wi
 
 ![no-preemption](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/go/chapter-IV/concurrency/no-preemption.png)
 
-- **Circular wait**
+- Circular wait
 
 A process is waiting for the resource held by the second process, which is waiting for the resource held by the third process, and so on, till the last process is waiting for a resource held by the first process. Hence, forming a circular chain.
 
@@ -4621,7 +4615,6 @@ Great, let's run this:
 
 ```bash
 $ go run main.go
-
 ```
 
 Interesting, it seems like our program did not run completely as it's missing some output. This is because our main goroutine exited and did not wait for the goroutine that we created.
@@ -4634,8 +4627,6 @@ func main() {
 	time.Sleep(1 * time.Second)
 }
 ```
-
-And now, if we run this.
 
 ```bash
 $ go run main.go
@@ -4729,8 +4720,6 @@ func main() {
 
 Notice how we can send data using the `channel<-data` and receive data using the `data := <-channel` syntax.
 
-And if we run this
-
 ```bash
 $ go run main.go
 Hello World
@@ -4763,7 +4752,7 @@ func main() {
 
 Because this channel is buffered, we can send these values into the channel without a corresponding concurrent receive. This means _sends_ to a buffered channel block only when the buffer is full and _receives_ block when the buffer is empty.
 
-By default, a channel is unbuffered and has a capacity of 0, hence, we omit the second argument to the `make` function.
+By default, a channel is unbuffered and has a capacity of 0, hence, we omit the second argument of the `make` function.
 
 Next, we have directional channels.
 
@@ -4833,21 +4822,21 @@ _In a way, this is similar to how we check if a key exists or not in a map._
 
 Lastly, let's discuss some properties of channels:
 
-- A send to a nil channel blocks forever.
+- A send to a `nil` channel blocks forever.
 
 ```go
 var c chan string
 c <- "Hello, World!" // Panic: all goroutines are asleep - deadlock!
 ```
 
-- A receive from a nil channel blocks forever.
+- A receive from a `nil` channel blocks forever.
 
 ```go
 var c chan string
 fmt.Println(<-c) // Panic: all goroutines are asleep - deadlock!
 ```
 
-- A send to a closed channel panics.
+- A send to a closed channel causes a panic.
 
 ```go
 var c = make(chan string, 1)
@@ -4983,7 +4972,7 @@ func main() {
 
 # Sync Package
 
-As we learned earlier, goroutines run in the same address space, so access to shared memory must be synchronized. The [`sync`](https://go.dev/pkg/sync/) package provides useful primitives.
+As we learned earlier, goroutines run in the same address space, so access to shared memory must be synchronized. The [`sync`](https://go.dev/pkg/sync) package provides useful primitives.
 
 ## WaitGroup
 
@@ -5052,7 +5041,7 @@ func main() {
 }
 ```
 
-But is important to know that a `WaitGroup` must **not be copied** after first use. And if it's explicitly passed into functions, it should be done by a _pointer._ This is because it can affect our counter which will disrupt the logic of our program.
+But is important to know that a `WaitGroup` **must not be copied** after first use. And if it's explicitly passed into functions, it should be done by a _pointer._ This is because it can affect our counter which will disrupt the logic of our program.
 
 Let's also increase the number of goroutines by calling the `Add` method to wait for 4 goroutines.
 
@@ -5132,7 +5121,7 @@ func main() {
 	go c.Update(19, &wg)
 
 	wg.Wait()
-	fmt.Println(c.value)
+	fmt.Printf("Result is %d", c.value)
 }
 ```
 
@@ -5187,6 +5176,7 @@ func main() {
 	go c.Update(19, &wg)
 
 	wg.Wait()
+	fmt.Printf("Result is %d", c.value)
 }
 ```
 
@@ -5201,7 +5191,7 @@ Result is 49
 
 Looks like we solved our issue and the output looks correct as well.
 
-_Note: Similar to WaitGroup a Mutex must **not be copied** after first use._
+_Note: Similar to WaitGroup a Mutex **must not be copied** after first use._
 
 ## RWMutex
 
@@ -5220,7 +5210,7 @@ Similar to `sync.Mutex`, we can use `sync.RWMutex` using the following methods:
 - `RLock()` acquires or holds the read lock.
 - `RUnlock()` releases the read lock.
 
-_Notice how RWMutex has additional `RLock` and `RUnlock`_ methods _compared to Mutex._
+_Notice how RWMutex has additional `RLock` and `RUnlock` methods compared to Mutex._
 
 ### Example
 
@@ -5284,7 +5274,7 @@ Get value: 10
 Get value: 10
 ```
 
-_Note: Both `sync.Mutex` and `sync.RWMutex` implements the `sync.Locker` interface:_
+_Note: Both `sync.Mutex` and `sync.RWMutex` implements the `sync.Locker` interface._
 
 ```go
 type Locker interface {
@@ -5520,7 +5510,7 @@ The Map type is optimized for two common use cases:
 
 _The zero Map is empty and ready for use. A Map must not be copied after first use._
 
-## Usage
+### Usage
 
 `sync.Map` gives us the following methods:
 
@@ -5533,7 +5523,7 @@ _The zero Map is empty and ready for use. A Map must not be copied after first u
 
 _Note: Range does not necessarily correspond to any consistent snapshot of the Map's contents._
 
-## Example
+### Example
 
 Let's look at an example. Here, we will launch a bunch of goroutines that will add and retrieve values from our map concurrently.
 
@@ -5594,7 +5584,7 @@ Package atomic provides low-level atomic memory primitives for integers and poin
 
 ### Usage
 
-`atomic` package provides [several functions](https://pkg.go.dev/sync/atomic#pkg-functions) which do the following 5 operations for `int`, `uint`, and `uintptr` types:
+`atomic` package provides [several functions](https://pkg.go.dev/sync/atomic#pkg-functions) that do the following 5 operations for `int`, `uint`, and `uintptr` types:
 
 - Add
 - Load
@@ -5638,7 +5628,7 @@ func main() {
 Here, `atomic.AddInt32` guarantees that the result of `n` will be 1000 as the instruction execution of atomic operations cannot be interrupted.
 
 ```bash
-go run main.go
+$ go run main.go
 Result: 1000
 ```
 
@@ -6175,7 +6165,7 @@ The `Context` type has the following methods:
 
 ### CancelFunc
 
-A `CancelFunc` tells an operation to abandon its work and it does not wait for the work to stop. If it is called by multiple goroutines simultaneously, after the first call, subsequent calls to a `CancelFunc` do nothing.
+A `CancelFunc` tells an operation to abandon its work and it does not wait for the work to stop. If it is called by multiple goroutines simultaneously, after the first call, subsequent calls to a `CancelFunc` does nothing.
 
 ```go
 type CancelFunc func()
