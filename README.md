@@ -606,30 +606,30 @@ Now, let's quickly look at some more examples. Here we will try to calculate a p
 
 ```go
 ...
-percent := (3/5) * 100
+percent := (7.0 / 9) * 100
 fmt.Printf("%f", percent)
 ...
 ```
 
 ```bash
 $ go run main.go
-58.181818
+77.777778
 ```
 
-Let's say we want just `58.18` which is 2 points precision, we can do that as well by using `.2f`.
+Let's say we want just `77.78` which is 2 points precision, we can do that as well by using `.2f`.
 
 Also, to add an actual percent sign, we will need to _escape it_.
 
 ```go
 ...
-percent := (3/5) * 100
+percent := (7.0 / 9) * 100
 fmt.Printf("%.2f %%", percent)
 ...
 ```
 
 ```bash
 $ go run main.go
-58.18 %
+77.78 %
 ```
 
 This brings us to `Sprint`, `Sprintln`, and `Sprintf`. These are basically the same as the print functions, the only difference being they return the string instead of printing it.
