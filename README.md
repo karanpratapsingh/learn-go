@@ -616,7 +616,7 @@ $ go run main.go
 77.777778
 ```
 
-Let's say we want just `58.18` which is 2 points precision, we can do that as well by using `.2f`.
+Let's say we want just `77.78` which is 2 points precision, we can do that as well by using `.2f`.
 
 Also, to add an actual percent sign, we will need to _escape it_.
 
