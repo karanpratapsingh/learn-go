@@ -360,9 +360,9 @@ Similar to signed integers, we have unsigned integers.
 ```go
 var ui uint = 404                     // Platform dependent
 var ui8 uint8 = 255                   // 0 to 255
-var ui16 uint16 = 65535               // 0 to 2^16
-var ui32 uint32 = 2147483647          // 0 to 2^32
-var ui64 uint64 = 9223372036854775807 // 0 to 2^64
+var ui16 uint16 = 65535               // 0 to 2^16-1
+var ui32 uint32 = 2147483647          // 0 to 2^32-1
+var ui64 uint64 = 9223372036854775807 // 0 to 2^64-1
 var uiptr uintptr                     // Integer representation of a memory address
 ```
 
